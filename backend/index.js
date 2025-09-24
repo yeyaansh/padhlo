@@ -1,0 +1,37 @@
+import express from "express";
+const app = express();
+import "dotenv/config"
+import cors from "cors"
+import cookieParser from "cookie-parser";
+import dbmongo from "./src/config/dbConnect.js"
+import userAuth from "./src/routes/userAuth.js"
+import redisClient from "./src/config/redisConnect.js"
+import submitRouter from "./src/routes/userSubmission.js"
+import problemRouter from "./src/routes/problemRouter.js"
+import osmosisRouter from "./src/routes/osmosisRouter.js";
+
+app.use(cors());
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.use("/user",userAuth);
+app.use("/problem",problemRouter);
+app.use("/pid",submitRouter);
+app.use("/osmosis",osmosisRouter)
+
+const startServer = async()=>{
+  try{
+    const PORT = process.env.PORT || 3000;
+  await Promise.all([dbmongo(),redisClient.connect()]);
+  app.listen(PORT, () => {
+    console.log("Server is Listening at Port No.: " + PORT);
+  });
+}
+catch(err){
+  console.log(err)
+}
+}
+
+startServer();
+

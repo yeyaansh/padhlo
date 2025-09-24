@@ -1,0 +1,26 @@
+import express from "express"
+const problemRouter = express.Router();
+import {
+  createProblem,
+  updateProblem,
+  deleteProblemById,
+  fetchProblemById,
+  fetchAllProblem,
+  solvedProblems,
+  submittedProblem
+} from "../controllers/problemRouterFunctions.js"
+import adminMiddleware from "../middleware/adminMiddleware.js"
+import userMiddleware from "../middleware/userMiddleware.js"
+// only admin have this power
+problemRouter.post("/create", adminMiddleware, createProblem);
+problemRouter.put("/update/:id", adminMiddleware, updateProblem);
+problemRouter.delete("/delete/:id",adminMiddleware, deleteProblemById);
+
+// // both have this power
+problemRouter.get("/id/:id",userMiddleware, fetchProblemById);
+problemRouter.get("/all",userMiddleware, fetchAllProblem);
+
+// // user have this power
+problemRouter.get("/solvedProblems",userMiddleware, solvedProblems);
+problemRouter.get("/submittedProblem/:id",userMiddleware,submittedProblem);
+export default problemRouter;
