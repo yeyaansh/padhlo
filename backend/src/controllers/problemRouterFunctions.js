@@ -88,7 +88,7 @@ const updateProblem = async (req, res) => {
 
   try {
     if (!id) {
-      throw new Error("Id is not valid");
+      throw new Error("Problem-Id shouldn't be empty");
     }
 
     // check if the problem exists in your db
@@ -98,7 +98,7 @@ const updateProblem = async (req, res) => {
     }
     // repeat the process same as we performed while creating the problem
     // verify the problem on judge0 before saving in database
-    for ({ language, completeCode } of referenceSolution) {
+    for (const { language, completeCode } of referenceSolution) {
       const languageID = languageById(language);
 
       const submissions = visibleTestCases.map((value) => {
@@ -124,7 +124,7 @@ const updateProblem = async (req, res) => {
         if (status_id != 3) {
           return res.status(401).send("Error in your Submitted Code");
         }
-        // console.log(`language: ${language_id}, statusId: ${status_id}`)
+        console.log(`language: ${language_id}, statusId: ${status_id}`)
       }
     }
 
@@ -153,7 +153,7 @@ const deleteProblemById = async (req, res) => {
     }
 
     const deleted = await problem.findByIdAndDelete(id);
-    res.status(200).send("Problem has been deleted succesfully");
+    res.status(200).send("Problem-Id has been deleted succesfully\n",deleted);
   } catch (err) {
     console.log("error while deleting the problem from the db of problems"+err);
     res.status(401).send(err.message);
@@ -221,7 +221,7 @@ const fetchAllProblem = async (req, res) => {
 
 
 // this tells the unique problems attempted by the user
-const solvedProblems = async (req, res) => {
+const  solvedProblems = async (req, res) => {
   try {
 
     // only bring the solved questions by the user

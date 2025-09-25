@@ -8,10 +8,16 @@ const waiting = async (timer) => {
 
 // 1.1 language list
 const languageList = {
-  "cpp": 54,
-  "java": 91,
-  "javascript": 102,
+  "cpp": 54, //"C++ (GCC 9.2.0)"
+  "java": 91, //"Java (JDK 17.0.6)"
+  "javascript": 102, //"JavaScript (Node.js 22.08.0)"
+  "python": 109, //"Python (3.13.2)"
 };
+
+
+
+
+
 // 1.2 language by id
 const languageById = (language) => {
   return languageList[language.toLowerCase().trim()];

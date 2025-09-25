@@ -13,7 +13,7 @@ const extractDomain = (url) => {
 
     return `${parsedUrl.protocol}//${host}/`;
   } catch (error) {
-    // Enhanced regex to handle www. and ports
+    // Enhanced regex to handle www. and portsz
     const match = url.match(/^(https?:\/\/)(?:www\.)?([^\/\?#]+)/);
     if (match) {
       return match[1] + match[2] + "/";

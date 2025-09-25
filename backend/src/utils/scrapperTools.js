@@ -121,7 +121,7 @@ const hackerrank = async (link) => {
     await page.goto(link, { waitUntil: "domcontentloaded" });
 
     // 4. Wait for your selector
-    const titleSelector = "div.challenge-page-label-wrapper>h1";
+    const titleSelector = "h1.ui-icon-label.page-label";
     await page.waitForSelector(titleSelector, { timeout: 10000 });
 
     // first field
@@ -129,10 +129,10 @@ const hackerrank = async (link) => {
       el.textContent?.trim()
     );
 
-        // second field
+    // second field
     const problemSourcedFrom = "hackerrank";
 
-        // third field
+    // third field
     const companyTags = [];
 
     const topicTagsInput = await page.$$eval(
@@ -145,25 +145,25 @@ const hackerrank = async (link) => {
     // fourth field
     const topicTags = topicTagsInput;
 
-        // fifth field
+    // fifth field
     const difficultyLevel = await page.$eval(
       "p.pull-right[class*='difficulty-']",
       (el) => el.textContent.trim().toLowerCase()
     );
 
-        // sixth field
+    // sixth field
     const problemUrl = link;
 
-   // // seventh field -- before saving the field (push the data)
+    // // seventh field -- before saving the field (push the data)
     // const popularSheets = null;
 
     // eighth field
     const videoSolution = [];
 
-        // nineth field
+    // nineth field
     const explicitTag = [];
 
-     // // tenth field -- before saving the field (push the data)
+    // // tenth field -- before saving the field (push the data)
     // const createdBy = null;
 
     // console.log( title);
@@ -194,7 +194,6 @@ const hackerearth = async (link) => {
   try {
     console.time("timing: ");
 
-
     // 1. Run in headless mode
     const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
     const page = await browser.newPage();
@@ -217,28 +216,28 @@ const hackerearth = async (link) => {
     await page.waitForSelector(titleSelector, { timeout: 10000 });
 
     // first field
-      const title = await page.$eval(titleSelector, (el) =>
+    const title = await page.$eval(titleSelector, (el) =>
       el.textContent?.trim()
     );
 
-        // second field
+    // second field
     const problemSourcedFrom = "hackerearth";
 
     // third field
     const companyTags = [];
 
-        // fourth field
+    // fourth field
     const topicTags = await page.$$eval("div.breadcrumb>a", (data) => {
       return data.map((each) => each.textContent?.trim());
     });
 
-        // fifth field
+    // fifth field
     const difficultyLevel = "medium";
 
-        // sixth field
+    // sixth field
     const problemUrl = link;
 
-        // // seventh field -- before saving the field (push the data)
+    // // seventh field -- before saving the field (push the data)
     // const popularSheets = null;
 
     // eighth field
@@ -249,7 +248,6 @@ const hackerearth = async (link) => {
 
     // // tenth field -- before saving the field (push the data)
     // const createdBy = null;
-
 
     // console.log( title);
     // console.log(topicTags);
@@ -280,7 +278,6 @@ const interviewbit = async (link) => {
   try {
     console.time("timing: ");
 
-
     // 1. Run in headless mode
     const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
     const page = await browser.newPage();
@@ -296,9 +293,7 @@ const interviewbit = async (link) => {
     await page.setViewport({ width: 1920, height: 1080 });
 
     // 3. Load the page
-    await page.goto("https://www.interviewbit.com/problems/allocate-books/", {
-      waitUntil: "domcontentloaded",
-    });
+    await page.goto(link, { waitUntil: "domcontentloaded" });
 
     // 4. Wait for your selector
     const titleSelector = "h1.p-tile__title";
@@ -319,7 +314,7 @@ const interviewbit = async (link) => {
 
     const htmlString = companyList[0];
 
-        // third field
+    // third field
     const companyTags = [];
     const regex = /href="\/search\/\?q=([^"]+)"/g;
     let match;
@@ -338,11 +333,11 @@ const interviewbit = async (link) => {
       (el) => el.textContent?.trim()
     );
 
-        // fifth field
+    // fifth field
     const difficultyLevel = difficultyLevelRaw.toLowerCase();
 
-      // difficultyLevelRaw.charAt(0)?.toUpperCase() +
-      // difficultyLevelRaw.slice(1)?.toLowerCase();
+    // difficultyLevelRaw.charAt(0)?.toUpperCase() +
+    // difficultyLevelRaw.slice(1)?.toLowerCase();
     // console.log(difficultyLevel);
 
     // sixth field
@@ -359,7 +354,6 @@ const interviewbit = async (link) => {
 
     // // tenth field -- before saving the field (push the data)
     // const createdBy = null;
-
 
     // console.log( title);
     // console.log(topicTags);
@@ -390,7 +384,6 @@ const codingninjas = async (link) => {
   try {
     console.time("timing: ");
 
-
     // 1. Run in headless mode
     const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
     const page = await browser.newPage();
@@ -419,10 +412,10 @@ const codingninjas = async (link) => {
     // console.log(title)
     // second field
     const problemSourcedFrom = "codingninjas";
-    
+
     await page.locator("div.company-preshow").click();
 
-        // third field
+    // third field
     const companyTags = await page.$$eval(
       "div.companies-container>div>div",
       (el) => el.map((data) => data.innerText?.trim())
@@ -438,7 +431,7 @@ const codingninjas = async (link) => {
     );
     // console.log(difficultyLevel);
 
-       // sixth field
+    // sixth field
     const problemUrl = link;
 
     // // seventh field -- before saving the field (push the data)
@@ -452,7 +445,6 @@ const codingninjas = async (link) => {
 
     // // tenth field -- before saving the field (push the data)
     // const createdBy = null;
-
 
     // console.log( title);
     // console.log(topicTags);
@@ -478,103 +470,105 @@ const codingninjas = async (link) => {
   }
 };
 
-const spoj = async (link) => {
-  try {
-    console.time("timing: ");
+// const spoj = async (link) => {
+//   try {
+//     console.time("timing: ");
 
-    // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
-    const page = await browser.newPage();
+//     // 1. Run in headless mode
+//     const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+//     const page = await browser.newPage();
 
-    // 2. Set headers
-    await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
-    );
-    await page.setExtraHTTPHeaders({
-      "Accept-Language": "en-US,en;q=0.9",
-    });
+//     // 2. Set headers
+//     await page.setUserAgent(
+//       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+//     );
+//     await page.setExtraHTTPHeaders({
+//       "Accept-Language": "en-US,en;q=0.9",
+//     });
 
-    await page.setViewport({ width: 1920, height: 1080 });
+//     await page.setViewport({ width: 1920, height: 1080 });
 
-    // 3. Load the page
-    await page.goto("https://www.spoj.com/problems/ANARC05B/", {
-      waitUntil: "domcontentloaded",
-    });
+//     // 3. Load the page
+//        await page.goto(link, { waitUntil: "domcontentloaded" });
 
-    // 4. Wait for your selector
-    const titleSelector = "h2#problem-name";
-    await page.waitForSelector(titleSelector, { timeout: 10000 });
+//        await page.waitForSelector(`input[type="checkbox"]`, { timeout: 10000 });
+//     await page.click('input[type="checkbox"]');
 
-    // first field
-    const title = await page.$eval(titleSelector, (el) =>
-      el.textContent?.trim()
-    );
+//     // input checkbox -->
+//     // input[type="checkbox"]
 
-        // second field
-    const problemSourcedFrom = "spoj";
+//     // 4. Wait for your selector
+//     const titleSelector = "#problem-name";
+//     await page.waitForSelector(titleSelector, { timeout: 10000 });
 
-    // third field
-    const companyTags = [];
+//     // first field
+//     const title = await page.$eval(titleSelector, (el) =>
+//       el.textContent?.trim()
+//     );
 
-    const topicTagsInput = await page.$$eval(
-      "div#problem-tags>a>span",
-      (data) => {
-        return data.map((each) => each.textContent?.trim());
-      }
-    );
-        // fourth field
-    const topicTags = topicTagsInput.map((element) =>
-      element?.split("#")[1]?.replace("-", " ")
-    );
+//         // second field
+//     const problemSourcedFrom = "spoj";
 
-        // fifth field
-    const difficultyLevel = "medium";
+//     // third field
+//     const companyTags = [];
 
-    // sixth field
-    const problemUrl = link;
+//     const topicTagsInput = await page.$$eval(
+//       "div#problem-tags>a>span",
+//       (data) => {
+//         return data.map((each) => each.textContent?.trim());
+//       }
+//     );
+//         // fourth field
+//     const topicTags = topicTagsInput.map((element) =>
+//       element?.split("#")[1]?.replace("-", " ")
+//     );
 
-    // // seventh field -- before saving the field (push the data)
-    // const popularSheets = null;
+//         // fifth field
+//     const difficultyLevel = "medium";
 
-    // eighth field
-    const videoSolution = [];
+//     // sixth field
+//     const problemUrl = link;
 
-    // nineth field
-    const explicitTag = [];
+//     // // seventh field -- before saving the field (push the data)
+//     const popularSheets = null;
 
-    // // tenth field -- before saving the field (push the data)
-    // const createdBy = null;
+//     // eighth field
+//     const videoSolution = [];
 
+//     // nineth field
+//     const explicitTag = [];
 
-    // console.log( title);
-    // console.log(topicTags);
-    // console.log(difficultyLevel);
+//     // // tenth field -- before saving the field (push the data)
+//     // const createdBy = null;
 
-    console.timeEnd("timing: ");
+//     // console.log( title);
+//     // console.log(topicTags);
+//     // console.log(difficultyLevel);
 
-    await browser.close();
+//     console.timeEnd("timing: ");
 
-    return {
-      title,
-      problemSourcedFrom,
-      companyTags,
-      topicTags,
-      difficultyLevel,
-      problemUrl,
-      // popularSheets,
-      videoSolution,
-      explicitTag,
-      // createdBy,
-    };
-  } catch (err) {
-    console.log("fetch dat in controllers: ", err);
-  }
-};
+//     await browser.close();
+
+//     return {
+//       title,
+//       problemSourcedFrom,
+//       companyTags,
+//       topicTags,
+//       difficultyLevel,
+//       problemUrl,
+// //      popularSheets,
+//       videoSolution,
+//       explicitTag,
+//       // createdBy,
+//     };
+//   } catch (err) {
+//     console.log("fetch dat in controllers: ", err);
+//   }
+// };
 
 const gfg = async (link) => {
   try {
     console.time("timing: ");
-
 
     // 1. Run in headless mode
     const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
@@ -597,13 +591,13 @@ const gfg = async (link) => {
 
     await page.waitForSelector(".g-m-0", { timeout: 10000 });
 
-        // first field
+    // first field
     const title = await page.$eval(".g-m-0", (data) =>
       data.textContent?.trim()
     );
 
-        // second field
-        const problemSourcedFrom = "gfg";
+    // second field
+    const problemSourcedFrom = "gfg";
 
     // 1. Get all "tag sections"
     const tagSections = await page.$$(".problems_accordion_tags__JJ2DX");
@@ -636,7 +630,7 @@ const gfg = async (link) => {
       (data) => data.textContent?.trim().toLowerCase()
     );
 
-   // sixth field
+    // sixth field
     const problemUrl = link;
 
     // // seventh field -- before saving the field (push the data)
@@ -680,36 +674,7 @@ export {
   codingninjas,
   hackerearth,
   hackerrank,
-  spoj,
+  // spoj,
   interviewbit,
   gfg,
 };
-
-
-
-// we will show the images from frontend (optimized image) not from backend
-
-// const imagePath = {
-//   light: {
-//     leetcode: "../components/images/lightMode/leetcode_light.png",
-//     codingninjas: "../components/images/lightMode/codestudio_light.png",
-//     hackerrank: "../components/images/lightMode/hackerrank.png",
-//     hackerearth: "../components/images/lightMode/hackerearth.png",
-//     spoj: "../components/images/lightMode/spoj.png",
-//     gfg: "../components/images/lightMode/gfg.png",
-//     interviewbit: "../components/images/lightMode/interviewbit.png",
-//     codeforces: "../components/images/lightMode/codeforces.png",
-//   },
-//   dark: {
-//     leetcode: "../components/images/darkMode/leetcode_dark.png",
-//     codingninjas: "../components/images/darkMode/codestudio_dark.png",
-//     hackerrank: "../components/images/darkMode/hackerrank.png",
-//     hackerearth: "../components/images/darkMode/hackerearth.png",
-//     spoj: "../components/images/darkMode/spoj.png",
-//     gfg: "../components/images/darkMode/gfg.png",
-//     interviewbit: "../components/images/darkMode/interviewbit.png",
-//     codeforces: "../components/images/darkMode/codeforces.png",
-//   },
-// };
-
-// export { imagePath };

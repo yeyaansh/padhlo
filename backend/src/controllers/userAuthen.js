@@ -118,4 +118,12 @@ const deleteProfile = async (req, res) => {
     res.status(500).send(err.message);
   }
 };
-export { register, login, logout, getProfile, adminRegister, deleteProfile };
+export {
+  register,
+  login,
+  logout,
+  getProfile,
+  adminRegister,
+  // adminLogin,
+  deleteProfile,
+};

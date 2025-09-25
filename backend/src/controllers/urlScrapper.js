@@ -3,16 +3,33 @@ import {
   codingninjas,
   hackerearth,
   hackerrank,
-  spoj,
+  // spoj,
   interviewbit,
   gfg,
 } from "../utils/scrapperTools.js";
 import { checkPlatform, cleanUrl, extractDomain } from "../utils/filterURL.js";
-import inputURL from "../models/urlSchema.js"
+import inputURL from "../models/urlSchema.js";
+
+
+function getSpojProblemCode(url) {
+  try {
+    const parsed = new URL(url);
+    const pathSegments = parsed.pathname.split("/").filter(Boolean); // removes empty strings
+    const problemsIndex = pathSegments.indexOf("problems");
+
+    if (problemsIndex !== -1 && pathSegments.length > problemsIndex + 1) {
+      return pathSegments[problemsIndex + 1];
+    }
+
+    return null; // "problems" not found or no code after it
+  } catch (err) {
+    return null; // invalid URL
+  }
+}
+
 
 const urlScrapper = async (req, res) => {
   try {
-    
     // url will be a normal text of the problem
     const url = req.body.url;
 
@@ -23,15 +40,18 @@ const urlScrapper = async (req, res) => {
 
     //  function which removes the unnecessary parts from the problem url
     const problemURL = cleanUrl(url);
-// console.log("before switch")
+    // console.log("before switch")
+
     // this will give you the platform name maybe (gfg)
     const platform = checkPlatform(urlDomain);
     // console.log(platform)
     switch (platform) {
-      case "codeforces":
-        problemToUpload = await codeforces(problemURL);
-        // problemToUpload.push(await codeforces(problemURL));
-        break;
+      //not working
+      // case "codeforces":
+      //   problemToUpload = await codeforces(problemURL);
+      //   // problemToUpload.push(await codeforces(problemURL));
+      //   break;
+
       case "interviewbit":
         problemToUpload = await interviewbit(problemURL);
         // problemToUpload.push(await interviewbit(problemURL));
@@ -48,8 +68,20 @@ const urlScrapper = async (req, res) => {
         problemToUpload = await hackerearth(problemURL);
         // problemToUpload.push(await hackerearth(problemURL));
         break;
+
+      //not working but managed manually (by extracting the title from url)
       case "spoj":
-        problemToUpload = await spoj(problemURL);
+        problemToUpload = {
+          title: await getSpojProblemCode(problemURL),
+          problemSourcedFrom: "spoj",
+          companyTags: [],
+          topicTags: [],
+          difficultyLevel: "medium",
+          problemUrl: problemURL,
+          videoSolution: [],
+          explicitTag: [],
+        };
+        // problemToUpload = await spoj(problemURL);
         // problemToUpload.push(await spoj(problemURL));
         break;
       case "leetcode":
@@ -72,12 +104,11 @@ const urlScrapper = async (req, res) => {
     problemToUpload.popularSheets = popularSheets;
     problemToUpload.createdBy = createdBy;
     const data = problemToUpload;
-    console.log(data)
+    console.log(data);
     await inputURL.create(data);
-
     res.status(201).send(problemToUpload);
   } catch (err) {
-    console.log("error during single url Scrapping " + err);
+    console.log("error in urlScrapper during single url Scrapping " + err);
     res.status(401).send(err.message);
   }
 };

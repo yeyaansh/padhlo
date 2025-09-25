@@ -18,6 +18,7 @@ const inputURLSchema = new Schema(
     topicTags: [
       {
         type: String,
+        trim:true,
         default: null,
       },
     ],

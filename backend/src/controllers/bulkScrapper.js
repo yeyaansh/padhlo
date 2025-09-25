@@ -3,7 +3,7 @@ import {
   codingninjas,
   hackerearth,
   hackerrank,
-  spoj,
+  // spoj,
   interviewbit,
   gfg,
 } from "../utils/scrapperTools.js";
@@ -46,7 +46,8 @@ const bulkScrapper = async (req, res) => {
           problemToUpload.push(await hackerearth(problemURL));
           break;
         case "spoj":
-          problemToUpload.push(await spoj(problemURL));
+          problemToUpload.push("currently we are working on resolving spoj...");
+          // problemToUpload.push(await spoj(problemURL));
           break;
         case "leetcode":
           problemToUpload.push(await leetcode(problemURL));
