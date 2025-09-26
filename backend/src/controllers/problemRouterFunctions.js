@@ -1,6 +1,6 @@
-import problem from "../models/problemSchema.js"
-import User from "../models/userSchema.js"
-import submission from "../models/userSubmissionSchema.js"
+import problem from "../models/problemSchema.js";
+import User from "../models/userSchema.js";
+import submission from "../models/userSubmissionSchema.js";
 import {
   languageById,
   batchSubmission,
@@ -21,16 +21,16 @@ const createProblem = async (req, res) => {
   } = req.body;
 
   try {
-
     // this will iterate over each array of referenceSolution containing language and completeCode, because we are in the phase of create Problem, so we need to verify the code before submitting it to the db
     for (const { language, completeCode } of referenceSolution) {
-
       // get the number with respect to the language of the compiler
       const languageID = languageById(language);
 
-
+      const allTestCases = [...visibleTestCases,...hiddenTestCases]
+      // console.log(allTestCases.length);
+      
       // store languageId, souceId, input, expectedOutput for all visible test cases in array
-      const submissions = visibleTestCases.map((value) => {
+      const submissions = allTestCases.map((value) => {
         return {
           language_id: languageID,
           source_code: completeCode,
@@ -44,19 +44,24 @@ const createProblem = async (req, res) => {
 
       // store token data in an array, this helps in future to get the information about the status of the submitted codes
       const resultToken = batchTokens.map((k) => k.token);
-
+      // console.log("resultToken")
+      // console.log(resultToken);
+      
+//  console.log("starting")
       const batchSubmissionStatus = await statusId_Submission(resultToken);
-      // console.log("starting")
-      // console.log(batchSubmissionStatus)
       // console.log("ending")
+let countTestCases = 0;
       for (const {
         language_id,
         status_id,
       } of batchSubmissionStatus.submissions) {
+        countTestCases++;
         if (status_id != 3) {
-          return res.status(401).send("Error in your Submitted Code while creating the problem");
+          return res
+            .status(401)
+            .send("Error in your Submitted Code while creating the problem: "+`language: ${language_id}, statusId: ${status_id}, and countTestCases: ${countTestCases}`);
         }
-        console.log(`language: ${language_id}, statusId: ${status_id}`);
+        // console.log();
       }
     }
 
@@ -67,8 +72,8 @@ const createProblem = async (req, res) => {
     });
     res.status(201).send("Problem Created Succesfully");
   } catch (err) {
-    console.log("error during creating the problem "+ err)
-    res.status(401).send(err.message);
+    console.log("error during creating the problem " + err);
+    res.json("Error is: "+err.message);
   }
 };
 
@@ -124,10 +129,9 @@ const updateProblem = async (req, res) => {
         if (status_id != 3) {
           return res.status(401).send("Error in your Submitted Code");
         }
-        console.log(`language: ${language_id}, statusId: ${status_id}`)
+        console.log(`language: ${language_id}, statusId: ${status_id}`);
       }
     }
-
 
     // run validators to verify the new data (as it follows the rules) before saving it to the db
     const updatedProblem = await problem.findByIdAndUpdate(
@@ -153,9 +157,11 @@ const deleteProblemById = async (req, res) => {
     }
 
     const deleted = await problem.findByIdAndDelete(id);
-    res.status(200).send("Problem-Id has been deleted succesfully\n",deleted);
+    res.status(200).send("Problem-Id has been deleted succesfully\n", deleted);
   } catch (err) {
-    console.log("error while deleting the problem from the db of problems"+err);
+    console.log(
+      "error while deleting the problem from the db of problems" + err
+    );
     res.status(401).send(err.message);
   }
 };
@@ -178,7 +184,7 @@ const fetchProblemById = async (req, res) => {
 
     res.status(200).send(problemById);
   } catch (err) {
-    console.log("error while fetching the data from db "+err);
+    console.log("error while fetching the data from db " + err);
     res.status(401).send(err.message);
   }
 };
@@ -201,7 +207,7 @@ const fetchAllProblem = async (req, res) => {
       filters.tags = tags;
     }
 
-    if(companies){
+    if (companies) {
       filters.companies = companies;
     }
 
@@ -214,16 +220,14 @@ const fetchAllProblem = async (req, res) => {
 
     res.status(200).send(allProblems);
   } catch (err) {
-    console.log("error while fetching all the problems "+err);
+    console.log("error while fetching all the problems " + err);
     res.status(500).send(err.message);
   }
 };
 
-
 // this tells the unique problems attempted by the user
-const  solvedProblems = async (req, res) => {
+const solvedProblems = async (req, res) => {
   try {
-
     // only bring the solved questions by the user
     const userSolvedProblem = await User.findById(req.result._id)
       .populate({
@@ -240,7 +244,9 @@ const  solvedProblems = async (req, res) => {
 
     res.status(200).send(data);
   } catch (err) {
-    console.log("error while fetching the data from user's all solvedProblems "+err);
+    console.log(
+      "error while fetching the data from user's all solvedProblems " + err
+    );
     res.status(500).send(err.message);
   }
 };
@@ -255,7 +261,9 @@ const submittedProblem = async (req, res) => {
     console.log(answer);
     res.status(200).send(answer);
   } catch (err) {
-    console.log("error while fetching the data about the solved problem id "+err);
+    console.log(
+      "error while fetching the data about the solved problem id " + err
+    );
     res.status(401).send(err.message);
   }
 };

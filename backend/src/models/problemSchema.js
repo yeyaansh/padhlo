@@ -15,10 +15,13 @@ const problemSchema = new Schema({
     type: String,
     enum: ["hard", "medium", "easy"],
     required: true,
+    lowercase: true,
   },
   tags: [
     {
       type: String,
+      lowercase: true,
+      trim: true,
       enum: [
         "array",
         "linked-list",
@@ -35,12 +38,21 @@ const problemSchema = new Schema({
   companies: [
     {
       type: String,
-      lowerCase: true,
+      lowercase: true,
       trim: true,
     },
   ],
   visibleTestCases: [
     {
+      inputMessage: {
+        type: String,
+        required: true,
+      },
+
+      outputMessage: {
+        type: String,
+        required: true,
+      },
       input: {
         type: String,
         required: true,
@@ -70,7 +82,7 @@ const problemSchema = new Schema({
     {
       language: {
         type: String,
-        requied: true,
+        required: true,
       },
       initialCode: {
         type: String,

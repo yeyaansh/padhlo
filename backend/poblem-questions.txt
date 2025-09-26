@@ -1,0 +1,481 @@
+{
+    "title": "Add Two Numbers",
+    "description": "Given two integers, `a` and `b`, return their sum.",
+    "difficultyLevel": "Easy",
+    "tags": [
+        "other"
+    ],
+    "companies": [
+        "Google",
+        "Facebook",
+        "Amazon",
+        "Apple",
+        "Microsoft"
+    ],
+    "visibleTestCases": [
+        {
+            "inputMessage": "The input is two integers, `a` and `b`, separated by a space.",
+            "outputMessage": "The expected output is a single integer representing the sum.",
+            "input": "2 3",
+            "output": "5",
+            "explaination": "The sum of 2 and 3 is 5."
+        },
+        {
+            "inputMessage": "The input is two integers, `a` and `b`, separated by a space.",
+            "outputMessage": "The expected output is a single integer representing the sum.",
+            "input": "-5 10",
+            "output": "5",
+            "explaination": "The sum of -5 and 10 is 5."
+        }
+    ],
+    "hiddenTestCases": [
+        {
+            "input": "0 0",
+            "output": "0"
+        },
+        {
+            "input": "-10 -20",
+            "output": "-30"
+        }
+    ],
+    "starterCode": [
+        {
+            "language": "cpp",
+            "initialCode": "#include <iostream>\n\nclass Solution {\npublic:\n    int solve(int a, int b) {\n        // Write your code here\n    }\n};\n\nint main() {\n    Solution sol;\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << sol.solve(a, b) << std::endl;\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "initialCode": "import java.util.Scanner;\n\nclass Solution {\n    public int solve(int a, int b) {\n        // Write your code here\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n        Solution sol = new Solution();\n        System.out.println(sol.solve(a, b));\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "initialCode": "import sys\n\nclass Solution:\n    def solve(self, a: int, b: int) -> int:\n        # Write your code here\n        pass\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        a, b = map(int, line.split())\n        sol = Solution()\n        result = sol.solve(a, b)\n        print(result)"
+        },
+        {
+            "language": "javascript",
+            "initialCode": "/**\n * @param {number} a\n * @param {number} b\n * @return {number}\n */\nvar solve = function(a, b) {\n    // Write your code here\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nrl.on('line', (line) => {\n    const [a, b] = line.split(' ').map(Number);\n    console.log(solve(a, b));\n    rl.close();\n});"
+        }
+    ],
+    "referenceSolution": [
+        {
+            "language": "cpp",
+            "completeCode": "#include <iostream>\n\nclass Solution {\npublic:\n    int solve(int a, int b) {\n        return a + b;\n    }\n};\n\nint main() {\n    Solution sol;\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << sol.solve(a, b) << std::endl;\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "completeCode": "import java.util.Scanner;\n\nclass Solution {\n    public int solve(int a, int b) {\n        return a + b;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n        Solution sol = new Solution();\n        System.out.println(sol.solve(a, b));\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "completeCode": "import sys\n\nclass Solution:\n    def solve(self, a: int, b: int) -> int:\n        return a + b\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        a, b = map(int, line.split())\n        sol = Solution()\n        result = sol.solve(a, b)\n        print(result)"
+        },
+        {
+            "language": "javascript",
+            "completeCode": "/**\n * @param {number} a\n * @param {number} b\n * @return {number}\n */\nvar solve = function(a, b) {\n    return a + b;\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout\n});\n\nrl.on('line', (line) => {\n    const [a, b] = line.split(' ').map(Number);\n    console.log(solve(a, b));\n    rl.close();\n});"
+        }
+    ]
+}
+
+{
+    "title": "Reverse a String",
+    "description": "Given a string `s`, return the string reversed.",
+    "difficultyLevel": "Easy",
+    "tags": [
+        "array",
+        "other"
+    ],
+    "companies": [
+        "Apple",
+        "Google",
+        "Microsoft",
+        "Amazon",
+        "Adobe"
+    ],
+    "visibleTestCases": [
+        {
+            "inputMessage": "The input is a single string `s`.",
+            "outputMessage": "The expected output is the reversed string.",
+            "input": "hello",
+            "output": "olleh",
+            "explaination": "The reverse of 'hello' is 'olleh'."
+        },
+        {
+            "inputMessage": "The input is a single string `s`.",
+            "outputMessage": "The expected output is the reversed string.",
+            "input": "world",
+            "output": "dlrow",
+            "explaination": "The reverse of 'world' is 'dlrow'."
+        }
+    ],
+    "hiddenTestCases": [
+        {
+            "input": "A",
+            "output": "A"
+        },
+        {
+            "input": " ",
+            "output": " "
+        }
+    ],
+    "starterCode": [
+        {
+            "language": "cpp",
+            "initialCode": "#include <iostream>\n#include <string>\n#include <algorithm>\n\nclass Solution {\npublic:\n    std::string solve(std::string s) {\n        // Write your code here\n    }\n};\n\nint main() {\n    Solution sol;\n    std::string s;\n    std::getline(std::cin, s);\n    std::cout << sol.solve(s) << std::endl;\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "initialCode": "import java.util.Scanner;\n\nclass Solution {\n    public String solve(String s) {\n        // Write your code here\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = \"\";\n        if (sc.hasNextLine()) {\n            s = sc.nextLine();\n        }\n        Solution sol = new Solution();\n        System.out.println(sol.solve(s));\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "initialCode": "import sys\n\nclass Solution:\n    def solve(self, s: str) -> str:\n        # Write your code here\n        pass\n\nif __name__ == '__main__':\n    line = sys.stdin.readline().strip('\\n')\n    sol = Solution()\n    result = sol.solve(line)\n    print(result)"
+        },
+        {
+            "language": "javascript",
+            "initialCode": "/**\n * @param {string} s\n * @return {string}\n */\nvar solve = function(s) {\n    // Write your code here\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet lineProcessed = false;\n\nrl.on('line', (line) => {\n    lineProcessed = true;\n    console.log(solve(line));\n});\n\nrl.on('close', () => {\n    if (!lineProcessed) {\n        console.log(solve(''));\n    }\n});"
+        }
+    ],
+    "referenceSolution": [
+        {
+            "language": "cpp",
+            "completeCode": "#include <iostream>\n#include <string>\n#include <algorithm>\n\nclass Solution {\npublic:\n    std::string solve(std::string s) {\n        std::reverse(s.begin(), s.end());\n        return s;\n    }\n};\n\nint main() {\n    Solution sol;\n    std::string s;\n    std::getline(std::cin, s);\n    std::cout << sol.solve(s) << std::endl;\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "completeCode": "import java.util.Scanner;\n\nclass Solution {\n    public String solve(String s) {\n        return new StringBuilder(s).reverse().toString();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = \"\";\n        if (sc.hasNextLine()) {\n            s = sc.nextLine();\n        }\n        Solution sol = new Solution();\n        System.out.println(sol.solve(s));\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "completeCode": "import sys\n\nclass Solution:\n    def solve(self, s: str) -> str:\n        return s[::-1]\n\nif __name__ == '__main__':\n    line = sys.stdin.readline().strip('\\n')\n    sol = Solution()\n    result = sol.solve(line)\n    print(result)"
+        },
+        {
+            "language": "javascript",
+            "completeCode": "/**\n * @param {string} s\n * @return {string}\n */\nvar solve = function(s) {\n    return s.split('').reverse().join('');\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet lineProcessed = false;\n\nrl.on('line', (line) => {\n    lineProcessed = true;\n    console.log(solve(line));\n});\n\nrl.on('close', () => {\n    if (!lineProcessed) {\n        console.log(solve(''));\n    }\n});"
+        }
+    ]
+}
+
+{
+    "title": "Find Maximum Element",
+    "description": "Given an array of integers `nums`, find and return the maximum element in the array. You can assume the array is not empty.",
+    "difficultyLevel": "easy",
+    "tags": [
+        "array"
+    ],
+    "companies": [
+        "Facebook",
+        "Amazon",
+        "Google",
+        "Microsoft"
+    ],
+    "visibleTestCases": [
+        {
+            "inputMessage": "The input is a single line of space-separated integers.",
+            "outputMessage": "The expected output is the largest integer from the input array.",
+            "input": "3 5 2 8 1",
+            "output": "8",
+            "explaination": "In the array [3, 5, 2, 8, 1], the largest element is 8."
+        },
+        {
+            "inputMessage": "The input is a single line of space-separated integers.",
+            "outputMessage": "The expected output is the largest integer from the input array.",
+            "input": "-1 -5 -2 -10",
+            "output": "-1",
+            "explaination": "When dealing with negative numbers, -1 is the largest element in the array."
+        }
+    ],
+    "hiddenTestCases": [
+        {
+            "input": "10",
+            "output": "10"
+        },
+        {
+            "input": "5 5 5 5",
+            "output": "5"
+        }
+    ],
+    "starterCode": [
+        {
+            "language": "cpp",
+            "initialCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n#include <algorithm>\n\nclass Solution {\npublic:\n    int solve(const std::vector<int>& nums) {\n        // Write your code here\n    }\n};\n\nint main() {\n    std::string line;\n    std::getline(std::cin, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::cout << sol.solve(nums) << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "initialCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\nclass Solution {\n    public int solve(int[] nums) {\n        // Write your code here\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextLine()) {\n            String line = sc.nextLine();\n            String[] parts = line.split(\" \");\n            int[] nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) {\n                nums[i] = Integer.parseInt(parts[i]);\n            }\n            if (nums.length > 0) {\n                Solution sol = new Solution();\n                System.out.println(sol.solve(nums));\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "initialCode": "import sys\n\nclass Solution:\n    def solve(self, nums: list[int]) -> int:\n        # Write your code here\n        pass\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(nums)\n            print(result)"
+        },
+        {
+            "language": "javascript",
+            "initialCode": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar solve = function(nums) {\n    // Write your code here\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.on('line', (line) => {\n    if (line.trim()) {\n        const nums = line.split(' ').map(Number);\n        if (nums.length > 0) {\n            console.log(solve(nums));\n        }\n    }\n    rl.close();\n});"
+        }
+    ],
+    "referenceSolution": [
+        {
+            "language": "cpp",
+            "completeCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n#include <algorithm>\n\nclass Solution {\npublic:\n    int solve(const std::vector<int>& nums) {\n        return *std::max_element(nums.begin(), nums.end());\n    }\n};\n\nint main() {\n    std::string line;\n    std::getline(std::cin, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::cout << sol.solve(nums) << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "completeCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\nclass Solution {\n    public int solve(int[] nums) {\n        return Arrays.stream(nums).max().getAsInt();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextLine()) {\n            String line = sc.nextLine();\n            String[] parts = line.split(\" \");\n            int[] nums = new int[parts.length];\n            for (int i = 0; i < parts.length; i++) {\n                nums[i] = Integer.parseInt(parts[i]);\n            }\n            if (nums.length > 0) {\n                Solution sol = new Solution();\n                System.out.println(sol.solve(nums));\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "completeCode": "import sys\n\nclass Solution:\n    def solve(self, nums: list[int]) -> int:\n        return max(nums)\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(nums)\n            print(result)"
+        },
+        {
+            "language": "javascript",
+            "completeCode": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar solve = function(nums) {\n    return Math.max(...nums);\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.on('line', (line) => {\n    if (line.trim()) {\n        const nums = line.split(' ').map(Number);\n        if (nums.length > 0) {\n            console.log(solve(nums));\n        }\n    }\n    rl.close();\n});"
+        }
+    ]
+}
+
+{
+    "title": "Product of Array Except Self",
+    "description": "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`. The product of any prefix or suffix of `nums` is **guaranteed** to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in $O(n)$ time and without using the division operation.",
+    "difficultyLevel": "medium",
+    "tags": [
+        "array"
+    ],
+    "companies": [
+        "Amazon",
+        "Microsoft",
+        "Facebook",
+        "Apple",
+        "Adobe",
+        "Uber"
+    ],
+    "visibleTestCases": [
+        {
+            "inputMessage": "The input is a single line of space-separated integers.",
+            "outputMessage": "The expected output is a single line of space-separated integers representing the resulting array.",
+            "input": "1 2 3 4",
+            "output": "24 12 8 6",
+            "explaination": "For input [1, 2, 3, 4]:\n- answer[0] = 2 * 3 * 4 = 24\n- answer[1] = 1 * 3 * 4 = 12\n- answer[2] = 1 * 2 * 4 = 8\n- answer[3] = 1 * 2 * 3 = 6"
+        },
+        {
+            "inputMessage": "The input is a single line of space-separated integers.",
+            "outputMessage": "The expected output is a single line of space-separated integers representing the resulting array.",
+            "input": "-1 1 0 -3 3",
+            "output": "0 0 9 0 0",
+            "explaination": "If any number is zero, the product of all other numbers will be zero, except for the position of the zero itself."
+        }
+    ],
+    "hiddenTestCases": [
+        {
+            "input": "0 0",
+            "output": "0 0"
+        },
+        {
+            "input": "5 2",
+            "output": "2 5"
+        }
+    ],
+    "starterCode": [
+        {
+            "language": "cpp",
+            "initialCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n\nclass Solution {\npublic:\n    std::vector<int> solve(const std::vector<int>& nums) {\n        // Write your code here\n    }\n};\n\nint main() {\n    std::string line;\n    std::getline(std::cin, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::vector<int> result = sol.solve(nums);\n        for (size_t i = 0; i < result.size(); ++i) {\n            std::cout << result[i] << (i == result.size() - 1 ? \"\" : \" \");\n        }\n        std::cout << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "initialCode": "import java.util.Scanner;\nimport java.util.Arrays;\nimport java.util.stream.Collectors;\n\nclass Solution {\n    public int[] solve(int[] nums) {\n        // Write your code here\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextLine()) {\n            String[] parts = sc.nextLine().split(\" \");\n            int[] nums = Arrays.stream(parts).mapToInt(Integer::parseInt).toArray();\n            if (nums.length > 0) {\n                Solution sol = new Solution();\n                int[] result = sol.solve(nums);\n                System.out.println(Arrays.stream(result).mapToObj(String::valueOf).collect(Collectors.joining(\" \")));\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "initialCode": "import sys\nfrom typing import List\n\nclass Solution:\n    def solve(self, nums: List[int]) -> List[int]:\n        # Write your code here\n        pass\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(nums)\n            print(' '.join(map(str, result)))\n"
+        },
+        {
+            "language": "javascript",
+            "initialCode": "/**\n * @param {number[]} nums\n * @return {number[]}\n */\nvar solve = function(nums) {\n    // Write your code here\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.on('line', (line) => {\n    if (line.trim()) {\n        const nums = line.split(' ').map(Number);\n        if (nums.length > 0) {\n            const result = solve(nums);\n            console.log(result.join(' '));\n        }\n    }\n    rl.close();\n});"
+        }
+    ],
+    "referenceSolution": [
+        {
+            "language": "cpp",
+            "completeCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n\nclass Solution {\npublic:\n    std::vector<int> solve(const std::vector<int>& nums) {\n        int n = nums.size();\n        std::vector<int> answer(n, 1);\n        int prefix = 1;\n        for (int i = 0; i < n; ++i) {\n            answer[i] = prefix;\n            prefix *= nums[i];\n        }\n        int postfix = 1;\n        for (int i = n - 1; i >= 0; --i) {\n            answer[i] *= postfix;\n            postfix *= nums[i];\n        }\n        return answer;\n    }\n};\n\nint main() {\n    std::string line;\n    std::getline(std::cin, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::vector<int> result = sol.solve(nums);\n        for (size_t i = 0; i < result.size(); ++i) {\n            std::cout << result[i] << (i == result.size() - 1 ? \"\" : \" \");\n        }\n        std::cout << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "completeCode": "import java.util.Scanner;\nimport java.util.Arrays;\nimport java.util.stream.Collectors;\n\nclass Solution {\n    public int[] solve(int[] nums) {\n        int n = nums.length;\n        int[] answer = new int[n];\n        int prefix = 1;\n        for (int i = 0; i < n; i++) {\n            answer[i] = prefix;\n            prefix *= nums[i];\n        }\n        int postfix = 1;\n        for (int i = n - 1; i >= 0; i--) {\n            answer[i] *= postfix;\n            postfix *= nums[i];\n        }\n        return answer;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextLine()) {\n            String[] parts = sc.nextLine().split(\" \");\n            int[] nums = Arrays.stream(parts).mapToInt(Integer::parseInt).toArray();\n            if (nums.length > 0) {\n                Solution sol = new Solution();\n                int[] result = sol.solve(nums);\n                System.out.println(Arrays.stream(result).mapToObj(String::valueOf).collect(Collectors.joining(\" \")));\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "completeCode": "import sys\nfrom typing import List\n\nclass Solution:\n    def solve(self, nums: List[int]) -> List[int]:\n        n = len(nums)\n        answer = [1] * n\n        prefix = 1\n        for i in range(n):\n            answer[i] = prefix\n            prefix *= nums[i]\n        postfix = 1\n        for i in range(n - 1, -1, -1):\n            answer[i] *= postfix\n            postfix *= nums[i]\n        return answer\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(nums)\n            print(' '.join(map(str, result)))"
+        },
+        {
+            "language": "javascript",
+            "completeCode": "/**\n * @param {number[]} nums\n * @return {number[]}\n */\nvar solve = function(nums) {\n    const n = nums.length;\n    const answer = new Array(n);\n    let prefix = 1;\n    for (let i = 0; i < n; i++) {\n        answer[i] = prefix;\n        prefix *= nums[i];\n    }\n    let postfix = 1;\n    for (let i = n - 1; i >= 0; i--) {\n        answer[i] *= postfix;\n        postfix *= nums[i];\n    }\n    return answer;\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.on('line', (line) => {\n    if (line.trim()) {\n        const nums = line.split(' ').map(Number);\n        if (nums.length > 0) {\n            const result = solve(nums);\n            console.log(result.join(' '));\n        }\n    }\n    rl.close();\n});"
+        }
+    ]
+}
+
+{
+    "title": "Container With Most Water",
+    "description": "You are given an integer array `height` of length `n`. There are `n` vertical lines drawn such that the two endpoints of the $i^{th}$ line are $(i, 0)$ and $(i, height[i])$.\n\nFind two lines that together with the x-axis form a container, such that the container contains the most water. Return the maximum amount of water a container can store.\n\n**Notice** that you may not slant the container.",
+    "difficultyLevel": "medium",
+    "tags": [
+        "array"
+    ],
+    "companies": [
+        "Google",
+        "Amazon",
+        "Facebook",
+        "Apple",
+        "Microsoft"
+    ],
+    "visibleTestCases": [
+        {
+            "inputMessage": "The input is a single line of space-separated integers representing the heights of the vertical lines.",
+            "outputMessage": "The expected output is a single integer representing the maximum area of water the container can hold.",
+            "input": "1 8 6 2 5 4 8 3 7",
+            "output": "49",
+            "explaination": "The two lines at indices 1 and 8 (with heights 8 and 7) form the container with the maximum area. The width is 7 and the height is limited by the shorter line, which is 7. Area = 7 * 7 = 49."
+        },
+        {
+            "inputMessage": "The input is a single line of space-separated integers.",
+            "outputMessage": "The expected output is a single integer.",
+            "input": "1 1",
+            "output": "1",
+            "explaination": "With two lines of height 1, the maximum area is 1 * 1 = 1."
+        }
+    ],
+    "hiddenTestCases": [
+        {
+            "input": "4 3 2 1 4",
+            "output": "16"
+        },
+        {
+            "input": "1 2 1",
+            "output": "2"
+        }
+    ],
+    "starterCode": [
+        {
+            "language": "cpp",
+            "initialCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n#include <algorithm>\n\nclass Solution {\npublic:\n    int solve(const std::vector<int>& height) {\n        // Write your code here\n    }\n};\n\nint main() {\n    std::string line;\n    std::getline(std::cin, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::cout << sol.solve(nums) << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "initialCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\nclass Solution {\n    public int solve(int[] height) {\n        // Write your code here\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextLine()) {\n            String[] parts = sc.nextLine().split(\" \");\n            int[] nums = Arrays.stream(parts).mapToInt(Integer::parseInt).toArray();\n            if (nums.length > 0) {\n                Solution sol = new Solution();\n                System.out.println(sol.solve(nums));\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "initialCode": "import sys\nfrom typing import List\n\nclass Solution:\n    def solve(self, height: List[int]) -> int:\n        # Write your code here\n        pass\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(nums)\n            print(result)"
+        },
+        {
+            "language": "javascript",
+            "initialCode": "/**\n * @param {number[]} height\n * @return {number}\n */\nvar solve = function(height) {\n    // Write your code here\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.on('line', (line) => {\n    if (line.trim()) {\n        const nums = line.split(' ').map(Number);\n        if (nums.length > 0) {\n            console.log(solve(nums));\n        }\n    }\n    rl.close();\n});"
+        }
+    ],
+    "referenceSolution": [
+        {
+            "language": "cpp",
+            "completeCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n#include <algorithm>\n\nclass Solution {\npublic:\n    int solve(const std::vector<int>& height) {\n        int max_area = 0;\n        int left = 0;\n        int right = height.size() - 1;\n        while (left < right) {\n            int current_height = std::min(height[left], height[right]);\n            int current_width = right - left;\n            max_area = std::max(max_area, current_height * current_width);\n            if (height[left] < height[right]) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n        return max_area;\n    }\n};\n\nint main() {\n    std::string line;\n    std::getline(std::cin, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::cout << sol.solve(nums) << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "completeCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\nclass Solution {\n    public int solve(int[] height) {\n        int maxArea = 0;\n        int left = 0;\n        int right = height.length - 1;\n        while (left < right) {\n            int currentHeight = Math.min(height[left], height[right]);\n            int currentWidth = right - left;\n            maxArea = Math.max(maxArea, currentHeight * currentWidth);\n            if (height[left] < height[right]) {\n                left++;\n            } else {\n                right--;\n            }\n        }\n        return maxArea;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextLine()) {\n            String[] parts = sc.nextLine().split(\" \");\n            int[] nums = Arrays.stream(parts).mapToInt(Integer::parseInt).toArray();\n            if (nums.length > 0) {\n                Solution sol = new Solution();\n                System.out.println(sol.solve(nums));\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "completeCode": "import sys\nfrom typing import List\n\nclass Solution:\n    def solve(self, height: List[int]) -> int:\n        max_area = 0\n        left, right = 0, len(height) - 1\n        while left < right:\n            current_height = min(height[left], height[right])\n            current_width = right - left\n            max_area = max(max_area, current_height * current_width)\n            if height[left] < height[right]:\n                left += 1\n            else:\n                right -= 1\n        return max_area\n\nif __name__ == '__main__':\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(nums)\n            print(result)"
+        },
+        {
+            "language": "javascript",
+            "completeCode": "/**\n * @param {number[]} height\n * @return {number}\n */\nvar solve = function(height) {\n    let maxArea = 0;\n    let left = 0;\n    let right = height.length - 1;\n    while (left < right) {\n        const currentHeight = Math.min(height[left], height[right]);\n        const currentWidth = right - left;\n        maxArea = Math.max(maxArea, currentHeight * currentWidth);\n        if (height[left] < height[right]) {\n            left++;\n        } else {\n            right--;\n        }\n    }\n    return maxArea;\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nrl.on('line', (line) => {\n    if (line.trim()) {\n        const nums = line.split(' ').map(Number);\n        if (nums.length > 0) {\n            console.log(solve(nums));\n        }\n    }\n    rl.close();\n});"
+        }
+    ]
+}
+
+{
+    "title": "Minimum Size Subarray Sum",
+    "description": "Given an array of positive integers `nums` and a positive integer `target`, return the **minimal length** of a contiguous subarray whose sum is greater than or equal to `target`. If there is no such subarray, return `0` instead.",
+    "difficultyLevel": "medium",
+    "tags": [
+        "array"
+    ],
+    "companies": [
+        "Amazon",
+        "Facebook",
+        "Microsoft",
+        "Google",
+        "Bloomberg"
+    ],
+    "visibleTestCases": [
+        {
+            "inputMessage": "The first line is the integer `target`. The second line is a space-separated list of integers for `nums`.",
+            "outputMessage": "The expected output is a single integer representing the minimal subarray length.",
+            "input": "7\n2 3 1 2 4 3",
+            "output": "2",
+            "explaination": "The subarray [4, 3] has the minimal length of 2 under the problem constraint (4 + 3 = 7)."
+        },
+        {
+            "inputMessage": "The first line is the integer `target`. The second line is a space-separated list of integers for `nums`.",
+            "outputMessage": "The expected output is a single integer.",
+            "input": "4\n1 4 4",
+            "output": "1",
+            "explaination": "The subarray [4] has the minimal length of 1, as 4 is equal to the target."
+        }
+    ],
+    "hiddenTestCases": [
+        {
+            "input": "11\n1 1 1 1 1 1 1 1 1 1 1",
+            "output": "11"
+        },
+        {
+            "input": "20\n2 15 3 8 9",
+            "output": "3"
+        },
+        {
+            "input": "100\n1 2 3 4 5",
+            "output": "0"
+        },
+        {
+            "input": "5\n5",
+            "output": "1"
+        },
+        {
+            "input": "10\n1 2 3 4 5",
+            "output": "3"
+        }
+
+    ],
+    "starterCode": [
+        {
+            "language": "cpp",
+            "initialCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n#include <algorithm>\n\nclass Solution {\npublic:\n    int solve(int target, const std::vector<int>& nums) {\n        // Write your code here\n    }\n};\n\nint main() {\n    int target;\n    std::cin >> target;\n    std::string line;\n    std::getline(std::cin >> std::ws, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::cout << sol.solve(target, nums) << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "initialCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\nclass Solution {\n    public int solve(int target, int[] nums) {\n        // Write your code here\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextInt()) {\n            int target = sc.nextInt();\n            sc.nextLine(); // Consume newline\n            if (sc.hasNextLine()) {\n                String[] parts = sc.nextLine().split(\" \");\n                int[] nums = Arrays.stream(parts).mapToInt(Integer::parseInt).toArray();\n                if (nums.length > 0) {\n                    Solution sol = new Solution();\n                    System.out.println(sol.solve(target, nums));\n                }\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "initialCode": "import sys\nfrom typing import List\n\nclass Solution:\n    def solve(self, target: int, nums: List[int]) -> int:\n        # Write your code here\n        pass\n\nif __name__ == '__main__':\n    target = int(sys.stdin.readline().strip())\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(target, nums)\n            print(result)"
+        },
+        {
+            "language": "javascript",
+            "initialCode": "/**\n * @param {number} target\n * @param {number[]} nums\n * @return {number}\n */\nvar solve = function(target, nums) {\n    // Write your code here\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet inputLines = [];\nrl.on('line', (line) => {\n    if (line.trim()) {\n        inputLines.push(line);\n    }\n});\n\nrl.on('close', () => {\n    if (inputLines.length >= 2) {\n        const target = parseInt(inputLines[0], 10);\n        const nums = inputLines[1].split(' ').map(Number);\n        if (nums.length > 0) {\n            console.log(solve(target, nums));\n        }\n    }\n});"
+        }
+    ],
+    "referenceSolution": [
+        {
+            "language": "cpp",
+            "completeCode": "#include <iostream>\n#include <vector>\n#include <string>\n#include <sstream>\n#include <algorithm>\n#include <limits>\n\nclass Solution {\npublic:\n    int solve(int target, const std::vector<int>& nums) {\n        int minLength = std::numeric_limits<int>::max();\n        int windowSum = 0;\n        int windowStart = 0;\n        for (int windowEnd = 0; windowEnd < nums.size(); ++windowEnd) {\n            windowSum += nums[windowEnd];\n            while (windowSum >= target) {\n                minLength = std::min(minLength, windowEnd - windowStart + 1);\n                windowSum -= nums[windowStart];\n                windowStart++;\n            }\n        }\n        return minLength == std::numeric_limits<int>::max() ? 0 : minLength;\n    }\n};\n\nint main() {\n    int target;\n    std::cin >> target;\n    std::string line;\n    std::getline(std::cin >> std::ws, line);\n    std::stringstream ss(line);\n    std::vector<int> nums;\n    int num;\n    while (ss >> num) {\n        nums.push_back(num);\n    }\n    if (!nums.empty()) {\n        Solution sol;\n        std::cout << sol.solve(target, nums) << std::endl;\n    }\n    return 0;\n}"
+        },
+        {
+            "language": "java",
+            "completeCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\nclass Solution {\n    public int solve(int target, int[] nums) {\n        int minLength = Integer.MAX_VALUE;\n        int windowSum = 0;\n        int windowStart = 0;\n        for (int windowEnd = 0; windowEnd < nums.length; windowEnd++) {\n            windowSum += nums[windowEnd];\n            while (windowSum >= target) {\n                minLength = Math.min(minLength, windowEnd - windowStart + 1);\n                windowSum -= nums[windowStart];\n                windowStart++;\n            }\n        }\n        return minLength == Integer.MAX_VALUE ? 0 : minLength;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (sc.hasNextInt()) {\n            int target = sc.nextInt();\n            sc.nextLine(); // Consume newline\n            if (sc.hasNextLine()) {\n                String[] parts = sc.nextLine().split(\" \");\n                int[] nums = Arrays.stream(parts).mapToInt(Integer::parseInt).toArray();\n                if (nums.length > 0) {\n                    Solution sol = new Solution();\n                    System.out.println(sol.solve(target, nums));\n                }\n            }\n        }\n        sc.close();\n    }\n}"
+        },
+        {
+            "language": "python",
+            "completeCode": "import sys\nfrom typing import List\nimport math\n\nclass Solution:\n    def solve(self, target: int, nums: List[int]) -> int:\n        min_length = float('inf')\n        window_sum = 0\n        window_start = 0\n        for window_end in range(len(nums)):\n            window_sum += nums[window_end]\n            while window_sum >= target:\n                min_length = min(min_length, window_end - window_start + 1)\n                window_sum -= nums[window_start]\n                window_start += 1\n        return min_length if min_length != float('inf') else 0\n\nif __name__ == '__main__':\n    target = int(sys.stdin.readline().strip())\n    line = sys.stdin.readline()\n    if line.strip():\n        nums = list(map(int, line.split()))\n        if nums:\n            sol = Solution()\n            result = sol.solve(target, nums)\n            print(result)"
+        },
+        {
+            "language": "javascript",
+            "completeCode": "/**\n * @param {number} target\n * @param {number[]} nums\n * @return {number}\n */\nvar solve = function(target, nums) {\n    let minLength = Infinity;\n    let windowSum = 0;\n    let windowStart = 0;\n    for (let windowEnd = 0; windowEnd < nums.length; windowEnd++) {\n        windowSum += nums[windowEnd];\n        while (windowSum >= target) {\n            minLength = Math.min(minLength, windowEnd - windowStart + 1);\n            windowSum -= nums[windowStart];\n            windowStart++;\n        }\n    }\n    return minLength === Infinity ? 0 : minLength;\n};\n\nconst readline = require('readline');\nconst rl = readline.createInterface({\n    input: process.stdin,\n    output: process.stdout,\n    terminal: false\n});\n\nlet inputLines = [];\nrl.on('line', (line) => {\n    if (line.trim()) {\n        inputLines.push(line);\n    }\n});\n\nrl.on('close', () => {\n    if (inputLines.length >= 2) {\n        const target = parseInt(inputLines[0], 10);\n        const nums = inputLines[1].split(' ').map(Number);\n        if (nums.length > 0) {\n            console.log(solve(target, nums));\n        }\n    }\n});"
+        }
+    ]
+}
