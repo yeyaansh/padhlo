@@ -91,3 +91,6 @@ a. add the feature of muliple problems to save on one click in the existing play
 
 4. Security:
 a. Rate Limiter using Redis, 5 seconds delay between every sumbission and number of requests a user can make (to prevent API exploitation)
+
+5. Slug URL:
+a. Your current url seems non readable to human and also it is not SEO friendly, to do that you need to create Slug URL feature so that instead of showing "https://xyz.com/problem/fd425348df3", it could show "https://xyz.com/problem/two-sum-8df3"

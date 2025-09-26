@@ -61,7 +61,7 @@ let countTestCases = 0;
             .status(401)
             .send("Error in your Submitted Code while creating the problem: "+`language: ${language_id}, statusId: ${status_id}, and countTestCases: ${countTestCases}`);
         }
-        // console.log();
+        console.log(`language: ${language_id}, statusId: ${status_id}`);
       }
     }
 
@@ -103,10 +103,12 @@ const updateProblem = async (req, res) => {
     }
     // repeat the process same as we performed while creating the problem
     // verify the problem on judge0 before saving in database
+    const allTestCases = [...visibleTestCases,...hiddenTestCases]
+
     for (const { language, completeCode } of referenceSolution) {
       const languageID = languageById(language);
 
-      const submissions = visibleTestCases.map((value) => {
+      const submissions = allTestCases.map((value) => {
         return {
           language_id: languageID,
           source_code: completeCode,

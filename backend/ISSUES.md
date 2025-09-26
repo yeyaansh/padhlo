@@ -1,0 +1,2 @@
+1. I think one thing could be the issue, when an Admin (who haven't created the problem) trying to update it and the backend allows it because the backend doesn't checked whether the admin created that problem or not.
+2. Same with deleting the problem
