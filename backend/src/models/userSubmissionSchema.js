@@ -19,7 +19,7 @@ const userSubmissionSchema = new Schema({
     language:{
         type:String,
         required:true,
-        enum:['javascript','cpp','java']
+        enum:['javascript','cpp','java','python']
     },
     status:{
         type:String,

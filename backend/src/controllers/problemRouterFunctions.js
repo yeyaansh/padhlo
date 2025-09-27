@@ -228,7 +228,7 @@ const fetchAllProblem = async (req, res) => {
 };
 
 // this tells the unique problems attempted by the user
-const solvedProblems = async (req, res) => {
+const uniqueSolvedProblems = async (req, res) => {
   try {
     // only bring the solved questions by the user
     const userSolvedProblem = await User.findById(req.result._id)
@@ -247,7 +247,7 @@ const solvedProblems = async (req, res) => {
     res.status(200).send(data);
   } catch (err) {
     console.log(
-      "error while fetching the data from user's all solvedProblems " + err
+      "error while fetching the data from user's all uniqueSolvedProblems " + err
     );
     res.status(500).send(err.message);
   }
@@ -276,6 +276,6 @@ export {
   deleteProblemById,
   fetchProblemById,
   fetchAllProblem,
-  solvedProblems,
+  uniqueSolvedProblems,
   submittedProblem,
 };

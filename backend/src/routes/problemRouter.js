@@ -6,7 +6,7 @@ import {
   deleteProblemById,
   fetchProblemById,
   fetchAllProblem,
-  solvedProblems,
+  uniqueSolvedProblems,
   submittedProblem
 } from "../controllers/problemRouterFunctions.js"
 import adminMiddleware from "../middleware/adminMiddleware.js"
@@ -21,6 +21,6 @@ problemRouter.get("/id/:id",userMiddleware, fetchProblemById);
 problemRouter.get("/all",userMiddleware, fetchAllProblem);
 
 // // user have this power
-problemRouter.get("/solvedProblems",userMiddleware, solvedProblems);
+problemRouter.get("/uniqueSolvedProblems",userMiddleware, uniqueSolvedProblems);
 problemRouter.get("/submittedProblem/:id",userMiddleware,submittedProblem);
 export default problemRouter;

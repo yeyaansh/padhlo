@@ -81,6 +81,7 @@ const problemSchema = new Schema({
   starterCode: [
     {
       language: {
+        enum: ["javascript", "cpp", "java", "python"],
         type: String,
         required: true,
       },
@@ -93,6 +94,7 @@ const problemSchema = new Schema({
   referenceSolution: [
     {
       language: {
+        enum: ["javascript", "cpp", "java", "python"],
         type: String,
         requied: true,
       },
