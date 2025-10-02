@@ -6,11 +6,33 @@ import expireCookie from "../utils/expireCookie.js";
 import jwt from "jsonwebtoken";
 import submission from "../models/userSubmissionSchema.js";
 
+//checkAuth function
+const checkAuth = async (req, res) => {
+  try {
+    const reply = {
+      _id: req.result._id,
+      email_id: req.result.email_id,
+      first_name: req.result.first_name,
+      last_name: req.result.last_name,
+    };
+
+    return res.status(200).json({
+      result: reply,
+      message: "user is already logged-in!",
+    });
+  } catch (error) {
+    console.log(err);
+    res.status(401).send(error.message);
+  }
+};
+
 // register function
 const register = async (req, res) => {
   try {
     // validate the data on API level
     validate(req.body);
+    console.log("body is: ", req.body);
+
     // hash the password
     req.body.password = await bcrypt.hash(req.body.password, 10);
     req.body.role = "user";
@@ -19,7 +41,20 @@ const register = async (req, res) => {
     const token = genCookie(newUser);
     res.cookie("token", token, { maxAge: 60 * 60 * 1000 });
 
-    res.status(200).send("Successfully Created");
+    const reply = {
+      _id: newUser._id,
+      email_id: newUser.email_id,
+      first_name: newUser.first_name,
+      last_name: newUser.last_name,
+    };
+    console.log("reply value on backend");
+
+    console.log(reply);
+
+    res.status(201).send({
+      result: reply,
+      message: "account created successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(400).send("error during registration " + err.message);
@@ -33,13 +68,26 @@ const login = async (req, res) => {
     if (!password) throw new Error("Password can't be empty");
     const existingUser = await User.findOne({ email_id });
     if (!existingUser) throw new Error("Invalid Credentials");
-    const validUser = bcrypt.compare(password, existingUser.password);
+    const validUser = await bcrypt.compare(password, existingUser.password);
     if (!validUser) throw new Error("Invalid Credentials");
 
     // if valid user then pass the data came from db to generate cookie
     const token = genCookie(existingUser);
     res.cookie("token", token, { maxAge: 60 * 60 * 1000 });
-    res.send("LoggedIn Successfully");
+    const reply = {
+      _id: existingUser._id,
+      email_id: existingUser.email_id,
+      first_name: existingUser.first_name,
+      last_name: existingUser.last_name,
+    };
+    console.log("reply value on backend");
+
+    console.log(reply);
+
+    res.status(200).send({
+      result: reply,
+      message: "account logged-in successfully",
+    });
   } catch (err) {
     console.log(err);
     res.status(401).send("error during logging-in " + err.message);
@@ -119,6 +167,7 @@ const deleteProfile = async (req, res) => {
   }
 };
 export {
+  checkAuth,
   register,
   login,
   logout,

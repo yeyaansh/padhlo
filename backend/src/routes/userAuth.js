@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  checkAuth,
   register,
   login,
   logout,
@@ -11,6 +12,7 @@ import userMiddleware from "../middleware/userMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
 const userAuth = express.Router();
 
+userAuth.get("/checkAuth", userMiddleware, checkAuth);
 userAuth.post("/register", register);
 userAuth.post("/login", login);
 userAuth.post("/logout", userMiddleware, logout);
