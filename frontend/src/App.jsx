@@ -3,7 +3,6 @@ import {
   Routes,
   Route,
   Navigate,
-  useNavigate,
   useLocation,
 } from "react-router";
 import HomePageLayout from "./components/layouts/HomePageLayout/HomePageLayout";
@@ -13,7 +12,7 @@ import ProblemQuestionPageLayout from "./components/layouts/ProblemQuestionPageL
 import OsmosisPageLayout from "./components/layouts/OsmosisPageLayout/OsmosisPageLayout";
 import HomePage from "./pages/HomePage";
 import UserPage from "./pages/UserPage";
-import ProblemPage from "./pages/ProblemPage";
+import ProblemPageAll from "./pages/ProblemPage";
 import ProblemQuestionPage from "./pages/ProblemQuestionPage";
 import OsmosisPage from "./pages/OsmosisPage";
 import AuthPageLayout from "./components/layouts/AuthPageLayout/AuthPageLayout";
@@ -23,22 +22,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./redux/authSlice";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
+import ProblemPageById from "./pages/ProblemPage/ProblemPageById.jsx";
+import ProblemPageSolved from "./pages/ProblemPage/ProblemPageSolved.jsx";
+import ProblemPageAttemptedQuestion from "./pages/ProblemPage/ProblemPageAttemptedQuestion.jsx";
+import LoadingGeneral from "./components/skeleton/loadingGeneral.jsx";
+
 function App() {
-  const { isLoading } = useSelector((state) => state.auth);
+  
+  const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
   const location = useLocation();
   const dispatch = useDispatch();
-  console.log(location);
+
+  console.log("inside app.jsx" , location.pathname , " isAuthen: ",isAuthenticated );
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <h1>Loading...</h1>
-    </div>
+  if (isLoading) return <LoadingGeneral />;
 
   return (
-    <>  
+    <>
       <Routes>
         <Route path="/" element={<HomePageLayout></HomePageLayout>}>
           <Route index element={<HomePage />}></Route>
@@ -57,7 +61,14 @@ function App() {
             path="/problem"
             element={<ProblemPageLayout></ProblemPageLayout>}
           >
-            <Route index element={<ProblemPage />}></Route>
+            <Route index element={<Navigate to="all"></Navigate>}></Route>
+            <Route path="all" element={<ProblemPageAll />}></Route>
+            <Route path="id/:id" element={<ProblemPageById />}></Route>
+            <Route path="solved" element={<ProblemPageSolved />}></Route>
+            <Route
+              path="attempted"
+              element={<ProblemPageAttemptedQuestion />}
+            ></Route>
           </Route>
           <Route
             path="/pid"

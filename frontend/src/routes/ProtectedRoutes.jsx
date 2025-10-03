@@ -1,29 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router";
+import Navbar from "../components/Navbar";
 
 const ProtectedRoutes = () => {
   const location = useLocation();
   const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
-  console.log("inside the protected route");
 
+  console.log("inside the protected route");
   console.log("isAuthenticated: :", isAuthenticated);
 
-  // if (isLoading && isAuthenticated) {
-  //   console.log("loading bro...");
-  //   return (
-  //     <div>
-  //       loading bro.... wait....you are Authenticated don't need to worry...😘
-  //     </div>
-  //   );
-  // }
+  useEffect(()=>{
+      if (!isAuthenticated)
+         <Navigate to="/auth/login" state={{ from: location }} replace></Navigate>
+    
+  },[])
 
-  if (!isAuthenticated)
-    return (
-      <Navigate to="/auth/login" state={{ from: location }} replace></Navigate>
-    );
 
-  return <Outlet></Outlet>;
+
+  return (
+    <>
+      <Navbar />
+      <Outlet></Outlet>
+    </>
+  );
 };
 
 export default ProtectedRoutes;

@@ -106,10 +106,15 @@ const urlScrapper = async (req, res) => {
     const data = problemToUpload;
     console.log(data);
     await inputURL.create(data);
-    res.status(201).send(problemToUpload);
+    res.status(201).send({...problemToUpload,success:true});
   } catch (err) {
     console.log("error in urlScrapper during single url Scrapping " + err);
-    res.status(401).send(err.message);
+    res.status(400).send(
+      {
+        message:"Invalid url or unsupported platform!",
+        success:false
+      }
+    );
   }
 };
 

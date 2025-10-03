@@ -26,9 +26,9 @@ const createProblem = async (req, res) => {
       // get the number with respect to the language of the compiler
       const languageID = languageById(language);
 
-      const allTestCases = [...visibleTestCases,...hiddenTestCases]
+      const allTestCases = [...visibleTestCases, ...hiddenTestCases];
       // console.log(allTestCases.length);
-      
+
       // store languageId, souceId, input, expectedOutput for all visible test cases in array
       const submissions = allTestCases.map((value) => {
         return {
@@ -46,11 +46,11 @@ const createProblem = async (req, res) => {
       const resultToken = batchTokens.map((k) => k.token);
       // console.log("resultToken")
       // console.log(resultToken);
-      
-//  console.log("starting")
+
+      //  console.log("starting")
       const batchSubmissionStatus = await statusId_Submission(resultToken);
       // console.log("ending")
-let countTestCases = 0;
+      let countTestCases = 0;
       for (const {
         language_id,
         status_id,
@@ -59,7 +59,10 @@ let countTestCases = 0;
         if (status_id != 3) {
           return res
             .status(401)
-            .send("Error in your Submitted Code while creating the problem: "+`language: ${language_id}, statusId: ${status_id}, and countTestCases: ${countTestCases}`);
+            .send(
+              "Error in your Submitted Code while creating the problem: " +
+                `language: ${language_id}, statusId: ${status_id}, and countTestCases: ${countTestCases}`
+            );
         }
         console.log(`language: ${language_id}, statusId: ${status_id}`);
       }
@@ -73,7 +76,7 @@ let countTestCases = 0;
     res.status(201).send("Problem Created Succesfully");
   } catch (err) {
     console.log("error during creating the problem " + err);
-    res.json("Error is: "+err.message);
+    res.json("Error is: " + err.message);
   }
 };
 
@@ -103,7 +106,7 @@ const updateProblem = async (req, res) => {
     }
     // repeat the process same as we performed while creating the problem
     // verify the problem on judge0 before saving in database
-    const allTestCases = [...visibleTestCases,...hiddenTestCases]
+    const allTestCases = [...visibleTestCases, ...hiddenTestCases];
 
     for (const { language, completeCode } of referenceSolution) {
       const languageID = languageById(language);
@@ -184,10 +187,19 @@ const fetchProblemById = async (req, res) => {
       throw new Error("This Problem Id doen't exist");
     }
 
-    res.status(200).send(problemById);
+    res
+      .status(200)
+      .send({
+        ...problemById,
+        success: true,
+        message: "successfully fetched the problem",
+      });
   } catch (err) {
     console.log("error while fetching the data from db " + err);
-    res.status(401).send(err.message);
+    res.status(400).send({
+      success: false,
+      message: err.message,
+    });
   }
 };
 
@@ -247,7 +259,8 @@ const uniqueSolvedProblems = async (req, res) => {
     res.status(200).send(data);
   } catch (err) {
     console.log(
-      "error while fetching the data from user's all uniqueSolvedProblems " + err
+      "error while fetching the data from user's all uniqueSolvedProblems " +
+        err
     );
     res.status(500).send(err.message);
   }

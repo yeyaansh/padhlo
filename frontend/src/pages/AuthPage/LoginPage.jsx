@@ -4,8 +4,8 @@ import { z } from "zod";
 import { loginUser } from "../../redux/authSlice";
 import { useSelector } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const location = useLocation();
@@ -14,13 +14,18 @@ export default function LoginPage() {
   const dispatch = useDispatch();
   const from = location.state?.from?.pathname || "/";
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate(from, { replace: true });
-    }
-  }, [isAuthenticated]);
+  
+useEffect(()=>{
+  
+  if (isAuthenticated) {
+    navigate(from, { replace: true });
+  }
+},[isAuthenticated,isLoading])
 
-  // if (isLoading) return <div>Loadin bro .... okay... in login page....</div>;
+
+  console.log("isLoading : ", isLoading);
+  
+
 
   const loginSchema = z.object({
     email_id: z.email("enter a valid email-address"),
