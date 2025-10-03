@@ -23,7 +23,7 @@ export default function Navbar() {
           {/* ## Logo / Brand Name ## */}
           <div className="flex-shrink-0">
             <NavLink
-              to="/"
+              to={isAuthenticated ? "/dashboard" : "/"}
               className="text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
             >
               AlgoSketch
@@ -32,8 +32,8 @@ export default function Navbar() {
 
           {/* ## Desktop Navigation Links ## */}
           <div className="hidden md:flex items-center space-x-4">
-            <NavLink to="/" className={linkClassName}>
-              Home
+            <NavLink to="/dashboard" className={linkClassName}>
+              Dashboard
             </NavLink>
             <NavLink to="/problem/all" className={linkClassName}>
               Problems
@@ -105,11 +105,11 @@ export default function Navbar() {
       <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 flex flex-wrap sm:px-3 border-t-2 border-dashed border-gray-300">
           <NavLink
-            to="/"
+            to="/dashboard"
             className={linkClassName}
             onClick={() => setIsMenuOpen(false)}
           >
-            Home
+            Dashboard
           </NavLink>
           <NavLink
             to="/problem/all"

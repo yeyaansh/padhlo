@@ -4,28 +4,157 @@ import { z } from "zod";
 import { registerUser } from "../../redux/authSlice";
 import { useSelector } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router";
 
-export default function RegisterPage() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location.state?.from?.pathname || "/";
+const InputField = ({
+  id,
+  label,
+  register,
+  error,
+  required = false,
+  ...props
+}) => (
+  <div>
+    <label htmlFor={id} className="text-sm font-bold text-gray-700 mb-1 block">
+      {label} {required && <span className="text-red-500">*</span>}
+    </label>
+    <input
+      id={id}
+      {...register(id)}
+      {...props}
+      className={`w-full px-4 py-3 bg-slate-100 border-2 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 transition ${
+        error
+          ? "border-red-500 focus:ring-red-300"
+          : "border-gray-800 focus:ring-yellow-300"
+      }`}
+    />
+    {error && (
+      <p className="text-red-600 text-xs font-semibold mt-1">{error.message}</p>
+    )}
+  </div>
+);
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+// ## NEW ## Password field with visibility toggle
+const PasswordInputField = ({
+  id,
+  label,
+  register,
+  error,
+  required = false,
+  ...props
+}) => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="text-sm font-bold text-gray-700 mb-1 block"
+      >
+        {label} {required && <span className="text-red-500">*</span>}
+      </label>
+      <div className="relative">
+        <input
+          id={id}
+          {...register(id)}
+          {...props}
+          type={isPasswordVisible ? "text" : "password"}
+          className={`w-full px-4 py-3 bg-slate-100 border-2 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 transition ${
+            error
+              ? "border-red-500 focus:ring-red-300"
+              : "border-gray-800 focus:ring-yellow-300"
+          }`}
+        />
+        <button
+          type="button"
+          onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+          className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-500 hover:text-gray-800"
+        >
+          {isPasswordVisible ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path
+                fillRule="evenodd"
+                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z"
+                clipRule="evenodd"
+              />
+              <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.742L2.335 6.578A10.025 10.025 0 00.458 10c1.274 4.057 5.022 7 9.542 7 1.126 0 2.207-.245 3.232-.697z" />
+            </svg>
+          )}
+        </button>
+      </div>
+      {error && (
+        <p className="text-red-600 text-xs font-semibold mt-1">
+          {error.message}
+        </p>
+      )}
+    </div>
+  );
+};
+
+const GenderSelector = ({ register, error }) => (
+  <div>
+    <label className="text-sm font-bold text-gray-700 mb-2 block">
+      Gender <span className="text-red-500">*</span>
+    </label>
+    <div className="grid grid-cols-3 gap-3">
+      {["Male", "Female", "Other"].map((gender) => (
+        <label
+          key={gender}
+          className="flex items-center justify-center p-3 text-gray-800 bg-slate-100 border-2 border-gray-800 rounded-lg cursor-pointer transition-colors has-[:checked]:bg-yellow-200 has-[:checked]:border-yellow-500 has-[:checked]:font-bold"
+        >
+          <input
+            {...register("gender")}
+            type="radio"
+            value={gender.toLowerCase()}
+            className="sr-only"
+          />
+          <span className="text-sm">{gender}</span>
+        </label>
+      ))}
+    </div>
+    {error && (
+      <p className="text-red-600 text-xs font-semibold mt-1">{error.message}</p>
+    )}
+  </div>
+);
+
+export default function RegisterPage() {
+  const navigate = useNavigate();
+  const { isAuthenticated, isLoading } = useSelector((state) => state.auth); // Get isLoading state
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("isAuthenticated: " + isAuthenticated);
-    if (isAuthenticated) navigate(from, { replace: true });
-  }, [isAuthenticated]);
+    if (isAuthenticated) navigate("/", { replace: true });
+  }, [isAuthenticated, navigate]);
 
   const registerSchema = z.object({
-    first_name: z.string().min(3, "name should be atleast 3 chars."),
-    last_name: z.string(),
-    gender: z.enum(["male", "female", "other"]),
-    email_id: z.email("enter a valid email-address"),
-    password: z.string().min(8, "password should be atleast 8 chars."),
+    first_name: z.string().min(3, "First name must be at least 3 characters."),
+    last_name: z.string().optional(),
+    gender: z.enum(["male", "female", "other"], {
+      required_error: "Please select a gender.",
+    }),
+    email_id: z.string().email("Please enter a valid email address."),
+    password: z.string().min(8, "Password must be at least 8 characters."),
   });
 
   const {
@@ -35,258 +164,119 @@ export default function RegisterPage() {
   } = useForm({ resolver: zodResolver(registerSchema) });
 
   function submitForm(value) {
-    console.log(value);
     dispatch(registerUser(value));
   }
 
   return (
-    <>
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-black py-8 px-4">
-        <div className="w-full max-w-md">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              Create Account
-            </h1>
-            <p className="text-gray-400">Join our community today</p>
-          </div>
-
-          {/* Form Container */}
-          <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-2xl">
-            <form onSubmit={handleSubmit(submitForm)} className="space-y-4">
-              {/* Name Fields */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col">
-                  <label
-                    htmlFor="first_name"
-                    className="text-sm font-medium text-gray-300 mb-1"
-                  >
-                    First Name *
-                  </label>
-                  <input
-                    {...register("first_name", {
-                      required: "First name is required",
-                    })}
-                    type="text"
-                    id="first_name"
-                    placeholder="Rohit"
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                  />
-                  {errors.first_name && (
-                    <p className="text-red-400 text-xs mt-1">
-                      {errors.first_name.message}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex flex-col">
-                  <label
-                    htmlFor="last_name"
-                    className="text-sm font-medium text-gray-300 mb-1"
-                  >
-                    Last Name
-                  </label>
-                  <input
-                    {...register("last_name")}
-                    type="text"
-                    id="last_name"
-                    placeholder="Patel"
-                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                  />
-                </div>
-              </div>
-
-              {/* Gender Field */}
-              <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-300 mb-2">
-                  Gender *
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  <label className="flex items-center p-3 text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors has-[:checked]:bg-amber-500 has-[:checked]:border-amber-500 has-[:checked]:text-white">
-                    <input
-                      {...register("gender", {
-                        required: "Please select your gender",
-                      })}
-                      type="radio"
-                      value="male"
-                      className="sr-only"
-                    />
-                    <div className="flex items-center justify-center w-full">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
-                      </svg>
-                      <span className="text-sm">Male</span>
-                    </div>
-                  </label>
-
-                  <label className="flex items-center p-3 text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors has-[:checked]:bg-amber-500 has-[:checked]:border-amber-500 has-[:checked]:text-white">
-                    <input
-                      {...register("gender", {
-                        required: "Please select your gender",
-                      })}
-                      type="radio"
-                      value="female"
-                      className="sr-only"
-                    />
-                    <div className="flex items-center justify-center w-full">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                        />
-                      </svg>
-                      <span className="text-sm">Female</span>
-                    </div>
-                  </label>
-
-                  <label className="flex items-center p-3 text-white bg-gray-700 border border-gray-600 rounded-lg cursor-pointer hover:bg-gray-600 transition-colors has-[:checked]:bg-amber-500 has-[:checked]:border-amber-500 has-[:checked]:text-white">
-                    <input
-                      {...register("gender", {
-                        required: "Please select your gender",
-                      })}
-                      type="radio"
-                      value="other"
-                      className="sr-only"
-                    />
-                    <div className="flex items-center justify-center w-full">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                        />
-                      </svg>
-                      <span className="text-sm">Other</span>
-                    </div>
-                  </label>
-                </div>
-                {errors.gender && (
-                  <p className="text-red-400 text-xs mt-2 flex items-center">
-                    <svg
-                      className="w-3 h-3 mr-1"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    {errors.gender.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Email Field */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="email_id"
-                  className="text-sm font-medium text-gray-300 mb-1"
-                >
-                  Email Address *
-                </label>
-                <input
-                  {...register("email_id", {
-                    required: "Please enter email address",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
-                    },
-                  })}
-                  type="email"
-                  id="email_id"
-                  placeholder="xyz@example.com"
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                />
-                {errors.email_id && (
-                  <p className="text-red-400 text-xs mt-1">
-                    {errors.email_id.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Password Field */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="password"
-                  className="text-sm font-medium text-gray-300 mb-1"
-                >
-                  Password *
-                </label>
-                <input
-                  {...register("password", {
-                    required: "Please enter the password",
-                    minLength: {
-                      value: 6,
-                      message: "Password must be at least 6 characters",
-                    },
-                  })}
-                  type="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                />
-                {errors.password && (
-                  <p className="text-red-400 text-xs mt-1">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-              >
-                Create Account
-              </button>
-
-              {/* Additional Links */}
-              <div className="text-center pt-4">
-                <p className="text-gray-400 text-sm">
-                  Already have an account?{" "}
-                  <Link
-                    to="/auth/login"
-                    className="text-amber-500 hover:text-amber-400 font-medium transition-colors"
-                  >
-                    Sign in
-                  </Link>
-                </p>
-              </div>
-            </form>
-          </div>
-
-          {/* Terms Notice */}
-          <p className="text-gray-500 text-xs text-center mt-6">
-            By creating an account, you agree to our Terms of Service and
-            Privacy Policy.
+    <div className="min-h-screen font-['Comic_Neue'] flex items-center justify-center p-4">
+      <div className="w-full max-w-5xl bg-white rounded-2xl sketch-border-1 shadow-2xl grid md:grid-cols-2 overflow-hidden">
+        {/* Left Panel (Visual/Welcome) */}
+        <div className="hidden md:flex flex-col items-center justify-center p-10 bg-yellow-100 border-r-4 border-dashed border-gray-300">
+          <h2 className="text-4xl font-bold text-gray-800">
+            Your Creative Journey Starts Here ✨
+          </h2>
+          <p className="mt-4 text-center text-gray-600">
+            Turn complex problems into works of art. Our platform is your canvas
+            for mastering algorithms in a fun and engaging way.
           </p>
+          {/* <div className="text-7xl mt-8">✨</div> */}
+        </div>
+
+        {/* Right Panel (Form) */}
+        <div className="p-8 sm:p-12">
+          <div className="text-center md:text-left mb-8">
+            <h1 className="text-4xl font-bold text-gray-800">
+              Join the Sketchbook
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Create your account to start the adventure!
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(submitForm)} className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <InputField
+                id="first_name"
+                label="First Name"
+                register={register}
+                error={errors.first_name}
+                placeholder="Rohit"
+                required
+              />
+              <InputField
+                id="last_name"
+                label="Last Name"
+                register={register}
+                error={errors.last_name}
+                placeholder="Patel"
+              />
+            </div>
+
+            <GenderSelector register={register} error={errors.gender} />
+            <InputField
+              id="email_id"
+              label="Email Address"
+              type="email"
+              register={register}
+              error={errors.email_id}
+              placeholder="rohit@example.com"
+              required
+            />
+            <PasswordInputField
+              id="password"
+              label="Password"
+              register={register}
+              error={errors.password}
+              placeholder="••••••••••••••••"
+              required
+            />
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full mt-4 px-6 py-4 bg-yellow-400 text-gray-900 text-xl font-bold rounded-lg sketch-button flex items-center justify-center disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Creating...
+                </>
+              ) : (
+                "Create My Sketchbook"
+              )}
+            </button>
+
+            <p className="text-center text-gray-600 text-sm pt-4">
+              Already have an account?{" "}
+              <Link
+                to="/auth/login"
+                className="text-blue-600 hover:underline font-bold"
+              >
+                Log In
+              </Link>
+            </p>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
