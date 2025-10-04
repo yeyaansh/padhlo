@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, Navigate, useLocation } from "react-router";
+import { Routes, Route, Navigate, useLocation, ScrollRestoration } from "react-router";
 import HomePageLayout from "./components/layouts/HomePageLayout/HomePageLayout";
 import UserPageLayout from "./components/layouts/UserPageLayout/UserPageLayout";
 import ProblemPageLayout from "./components/layouts/ProblemPageLayout/ProblemPageLayout";
@@ -48,7 +48,12 @@ function App() {
 
   return (
     <>
+{/* <ScrollRestoration
+getKey={(location,matches)=>{
+  return location.pathname}}
+/> */}
       <Routes>
+        
         <Route path="/" element={<HomePageLayout></HomePageLayout>}>
           <Route index element={<HomepageLoggedOut />}></Route>
         </Route>

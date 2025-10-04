@@ -156,10 +156,10 @@ console.log("inside problem for all ", "isAuthe: ", isAuthenticated, " isLoading
             <div className="flex items-center justify-center pt-4 border-t-2 border-dashed border-gray-300 mt-auto">
               <Link
                 to={`/problem/id/${problem?._id}`}
-                className="inline-flex items-center justify-center px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-lg font-['Permanent_Marker'] rounded-lg transition-all duration-200 ease-out transform active:scale-95 sketch-button"
+                className="inline-flex items-center justify-center px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xl font-bold rounded-lg transition-all duration-200 ease-out transform active:scale-95 sketch-button"
               >
                 Let's Code!
-                <span className="ml-2 text-xl">🚀</span>
+                {/* <span className="ml-2 text-xl">🚀</span> */}
               </Link>
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function HomePageLoggedIn() {
   ];
 
   return (
-    <div className="p-6 md:p-10 font-['Comic_Neue'] pt-8">
+    <div className="p-6 md:p-10 font-['Comic_Neue'] pt-10">
       {/* 1. Personalized Greeting & Stats */}
       <h1 className="text-5xl font-bold text-gray-800">
         Welcome back, <span className="text-blue-600">{user?.first_name}!</span>
