@@ -12,8 +12,8 @@ import osmosisRouter from "./src/routes/osmosisRouter.js";
 
 app.use(
   cors({
-    origin: ["http://localhost:5173","http://10.2.16.75:5173"],
-    // origin: "http://localhost:5173",
+    // origin: ["http://localhost:5173","http://10.2.16.75:5173"],
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
