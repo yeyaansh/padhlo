@@ -12,7 +12,10 @@ import osmosisRouter from "./src/routes/osmosisRouter.js";
 
 app.use(
   cors({
-    // origin: ["http://localhost:5173","http://10.2.16.75:5173"],
+    // origin: [
+    //   "http://localhost:5173",
+    //   "http://10.21.12.34:5173",
+    // ],
     origin: "http://localhost:5173",
     credentials: true,
   })
@@ -30,7 +33,8 @@ const startServer = async () => {
   try {
     const PORT = process.env.PORT || 3000;
     await Promise.all([dbmongo(), redisClient.connect()]);
-    app.listen(PORT,'0.0.0.0', () => {
+    app.listen(PORT, () => {
+    // app.listen(PORT, "0.0.0.0", () => {
       console.log("Server is Listening at Port No.: " + PORT);
     });
   } catch (err) {

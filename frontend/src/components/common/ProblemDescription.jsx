@@ -1,5 +1,5 @@
 import React from "react";
-
+import Markdown from 'react-markdown'
 export default function ProblemDescription({ problem }) {
   const getDifficultyStyles = (level = "") => {
     switch (level.toLowerCase()) {
@@ -36,7 +36,7 @@ export default function ProblemDescription({ problem }) {
       </div>
 
       <div className="prose max-w-none text-gray-700">
-        <p>{problem.description || "No description available."}</p>
+        <Markdown>{problem.description || "No description available."}</Markdown>
 
         {/* Example section - adapt based on your data structure */}
         {/* {problem.visibleTestCases?.map((example, index) => (

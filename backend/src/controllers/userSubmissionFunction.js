@@ -7,6 +7,10 @@ import {
 } from "../utils/problemUtility.js"
 const submitCodeFunction = async (req, res) => {
   try {
+
+    // console.log(req.body);
+    
+
     const problemId = (req.params.id);
     const userId = req.result._id;
     const { code, language } = req.body;
@@ -106,6 +110,9 @@ const submitCodeFunction = async (req, res) => {
 
 const runCodeFunction = async (req, res) => {
   try {
+
+        console.log(req.body);
+
     const problemId = (req.params.id);
     const userId = req.result._id;
     const { code, language } = req.body;
