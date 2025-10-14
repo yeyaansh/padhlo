@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosClient from "../axiosClient";
+import { toast } from "sonner";
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -7,8 +8,14 @@ export const registerUser = createAsyncThunk(
     try {
       const response = await axiosClient.post("/user/register", formData);
       console.log("reponse");
-
       console.log(response);
+ 
+      if (response.data.success) toast.success(`${response.data.message}`);
+      // toast("Congratulations!!", {
+      //   description: `${response.data.message}`,
+      // });
+
+      if (!response.data.success) toast.error(`${response.data.message}`);
       return response.data;
     } catch (error) {
       // Note: error.response?.data is a robust way to access specific error information from an Axios response.
@@ -22,6 +29,13 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axiosClient.post("/user/login", formData);
+            if (response.data.success) toast.success(`${response.data.message}`);
+      // toast("Congratulations!!", {
+      //   description: `${response.data.message}`,
+      // });
+
+      if (!response.data.success) toast.error(`${response.data.message}`);
+      return response.data;
       return response.data;
     } catch (error) {
       // Note: error.response?.data is a robust way to access specific error information from an Axios response.

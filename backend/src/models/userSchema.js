@@ -22,7 +22,7 @@ const userSchema = new Schema(
       trim: true,
       lowerCase: true,
       required: true,
-      default:"other"
+      default: "other",
     },
 
     age: {
@@ -39,6 +39,11 @@ const userSchema = new Schema(
       trim: true,
       immutable: true,
     },
+    avatarURL:{
+      type:String,
+      default:'https://avatar.iran.liara.run/public/boy',
+      trim:true,
+    },
     problemSolved: {
       type: [
         {
@@ -48,6 +53,23 @@ const userSchema = new Schema(
         },
       ],
     },
+    totalAttempts: {
+      type: Number,
+      default: 0,
+    },
+    acceptanceRate: {
+      type: Number,
+      default: 0,
+    },
+    playlist: [
+      {
+        playlistId: {
+          type: Schema.Types.ObjectId,
+          ref: "playlistContainer",
+          required: true,
+        },
+      },
+    ],
     role: {
       type: String,
       enum: ["user", "admin"],

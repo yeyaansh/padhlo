@@ -5,6 +5,7 @@ import Editor from "@monaco-editor/react";
 export default function CodeEditor({ problem }) {
   const [language, setLanguage] = useState("cpp");
   const [initialCode, setInitialCode] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   // ## NEW ##: Use useEffect to set the initial code and update it on language change.
   // This hook runs when the component first mounts and whenever 'language' or 'problem' changes.
@@ -33,23 +34,42 @@ export default function CodeEditor({ problem }) {
   }
 
   async function runCodeFunction() {
-    const response = await axiosClient.post(`/pid/run/${problem._id}`, {
-      code: editorRef.current.getValue(),
-      language,
-    });
+    try {
+      setSubmitting(true);
+      const response = await axiosClient.post(`/pid/run/${problem._id}`, {
+        code: editorRef.current.getValue(),
+        language,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      // setTimeout(() => {
+      //   setSubmitting(false);
+      // }, 5000);
 
-    console.log(response.data);
+      setSubmitting(false);
+    }
   }
 
   async function submitCodeFunction() {
-    const response = await axiosClient.post(`/pid/submit/${problem._id}`, {
-      code: editorRef.current.getValue(),
-      language,
-    });
+    try {
+      setSubmitting(true);
+      const response = await axiosClient.post(`/pid/submit/${problem._id}`, {
+        code: editorRef.current.getValue(),
+        language,
+      });
 
-    console.log(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      // setTimeout(() => {
+      //   setSubmitting(false);
+      // }, 5000);
+      setSubmitting(false);
+    }
   }
-
   return (
     <div className="flex flex-col h-full">
       {/* Header: Language Selector - OnClick handlers are now simpler */}
@@ -95,8 +115,8 @@ export default function CodeEditor({ problem }) {
         <Editor
           width="100%"
           height="100%"
-          defaultLanguage={language}
-          // language=""
+          // defaultLanguage={language}
+          language={language}
           // onChange=""
           // defaultValue={initialCode}
           value={initialCode}
@@ -117,7 +137,13 @@ export default function CodeEditor({ problem }) {
       <div className="flex items-center justify-end p-3 gap-3 border-t-2 border-dashed bg-slate-50">
         <button
           onClick={runCodeFunction}
-          className="px-5 py-2 bg-gray-600 text-white font-bold rounded-lg sketch-button"
+          disabled={submitting}
+          // className="px-5 py-2 bg-gray-600 text-white font-bold rounded-lg sketch-button"
+          className={`px-5 py-2 ${
+            submitting
+              ? "bg-gray-500 text-white sketch-button-clicked"
+              : "bg-gray-600 text-white "
+          } font-bold rounded-lg sketch-button`}
         >
           {/* <button className="px-5 py-2 bg-gray-600 text-white font-bold rounded-lg sketch-button" > */}
           Run
@@ -125,7 +151,12 @@ export default function CodeEditor({ problem }) {
         {/* <button className="px-5 py-2 bg-green-500 text-white font-bold rounded-lg sketch-button"> */}
         <button
           onClick={submitCodeFunction}
-          className="px-5 py-2 bg-green-500 text-white font-bold rounded-lg sketch-button"
+          disabled={submitting}
+          className={`px-5 py-2 ${
+            submitting
+              ? "bg-gray-500 text-white sketch-button-clicked"
+              : "bg-green-500 text-white "
+          } font-bold rounded-lg sketch-button`}
         >
           Submit
         </button>

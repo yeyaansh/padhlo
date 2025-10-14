@@ -1,5 +1,11 @@
 import "./App.css";
-import { Routes, Route, Navigate, useLocation, ScrollRestoration } from "react-router";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  ScrollRestoration,
+} from "react-router";
 import HomePageLayout from "./components/layouts/HomePageLayout/HomePageLayout";
 import UserPageLayout from "./components/layouts/UserPageLayout/UserPageLayout";
 import ProblemPageLayout from "./components/layouts/ProblemPageLayout/ProblemPageLayout";
@@ -38,9 +44,8 @@ function App() {
   // );
 
   useEffect(() => {
-    dispatch(checkAuth()).then((data)=>{
+    dispatch(checkAuth()).then((data) => {
       console.log(data);
-      
     });
   }, [dispatch]);
 
@@ -48,12 +53,11 @@ function App() {
 
   return (
     <>
-{/* <ScrollRestoration
+      {/* <ScrollRestoration
 getKey={(location,matches)=>{
   return location.pathname}}
 /> */}
       <Routes>
-        
         <Route path="/" element={<HomePageLayout></HomePageLayout>}>
           <Route index element={<HomepageLoggedOut />}></Route>
         </Route>
@@ -73,10 +77,13 @@ getKey={(location,matches)=>{
         </Route>
 
         <Route element={<ProtectedRoutes />}>
-        <Route path="/profile" element={<ProfilePageLayout></ProfilePageLayout>}>
-        <Route index element={<ProfilePage/>}></Route>
-        <Route path="edit" element={""}></Route>
-        </Route>
+          <Route
+            path="/profile"
+            element={<ProfilePageLayout></ProfilePageLayout>}
+          >
+            <Route index element={<ProfilePage />}></Route>
+            {/* <Route path="edit" element={""}></Route> */}
+          </Route>
           <Route path="/dashboard" element={<HomePageLoggedIn />}></Route>
           <Route path="/user" element={<UserPageLayout></UserPageLayout>}>
             <Route index element={<UserPage />}></Route>

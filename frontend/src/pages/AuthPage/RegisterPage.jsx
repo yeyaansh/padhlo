@@ -153,7 +153,7 @@ export default function RegisterPage() {
     gender: z.enum(["male", "female", "other"], {
       required_error: "Please select a gender.",
     }),
-    email_id: z.string().email("Please enter a valid email address."),
+    email_id: z.email("Please enter a valid email address."),
     password: z.string().min(8, "Password must be at least 8 characters."),
   });
 
@@ -164,7 +164,7 @@ export default function RegisterPage() {
   } = useForm({ resolver: zodResolver(registerSchema) });
 
   function submitForm(value) {
-    dispatch(registerUser(value));
+    dispatch(registerUser(value))
   }
 
   return (

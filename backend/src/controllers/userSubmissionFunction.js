@@ -180,10 +180,15 @@ const runCodeFunction = async (req, res) => {
       testCasesPassed,
     };
 
-    res.status(201).send(runResult);
+    res.status(201).send({runResult,
+      success:true,
+      message:"solution accepted!"
+    });
   } catch (err) {
     console.log("error while running the code "+err);
-    res.status(401).send(err.message);
+    res.status(500).send({
+      success:false,
+      message:err.message});
   }
 };
 export {submitCodeFunction,runCodeFunction};

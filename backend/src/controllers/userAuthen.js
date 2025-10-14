@@ -33,6 +33,15 @@ const register = async (req, res) => {
     validate(req.body);
     console.log("body is: ", req.body);
 
+    const doUserExist = await User.findOne({ email_id: req.body.email_id });
+    if (doUserExist) {
+      // console.log("user already exist babu...");
+
+      return res.send({
+        success: false,
+        message: "This user already exist!",
+      });
+    }
     // hash the password
     req.body.password = await bcrypt.hash(req.body.password, 10);
     req.body.role = "user";
@@ -53,11 +62,15 @@ const register = async (req, res) => {
 
     res.status(201).send({
       result: reply,
+      success: true,
       message: "account created successfully",
     });
   } catch (err) {
     console.log(err);
-    res.status(400).send("error during registration " + err.message);
+    res.send({
+      success: false,
+      message: `${err.message}`,
+    });
   }
 };
 // login function
@@ -86,11 +99,15 @@ const login = async (req, res) => {
 
     res.status(200).send({
       result: reply,
+      success: true,
       message: "account logged-in successfully",
     });
   } catch (err) {
     console.log(err);
-    res.status(401).send("error during logging-in " + err.message);
+    res.send({
+      success: false,
+      message: `${err.message}`,
+    });
   }
 };
 // logout function
@@ -114,7 +131,12 @@ const logout = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     // Since we had verified everything in userMiddleware and passed the data with request as result, so we can fetch it from there
-    const userData = req.result;
+    // const userData = req.result;
+    const userData = await User.findById(req.result._id).populate(
+      "problemSolved"
+    );
+
+    console.log(userData);
 
     // const payload = jwt.decode(req.cookies.token);
     // const { _id } = payload;

@@ -78,6 +78,20 @@ const problemSchema = new Schema({
       },
     },
   ],
+
+  totalAttempts: {
+    type: Number,
+    default: 0,
+  },
+  totalSolved: {
+    type: Number,
+    default: 0,
+  },
+  acceptanceRate: {
+    type: Number,
+    default: 0,
+  },
+
   starterCode: [
     {
       language: {

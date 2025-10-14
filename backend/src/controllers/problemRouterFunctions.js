@@ -268,11 +268,25 @@ const uniqueSolvedProblems = async (req, res) => {
 
 // this tells the user how many times, (more meta-data about the problem) the problem attempted and it's answers.
 // more data about that specific problem id
-const submittedProblem = async (req, res) => {
+const problemAttemptedById = async (req, res) => {
   try {
     const userId = req.result._id;
     const problemId = req.params.id;
     const answer = await submission.find({ userId, problemId });
+    console.log(answer);
+    res.status(200).send(answer);
+  } catch (err) {
+    console.log(
+      "error while fetching the data about the solved problem id " + err
+    );
+    res.status(401).send(err.message);
+  }
+};
+const problemAttemptedByUser = async (req, res) => {
+  try {
+    const userId = req.result._id;
+    // const problemId = req.params.id;
+    const answer = await submission.find({ userId });
     console.log(answer);
     res.status(200).send(answer);
   } catch (err) {
@@ -290,5 +304,6 @@ export {
   fetchProblemById,
   fetchAllProblem,
   uniqueSolvedProblems,
-  submittedProblem,
+  problemAttemptedById,
+  problemAttemptedByUser
 };
