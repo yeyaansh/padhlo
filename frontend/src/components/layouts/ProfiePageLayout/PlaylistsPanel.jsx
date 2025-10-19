@@ -27,16 +27,16 @@ const PlaylistCard = ({ playlist }) => (
   <div className="bg-gradient-to-br from-purple-100 to-blue-100 p-6 rounded-xl sketch-border-1 flex flex-col justify-between h-full">
     <div>
       <h3 className="text-2xl font-bold text-gray-800">
-        {playlist.title}
+        {playlist.playlistName}
       </h3>
-      <p className="text-gray-600 mt-2 text-sm h-10">{playlist.description}</p>
+      <p className="text-gray-600 mt-2 text-sm h-10">{playlist.playlistDescription}</p>
     </div>
     <div className="mt-6 flex items-center justify-between">
       <p className="font-bold text-gray-700">
-        {playlist.problemCount} Problems
+        {playlist.length || 0} Problems
       </p>
       <Link
-        to={`/playlist/${playlist.id}`}
+        to={`/playlist/${playlist._id}`}
         className="px-5 py-2 bg-purple-500 text-white font-bold rounded-lg sketch-button"
       >
         View
@@ -45,7 +45,8 @@ const PlaylistCard = ({ playlist }) => (
   </div>
 );
 
-export default function PlaylistsPanel() {
+export default function PlaylistsPanel({user}) {
+  
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -57,8 +58,8 @@ export default function PlaylistsPanel() {
         </button>
       </div>
       <div className="grid md:grid-cols-2 gap-6">
-        {playlists.map((playlist) => (
-          <PlaylistCard key={playlist.id} playlist={playlist} />
+        {user?.playlist.map((playlist) => (
+          <PlaylistCard key={playlist._id} playlist={playlist} />
         ))}
       </div>
     </div>

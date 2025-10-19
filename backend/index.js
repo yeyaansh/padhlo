@@ -9,13 +9,10 @@ import redisClient from "./src/config/redisConnect.js";
 import submitRouter from "./src/routes/userSubmission.js";
 import problemRouter from "./src/routes/problemRouter.js";
 import osmosisRouter from "./src/routes/osmosisRouter.js";
+import playlistRouter from "./src/routes/playlistRouter.js";
 
 app.use(
   cors({
-    // origin: [
-    //   "http://localhost:5173",
-    //   "http://10.21.12.34:5173",
-    // ],
     origin: "http://localhost:5173",
     credentials: true,
   })
@@ -28,6 +25,7 @@ app.use("/user", userAuth);
 app.use("/problem", problemRouter);
 app.use("/pid", submitRouter);
 app.use("/osmosis", osmosisRouter);
+app.use("/playlist",playlistRouter);
 
 const startServer = async () => {
   try {

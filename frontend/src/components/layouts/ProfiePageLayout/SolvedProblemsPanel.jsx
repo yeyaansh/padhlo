@@ -28,22 +28,23 @@ const solvedProblems = [
 
 const SolvedProblemCard = ({ problem }) => {
   const difficultyStyles = {
-    Easy: "bg-emerald-200 text-emerald-800",
-    Medium: "bg-amber-200 text-amber-800",
-    Hard: "bg-rose-200 text-rose-800",
+    easy: "bg-emerald-200 text-emerald-800",
+    medium: "bg-amber-200 text-amber-800",
+    hard: "bg-rose-200 text-rose-800",
   };
-
+console.log("problem")
+  console.log(problem)
   return (
     <div className="bg-white p-5 rounded-xl sketch-border-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h3 className="text-xl font-bold text-gray-800">{problem.title}</h3>
+        <h3 className="text-xl font-bold text-gray-800">{problem?.title}</h3>
         <div className="flex items-center gap-2 mt-2 flex-wrap">
           <span
             className={`px-3 py-1 text-xs font-bold rounded-full ${
-              difficultyStyles[problem.difficulty]
+              difficultyStyles[problem?.difficultyLevel]
             }`}
           >
-            {problem.difficulty}
+            {problem?.difficultyLevel}
           </span>
           {problem.tags.map((tag) => (
             <span
@@ -55,11 +56,12 @@ const SolvedProblemCard = ({ problem }) => {
           ))}
         </div>
         <p className="text-sm text-gray-500 mt-2 font-semibold">
-          ✅ Solved on: {problem.solvedDate}
+          ✅ Solved on: {problem.createdAt || "--:--:--"}
+          {/* ✅ Solved on: {problem.solvedDate} */}
         </p>
       </div>
       <Link
-        to={`/problem/id/${problem.id}`}
+        to={`/problem/id/${problem._id}`}
         className="px-5 py-2 bg-yellow-400 text-gray-900 font-bold rounded-lg sketch-button flex-shrink-0 text-center"
       >
         Review
@@ -68,13 +70,14 @@ const SolvedProblemCard = ({ problem }) => {
   );
 };
 
-export default function SolvedProblemsPanel() {
+export default function SolvedProblemsPanel({user}) {
   return (
     <div className="space-y-6">
       <h2 className="text-3xl font-bold text-gray-800">Solved Problems</h2>
       <div className="space-y-4">
-        {solvedProblems.map((problem) => (
-          <SolvedProblemCard key={problem.id} problem={problem} />
+        {user?.problemSolved.length==0 && <div>No Solved Problems, Try Solving Now!</div>}
+        {user?.problemSolved.map((problem) => (
+          <SolvedProblemCard key={problem._id} problem={problem} />
         ))}
       </div>
     </div>

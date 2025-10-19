@@ -286,7 +286,7 @@ const problemAttemptedByUser = async (req, res) => {
   try {
     const userId = req.result._id;
     // const problemId = req.params.id;
-    const answer = await submission.find({ userId });
+    const answer = await submission.find({ userId }).populate('problemId');
     console.log(answer);
     res.status(200).send(answer);
   } catch (err) {

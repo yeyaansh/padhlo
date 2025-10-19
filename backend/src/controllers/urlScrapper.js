@@ -10,7 +10,6 @@ import {
 import { checkPlatform, cleanUrl, extractDomain } from "../utils/filterURL.js";
 import inputURL from "../models/urlSchema.js";
 
-
 function getSpojProblemCode(url) {
   try {
     const parsed = new URL(url);
@@ -26,7 +25,6 @@ function getSpojProblemCode(url) {
     return null; // invalid URL
   }
 }
-
 
 const urlScrapper = async (req, res) => {
   try {
@@ -106,15 +104,19 @@ const urlScrapper = async (req, res) => {
     const data = problemToUpload;
     console.log(data);
     await inputURL.create(data);
-    res.status(201).send({...problemToUpload,success:true});
+    res
+      .status(201)
+      .send({
+        ...problemToUpload,
+        success: true,
+        message: "problems successfully imported to your playlist",
+      });
   } catch (err) {
     console.log("error in urlScrapper during single url Scrapping " + err);
-    res.status(400).send(
-      {
-        message:"Invalid url or unsupported platform!",
-        success:false
-      }
-    );
+    res.status(400).send({
+      message: "Invalid url or unsupported platform!",
+      success: false,
+    });
   }
 };
 

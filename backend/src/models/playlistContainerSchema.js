@@ -18,6 +18,7 @@ const playlistContainerSchema = new Schema(
       type: String,
       trim: true,
       minLength: 5,
+      default:"This is the playlist description..."
     },
     problemStore: [
       {

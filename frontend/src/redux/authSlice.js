@@ -44,6 +44,20 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+// export const deleteAccount = createAsyncThunk(
+//   "auth/deleteAccount",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await axiosClient.delete("/user/deleteProfile");
+//       console.log(response);
+
+//       return response.data;
+//     } catch (error) {
+//       // Note: error.response?.data is a robust way to access specific error information from an Axios response.
+//       return rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
 export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
@@ -119,7 +133,23 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
         state.error = action.payload?.message || "something went wrong!";
-      });
+      })
+      // .addCase(deleteAccount.pending, (state) => {
+      //   state.isLoading = true;
+      //   state.error = null;
+      // })
+      // .addCase(deleteAccount.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isAuthenticated = !action.payload.result;
+      //   state.user = action.payload.result;
+      //   state.error = null;
+      // })
+      // .addCase(deleteAccount.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isAuthenticated = false;
+      //   state.user = null;
+      //   state.error = action.payload?.message || "something went wrong!";
+      // });
   },
 });
 

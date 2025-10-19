@@ -9,21 +9,19 @@ import SolvedProblemsPanel from "../../components/layouts/ProfiePageLayout/Solve
 import AttemptedProblemsPanel from "../../components/layouts/ProfiePageLayout/AttemptedProblemsPanel";
 import PlaylistsPanel from "../../components/layouts/ProfiePageLayout/PlaylistsPanel";
 import axiosClient from "../../axiosClient";
-// import AttemptedProblemsPanel from "../../components";
-// import PlaylistPanel from "../../components";
 
 // Mock user data - in a real app, this would come from your Redux store or context
-const mockUser = {
-  username: "SketchMaster",
-  email: "sketch@example.com",
-  joinDate: "Joined Oct 2025",
-  avatarUrl: "https://avatar.iran.liara.run/public/boy", // A placeholder avatar service
-  stats: {
-    solved: 42,
-    attempted: 68,
-    playlists: 5,
-  },
-};
+// const mockUser = {
+//   username: "SketchMaster",
+//   email: "sketch@example.com",
+//   joinDate: "Joined Oct 2025",
+//   avatarUrl: "https://avatar.iran.liara.run/public/boy", // A placeholder avatar service
+//   stats: {
+//     solved: 42,
+//     attempted: 68,
+//     playlists: 5,
+//   },
+// };
 
 export default function ProfilePage() {
   // account, solved, attempted, playlists
@@ -31,26 +29,27 @@ export default function ProfilePage() {
   const [profilePageData, setprofilePageData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     async function fetchProfileData() {
-
-setLoading(true);
+      setLoading(true);
 
       const userInfo = await axiosClient.get("/user/getProfile");
-      console.log("userInfo is: ");
-      console.log(userInfo.data);
+      // console.log("userInfo is: ");
+      // console.log(userInfo.data);
 
       const attemptedInfo = await axiosClient.get(
         "/problem/problemAttemptedByUser"
       );
-      console.log("attemptedInfo is: ");
-      console.log(attemptedInfo.data);
+      // console.log("attemptedInfo is: ");
+      // console.log(attemptedInfo.data);
 
       const profilePageData = {
         userInfo,
         attemptedInfo,
       };
+
+      // console.log("profilePageData is: ");
+      // console.log(profilePageData);
 
       setprofilePageData(profilePageData);
       setLoading(false);
@@ -59,8 +58,7 @@ setLoading(true);
     fetchProfileData();
   }, []);
 
-if(loading)
-  return <div>Loading Profile Page Data...</div>
+  if (loading) return <div>Loading Profile Page Data...</div>;
 
   return (
     <div className="bg-slate-50 min-h-screen p-4 sm:p-8 font-['Comic_Neue']">
@@ -76,11 +74,21 @@ if(loading)
 
           {/* ## 3. Right Panel: Dynamic Content ## */}
           <div className="md:col-span-9">
-            {activeTab === "account" && <AccountPanel user={mockUser} />}
-            {activeTab === "solved" && <SolvedProblemsPanel />}
+            {activeTab === "account" && (
+              <AccountPanel user={profilePageData?.userInfo} />
+            )}
+            {activeTab === "solved" && (
+              <SolvedProblemsPanel user={profilePageData.userInfo.data} />
+            )}
             {/* Add other panels here similarly */}
-            {activeTab === "attempted" && <AttemptedProblemsPanel />}
-            {activeTab === "playlists" && <PlaylistsPanel />}
+            {activeTab === "attempted" && (
+              <AttemptedProblemsPanel
+                user={profilePageData.attemptedInfo.data}
+              />
+            )}
+            {activeTab === "playlists" && (
+              <PlaylistsPanel user={profilePageData.userInfo.data} />
+            )}
           </div>
         </div>
       </div>

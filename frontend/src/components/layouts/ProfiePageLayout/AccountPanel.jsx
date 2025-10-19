@@ -1,7 +1,22 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { success, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import axiosClient from "../../../axiosClient";
 
 // You can reuse these components from your other pages
 const InputField = ({ id, label, register, error, ...props }) => (
@@ -104,7 +119,25 @@ const ToggleSwitch = ({ label }) => (
   </label>
 );
 
-export default function AccountPanel({ user }) {
+export default function AccountPanel(user) {
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = async () => {
+    const deleteAccount = await axiosClient.delete("/user/deleteProfile");
+    console.log(deleteAccount.data);
+    if (deleteAccount.data.success) {
+      // dispatch()
+      toast.success(deleteAccount.data.message);
+      // navigate("/");
+      window.location.reload();
+    }
+
+    if (!deleteAccount.data.success) {
+      toast.warning(deleteAccount.data.message);
+      window.location.reload();
+    }
+  };
+
   // Form handling for Profile Information
   const profileSchema = z.object({
     username: z.string().min(3, "Username must be at least 3 characters."),
@@ -148,12 +181,13 @@ export default function AccountPanel({ user }) {
     <div className="bg-white p-6 sm:p-8 rounded-xl sketch-border-1 space-y-12">
       {/* --- Avatar Section --- */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Your Sketch
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Sketch</h2>
         <div className="flex items-center gap-6">
           <img
-            src={user.avatarUrl}
+            src={
+              user?.user?.data.avatarUrl ||
+              "https://avatar.iran.liara.run/public/boy"
+            }
             alt="User Avatar"
             className="w-20 h-20 rounded-full border-4 border-gray-800"
           />
@@ -178,12 +212,13 @@ export default function AccountPanel({ user }) {
             id="username"
             label="Username"
             register={registerProfile}
+            defaultValue={user?.user?.data.email_id}
             error={profileErrors.username}
           />
           <InputField
             label="Email Address"
             type="email"
-            defaultValue={user.email}
+            defaultValue={user?.user?.data.email_id}
             disabled
           />
         </div>
@@ -199,9 +234,7 @@ export default function AccountPanel({ user }) {
 
       {/* --- Change Password Form --- */}
       <form onSubmit={handleSubmitPassword(onPasswordSubmit)}>
-        <h2 className="text-2xl font-bold text-gray-800">
-          Change Password
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800">Change Password</h2>
         <div className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 gap-6">
           <PasswordInputField
             id="currentPassword"
@@ -235,9 +268,7 @@ export default function AccountPanel({ user }) {
 
       {/* --- Notifications Section --- */}
       <div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Notifications
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Notifications</h2>
         <div className="space-y-4 max-w-md">
           <ToggleSwitch label="Weekly progress reports" />
           <ToggleSwitch label="New challenge alerts" />
@@ -248,10 +279,8 @@ export default function AccountPanel({ user }) {
       <hr className="border-dashed border-gray-300" />
 
       {/* --- Danger Zone --- */}
-      <div>
-        <h2 className="text-2xl font-bold text-red-600">
-          Danger Zone
-        </h2>
+      {/* <div>
+        <h2 className="text-2xl font-bold text-red-600">Danger Zone</h2>
         <div className="mt-4 p-4 border-4 border-dashed border-red-400 rounded-lg">
           <div className="flex flex-col sm:flex-row items-center justify-between">
             <div>
@@ -261,12 +290,58 @@ export default function AccountPanel({ user }) {
                 certain.
               </p>
             </div>
-            <button className="mt-4 sm:mt-0 px-5 py-2 bg-red-500 text-white font-bold rounded-lg sketch-button flex-shrink-0">
+            <button
+              onClick={handleDeleteAccount}
+              className="mt-4 sm:mt-0 px-5 py-2 bg-red-500 text-white font-bold rounded-lg sketch-button flex-shrink-0"
+            >
               Delete Account
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <div>
+            <h2 className="text-2xl font-bold text-red-600">Danger Zone</h2>
+            <div className="mt-4 p-4 border-4 border-dashed border-red-400 rounded-lg">
+              <div className="flex flex-col sm:flex-row items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-gray-800">
+                    Delete Your Account
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Once you delete your account, there is no going back. Please
+                    be certain.
+                  </p>
+                </div>
+                <button className="mt-4 sm:mt-0 px-5 py-2 bg-red-500 text-white font-bold rounded-lg sketch-button flex-shrink-0">
+                  Delete Account
+                </button>
+              </div>
+            </div>
+          </div>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove all of your data from our servers. You will not
+              be able to recover your account.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteAccount}
+              className="bg-destructive text-white hover:bg-destructive/90"
+            >
+              Delete Account
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

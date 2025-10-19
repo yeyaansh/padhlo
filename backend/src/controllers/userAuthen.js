@@ -5,6 +5,7 @@ import genCookie from "../utils/genCookie.js";
 import expireCookie from "../utils/expireCookie.js";
 import jwt from "jsonwebtoken";
 import submission from "../models/userSubmissionSchema.js";
+import playlistContainer from "../models/playlistContainerSchema.js";
 
 //checkAuth function
 const checkAuth = async (req, res) => {
@@ -21,7 +22,7 @@ const checkAuth = async (req, res) => {
       message: "user is already logged-in!",
     });
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(401).send(error.message);
   }
 };
@@ -46,6 +47,15 @@ const register = async (req, res) => {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     req.body.role = "user";
     const newUser = await User.create(req.body);
+
+    const defaultPlaylist = await playlistContainer.create({
+      playlistCreator: newUser._id,
+    });
+
+    newUser.playlist.push(defaultPlaylist._id);
+
+    await newUser.save();
+
     // generate token
     const token = genCookie(newUser);
     res.cookie("token", token, { maxAge: 60 * 60 * 1000 });
@@ -133,7 +143,7 @@ const getProfile = async (req, res) => {
     // Since we had verified everything in userMiddleware and passed the data with request as result, so we can fetch it from there
     // const userData = req.result;
     const userData = await User.findById(req.result._id).populate(
-      "problemSolved"
+      "problemSolved playlist"
     );
 
     console.log(userData);
@@ -182,10 +192,16 @@ const deleteProfile = async (req, res) => {
     const userId = req.result._id;
     await User.findByIdAndDelete(userId);
     await submission.deleteMany(userId);
-    res.status(200).send("Your Profile Deleted Successfully");
+    res.status(200).send({
+      success: true,
+      message: "Your Profile Deleted Successfully",
+    });
   } catch (err) {
     console.log("error during deleting the profile " + err);
-    res.status(500).send(err.message);
+    res.send({
+      success: false,
+      message: err.message,
+    });
   }
 };
 export {

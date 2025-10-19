@@ -1,17 +1,16 @@
-import problem from "../models/problemSchema.js"
-import submission from "../models/userSubmissionSchema.js"
+import problem from "../models/problemSchema.js";
+import User from "../models/userSchema.js";
+import submission from "../models/userSubmissionSchema.js";
 import {
   languageById,
   batchSubmission,
   statusId_Submission,
-} from "../utils/problemUtility.js"
+} from "../utils/problemUtility.js";
 const submitCodeFunction = async (req, res) => {
   try {
-
     // console.log(req.body);
-    
 
-    const problemId = (req.params.id);
+    const problemId = req.params.id;
     const userId = req.result._id;
     const { code, language } = req.body;
     // validator
@@ -38,6 +37,13 @@ const submitCodeFunction = async (req, res) => {
       // need to include this one
       totalTestCases: allTestCases.length,
     });
+
+    req.result.totalAttempts = req.result.totalAttempts + 1;
+     req.result.acceptanceRate = Math.round(
+      (req.result.solvedProblems * 100) / req.result.totalAttempts
+    );
+
+    await req.result.save();
 
     // now send the code to judge0 for processing and getting the details
 
@@ -92,28 +98,41 @@ const submitCodeFunction = async (req, res) => {
     submitAnswer.errorMessage = errorMessage;
     submitAnswer.testCasesPassed = testCasesPassed;
 
-    await submitAnswer.save();
+    req.result.solvedProblems = req.result.solvedProblems + 1;
+    console.log("solvedProblems: ",req.result.solvedProblems);
     
-    if(!req.result.problemSolved.includes(problemId))
-    {
-      req.result.problemSolved.push(problemId)
+    req.result.acceptanceRate = Math.round(
+      (req.result.solvedProblems * 100) / req.result.totalAttempts
+    );
+
+    await req.result.save();
+
+    await submitAnswer.save();
+
+    if (!req.result.problemSolved.includes(problemId)) {
+      req.result.problemSolved.push(problemId);
       await req.result.save();
     }
 
-
-    res.status(201).send(submitAnswer);
+    res.status(201).send({
+      submitAnswer,
+      success: true,
+      message: "all test cases passed!",
+    });
   } catch (err) {
-    console.log("error while submitting the code "+err);
-    res.status(400).send(err.message);
+    console.log("error while submitting the code " + err);
+    res.send({
+      success: false,
+      message: "test cases failed!",
+    });
   }
 };
 
 const runCodeFunction = async (req, res) => {
   try {
+    console.log(req.body);
 
-        console.log(req.body);
-
-    const problemId = (req.params.id);
+    const problemId = req.params.id;
     const userId = req.result._id;
     const { code, language } = req.body;
     // validator
@@ -144,7 +163,7 @@ const runCodeFunction = async (req, res) => {
     const resultToken = batchTokens.map((k) => k.token);
 
     const batchSubmissionStatus = await statusId_Submission(resultToken);
-    console.log(batchSubmissionStatus)
+    console.log(batchSubmissionStatus);
     let runTime = 0;
     let memory = 0;
     let status = "accepted";
@@ -180,15 +199,15 @@ const runCodeFunction = async (req, res) => {
       testCasesPassed,
     };
 
-    res.status(201).send({runResult,
-      success:true,
-      message:"solution accepted!"
-    });
+    res
+      .status(200)
+      .send({ runResult, success: true, message: "solution accepted!" });
   } catch (err) {
-    console.log("error while running the code "+err);
-    res.status(500).send({
-      success:false,
-      message:err.message});
+    console.log("error while running the code " + err);
+    res.send({
+      success: false,
+      message: "solution not accepted!",
+    });
   }
 };
-export {submitCodeFunction,runCodeFunction};
+export { submitCodeFunction, runCodeFunction };

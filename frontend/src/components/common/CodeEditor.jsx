@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"; // Import useEffect
 import axiosClient from "../../axiosClient";
 import Editor from "@monaco-editor/react";
+import { toast } from "sonner";
 
 export default function CodeEditor({ problem }) {
   const [language, setLanguage] = useState("cpp");
@@ -40,6 +41,11 @@ export default function CodeEditor({ problem }) {
         code: editorRef.current.getValue(),
         language,
       });
+
+      if (response.data.success) toast.success(`${response.data.message}`);
+
+      if (!response.data.success) toast.error(`${response.data.message}`);
+
       console.log(response.data);
     } catch (error) {
       console.log(error.message);
@@ -59,6 +65,10 @@ export default function CodeEditor({ problem }) {
         code: editorRef.current.getValue(),
         language,
       });
+
+      if (response.data.success) toast.success(`${response.data.message}`);
+
+      if (!response.data.success) toast.error(`${response.data.message}`);
 
       console.log(response.data);
     } catch (error) {

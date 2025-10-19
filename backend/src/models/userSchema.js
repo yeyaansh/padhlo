@@ -11,7 +11,7 @@ const userSchema = new Schema(
     },
     last_name: {
       type: String,
-      minLength: 2,
+      // minLength: 2,
       maxLength: 20,
       trim: true,
     },
@@ -39,10 +39,10 @@ const userSchema = new Schema(
       trim: true,
       immutable: true,
     },
-    avatarURL:{
-      type:String,
-      default:'https://avatar.iran.liara.run/public/boy',
-      trim:true,
+    avatarURL: {
+      type: String,
+      default: "https://avatar.iran.liara.run/public/boy",
+      trim: true,
     },
     problemSolved: {
       type: [
@@ -57,17 +57,19 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
+    solvedProblems: {
+      type: Number,
+      default: 0,
+    },
     acceptanceRate: {
       type: Number,
       default: 0,
     },
     playlist: [
       {
-        playlistId: {
-          type: Schema.Types.ObjectId,
-          ref: "playlistContainer",
-          required: true,
-        },
+        type: Schema.Types.ObjectId,
+        ref: "playlistContainer",
+        required: true,
       },
     ],
     role: {
