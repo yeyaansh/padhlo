@@ -1,30 +1,20 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router"; // CORRECTED: Import from react-router
 
-// Mock data for solved problems
-const solvedProblems = [
-  {
-    id: "1",
-    title: "Two Sum",
-    difficulty: "Easy",
-    tags: ["Arrays", "Hash Table"],
-    solvedDate: "Oct 02, 2025",
-  },
-  {
-    id: "2",
-    title: "Reverse a Linked List",
-    difficulty: "Easy",
-    tags: ["Linked List", "Pointers"],
-    solvedDate: "Sep 28, 2025",
-  },
-  {
-    id: "3",
-    title: "Validate Binary Search Tree",
-    difficulty: "Medium",
-    tags: ["Trees", "DFS", "Recursion"],
-    solvedDate: "Sep 25, 2025",
-  },
-];
+// ## NEW ##: A dedicated component for when the list is empty.
+const EmptyState = () => (
+  <div className="text-center p-10 bg-slate-50 rounded-xl border-4 border-dashed">
+    <p className="text-5xl mb-4">🎨</p>
+    <h3 className="text-2xl font-bold text-gray-800">Your Sketchbook is Clean!</h3>
+    <p className="text-gray-600 mt-2">You haven't solved any problems yet. Time to make your mark!</p>
+    <Link
+      to="/problem/all"
+      className="mt-6 inline-block px-6 py-3 bg-yellow-400 text-gray-900 text-lg font-bold rounded-lg sketch-button"
+    >
+      Find a Challenge
+    </Link>
+  </div>
+);
 
 const SolvedProblemCard = ({ problem }) => {
   const difficultyStyles = {
@@ -32,8 +22,17 @@ const SolvedProblemCard = ({ problem }) => {
     medium: "bg-amber-200 text-amber-800",
     hard: "bg-rose-200 text-rose-800",
   };
-console.log("problem")
-  console.log(problem)
+
+  // ## NEW ##: Function to format the date nicely.
+  const formatDate = (dateString) => {
+    if (!dateString) return "--:--:--";
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
   return (
     <div className="bg-white p-5 rounded-xl sketch-border-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
@@ -41,12 +40,13 @@ console.log("problem")
         <div className="flex items-center gap-2 mt-2 flex-wrap">
           <span
             className={`px-3 py-1 text-xs font-bold rounded-full ${
-              difficultyStyles[problem?.difficultyLevel]
+              difficultyStyles[problem?.difficultyLevel?.toLowerCase()] || 'bg-gray-200'
             }`}
           >
             {problem?.difficultyLevel}
           </span>
-          {problem.tags.map((tag) => (
+          {/* ## IMPROVED ##: Added optional chaining for safety */}
+          {problem?.tags?.map((tag) => (
             <span
               key={tag}
               className="text-xs bg-purple-200 text-purple-800 px-2 py-0.5 rounded-full"
@@ -56,8 +56,7 @@ console.log("problem")
           ))}
         </div>
         <p className="text-sm text-gray-500 mt-2 font-semibold">
-          ✅ Solved on: {problem.createdAt || "--:--:--"}
-          {/* ✅ Solved on: {problem.solvedDate} */}
+          ✅ Solved on: {formatDate(problem.createdAt)}
         </p>
       </div>
       <Link
@@ -70,15 +69,20 @@ console.log("problem")
   );
 };
 
-export default function SolvedProblemsPanel({user}) {
+// ## IMPROVED ##: Changed prop from `user` to `problems` for clarity.
+export default function SolvedProblemsPanel({ problems }) {
   return (
     <div className="space-y-6">
       <h2 className="text-3xl font-bold text-gray-800">Solved Problems</h2>
       <div className="space-y-4">
-        {user?.problemSolved.length==0 && <div>No Solved Problems, Try Solving Now!</div>}
-        {user?.problemSolved.map((problem) => (
-          <SolvedProblemCard key={problem._id} problem={problem} />
-        ))}
+        {/* ## IMPROVED ##: Check is clearer and uses the new EmptyState component. */}
+        {!problems || problems.length === 0 ? (
+          <EmptyState />
+        ) : (
+          problems.map((problem) => (
+            <SolvedProblemCard key={problem._id} problem={problem} />
+          ))
+        )}
       </div>
     </div>
   );

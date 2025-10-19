@@ -138,6 +138,8 @@ export default function AccountPanel(user) {
     }
   };
 
+  console.log(user);
+
   // Form handling for Profile Information
   const profileSchema = z.object({
     username: z.string().min(3, "Username must be at least 3 characters."),

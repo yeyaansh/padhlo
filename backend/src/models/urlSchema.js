@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-const inputURLSchema = new Schema(
+const osmosisURLSchema = new Schema(
   {
     title: {
       type: String,
@@ -58,6 +58,6 @@ const inputURLSchema = new Schema(
   { timestamps: true }
 );
 
-const inputURL = mongoose.model("inputURL", inputURLSchema);
+const osmosisURL = mongoose.model("osmosisURL", osmosisURLSchema);
 
-export default inputURL;
+export default osmosisURL;

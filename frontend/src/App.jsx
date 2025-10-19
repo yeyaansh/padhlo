@@ -30,6 +30,8 @@ import HomepageLoggedOut from "./pages/HomePage/homePageLoggedOut.jsx";
 import HomePageLoggedIn from "./pages/HomePage/homePageLoggedIn.jsx";
 import ProfilePageLayout from "./components/layouts/ProfiePageLayout/index.jsx";
 import ProfilePage from "./pages/ProfilePage/index.jsx";
+import PlaylistPageLayout from "./components/layouts/PlaylistPageLayout/PlaylistPageLayout.jsx";
+import PlaylistPageById from "./pages/PlaylistPage/index.jsx";
 
 function App() {
   const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
@@ -83,6 +85,10 @@ getKey={(location,matches)=>{
           >
             <Route index element={<ProfilePage />}></Route>
             {/* <Route path="edit" element={""}></Route> */}
+          </Route>
+          <Route path="/playlist" element={<PlaylistPageLayout />}>
+            <Route index element={<Navigate to={"id"}></Navigate>}></Route>
+            <Route path="id/:playlistId" element={<PlaylistPageById />}></Route>
           </Route>
           <Route path="/dashboard" element={<HomePageLoggedIn />}></Route>
           <Route path="/user" element={<UserPageLayout></UserPageLayout>}>

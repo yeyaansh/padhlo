@@ -7,6 +7,7 @@ const playlistContainerSchema = new Schema(
       ref: "User",
       required: true,
     },
+
     playlistName: {
       type: String,
       trim: true,
@@ -18,16 +19,28 @@ const playlistContainerSchema = new Schema(
       type: String,
       trim: true,
       minLength: 5,
-      default:"This is the playlist description..."
+      default: "This is the playlist description...",
     },
     problemStore: [
       {
-        problemId: {
-          type: Schema.Types.ObjectId,
-          ref: "problem",
-        },
+        type: Schema.Types.ObjectId,
+        ref: "problem",
       },
     ],
+    playlistProfileImage: {
+      type: String,
+      trim: true,
+      default: "https://picsum.photos/200",
+    },
+    playlistCoverImage: {
+      type: String,
+      trim: true,
+      default: "https://picsum.photos/1024/576",
+    },
+    isPlaylistPublic: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );

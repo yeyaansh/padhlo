@@ -8,7 +8,8 @@ import {
   gfg,
 } from "../utils/scrapperTools.js";
 import { checkPlatform, cleanUrl, extractDomain } from "../utils/filterURL.js";
-import inputURL from "../models/urlSchema.js";
+import playlistContainer from "../models/playlistContainerSchema.js";
+import osmosisURL from "../models/urlSchema.js";
 
 function getSpojProblemCode(url) {
   try {
@@ -31,6 +32,13 @@ const urlScrapper = async (req, res) => {
     // url will be a normal text of the problem
     const url = req.body.url;
 
+    if (!req.body.playlistId) throw new Error("Please select the playlist...");
+
+    const playlist = await playlistContainer.findById(req.body.playlistId).populate("problemStore");
+    if (!playlist.playlistCreator.equals(req.result._id)) {
+      throw new Error("You are not the owner of this playlist!");
+    }
+
     let problemToUpload = null;
 
     // function which removes all the text exept the domain url only
@@ -38,6 +46,13 @@ const urlScrapper = async (req, res) => {
 
     //  function which removes the unnecessary parts from the problem url
     const problemURL = cleanUrl(url);
+
+    if(playlist.problemStore.find((data)=> data.problemURL == problemURL))
+      res.send({
+    success:false,
+    message:"Problem already exist in your playlist.."
+    })
+
     // console.log("before switch")
 
     // this will give you the platform name maybe (gfg)
@@ -70,7 +85,7 @@ const urlScrapper = async (req, res) => {
       //not working but managed manually (by extracting the title from url)
       case "spoj":
         problemToUpload = {
-          title: await getSpojProblemCode(problemURL),
+          title: getSpojProblemCode(problemURL),
           problemSourcedFrom: "spoj",
           companyTags: [],
           topicTags: [],
@@ -96,25 +111,26 @@ const urlScrapper = async (req, res) => {
 
     // console.log("after switch statement")
 
-    const popularSheets = req.body.collectionName;
-    const createdBy = req.result._id;
-
-    problemToUpload.popularSheets = popularSheets;
-    problemToUpload.createdBy = createdBy;
+    problemToUpload.playlistId = req.body.playlistId;
+    problemToUpload.createdBy = req.result._id;
     const data = problemToUpload;
     console.log(data);
-    await inputURL.create(data);
-    res
-      .status(201)
-      .send({
-        ...problemToUpload,
-        success: true,
-        message: "problems successfully imported to your playlist",
-      });
+
+    const osmosisURLData = await osmosisURL.create(data);
+
+    playlist.problemStore.push(osmosisURLData._id);
+
+    await playlist.save();
+
+    res.status(201).send({
+      ...problemToUpload,
+      success: true,
+      message: "problems successfully imported to your playlist",
+    });
   } catch (err) {
     console.log("error in urlScrapper during single url Scrapping " + err);
-    res.status(400).send({
-      message: "Invalid url or unsupported platform!",
+    res.send({
+      message: `${err.message}` || "Invalid url or unsupported platform!",
       success: false,
     });
   }

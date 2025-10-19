@@ -9,6 +9,7 @@ import SolvedProblemsPanel from "../../components/layouts/ProfiePageLayout/Solve
 import AttemptedProblemsPanel from "../../components/layouts/ProfiePageLayout/AttemptedProblemsPanel";
 import PlaylistsPanel from "../../components/layouts/ProfiePageLayout/PlaylistsPanel";
 import axiosClient from "../../axiosClient";
+import ProfilePageSkeleton from "../../components/skeleton/profileSkeleton";
 
 // Mock user data - in a real app, this would come from your Redux store or context
 // const mockUser = {
@@ -33,13 +34,18 @@ export default function ProfilePage() {
     async function fetchProfileData() {
       setLoading(true);
 
-      const userInfo = await axiosClient.get("/user/getProfile");
-      // console.log("userInfo is: ");
-      // console.log(userInfo.data);
+      // const userInfo = await axiosClient.get("/user/getProfile");
+      // // console.log("userInfo is: ");
+      // // console.log(userInfo.data);
 
-      const attemptedInfo = await axiosClient.get(
-        "/problem/problemAttemptedByUser"
-      );
+      // const attemptedInfo = await axiosClient.get(
+      //   "/problem/problemAttemptedByUser"
+      // );
+
+      const [userInfo, attemptedInfo] = await Promise.all([
+        await axiosClient.get("/user/getProfile"),
+        await axiosClient.get("/problem/problemAttemptedByUser"),
+      ]);
       // console.log("attemptedInfo is: ");
       // console.log(attemptedInfo.data);
 
@@ -58,7 +64,7 @@ export default function ProfilePage() {
     fetchProfileData();
   }, []);
 
-  if (loading) return <div>Loading Profile Page Data...</div>;
+  if (loading) return <ProfilePageSkeleton />;
 
   return (
     <div className="bg-slate-50 min-h-screen p-4 sm:p-8 font-['Comic_Neue']">
@@ -78,12 +84,14 @@ export default function ProfilePage() {
               <AccountPanel user={profilePageData?.userInfo} />
             )}
             {activeTab === "solved" && (
-              <SolvedProblemsPanel user={profilePageData.userInfo.data} />
+              <SolvedProblemsPanel
+                problems={profilePageData.userInfo.data.problemSolved}
+              />
             )}
             {/* Add other panels here similarly */}
             {activeTab === "attempted" && (
               <AttemptedProblemsPanel
-                user={profilePageData.attemptedInfo.data}
+                problems={profilePageData.attemptedInfo.data}
               />
             )}
             {activeTab === "playlists" && (
