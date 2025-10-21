@@ -1,10 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Navigate, Outlet, useLocation } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import Navbar from "../components/Navbar";
 
 const ProtectedRoutes = () => {
-  const location = useLocation();
   const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
 
   console.log("inside the protected route");
@@ -17,7 +16,7 @@ const ProtectedRoutes = () => {
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    return <Navigate to="/auth/login" replace />;
   }
 
   // Render protected content if authenticated

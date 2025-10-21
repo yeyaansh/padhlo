@@ -17,6 +17,8 @@ import {
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import axiosClient from "../../../axiosClient";
+import { useDispatch } from "react-redux";
+import { deleteAccount } from "../../../redux/authSlice";
 
 // You can reuse these components from your other pages
 const InputField = ({ id, label, register, error, ...props }) => (
@@ -121,21 +123,24 @@ const ToggleSwitch = ({ label }) => (
 
 export default function AccountPanel(user) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleDeleteAccount = async () => {
-    const deleteAccount = await axiosClient.delete("/user/deleteProfile");
-    console.log(deleteAccount.data);
-    if (deleteAccount.data.success) {
-      // dispatch()
-      toast.success(deleteAccount.data.message);
-      // navigate("/");
-      window.location.reload();
-    }
+    // const deleteAccount = await axiosClient.delete("/user/deleteProfile");
+    // console.log(deleteAccount.data);
+    // if (deleteAccount.data.success) {
+    //   // dispatch()
+    //   toast.success(deleteAccount.data.message)
+    //   .then(setTimeout(()=>window.location.reload(),2000))
+    //   // navigate("/");
+      
+    // }
 
-    if (!deleteAccount.data.success) {
-      toast.warning(deleteAccount.data.message);
-      window.location.reload();
-    }
+    // if (!deleteAccount.data.success) {
+    //   toast.warning(deleteAccount.data.message);
+    //   // window.location.reload();
+    // }
+    dispatch(deleteAccount());
   };
 
   console.log(user);

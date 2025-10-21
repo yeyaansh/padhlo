@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { z } from "zod";
-import { loginUser } from "../../redux/authSlice";
+import { Adminlogin, loginUser } from "../../redux/authSlice";
 import { useSelector } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useLocation, useNavigate } from "react-router";
@@ -118,22 +118,21 @@ const PasswordInputField = ({
   );
 };
 
-export default function LoginPage() {
-  const location = useLocation();
+export default function AdminAuthLoginPage() {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const from = location.state?.from?.pathname || "/dashboard";
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(from, { replace: true });
+      navigate("/");
     }
-  }, [isAuthenticated, navigate, from]);
+  }, [isAuthenticated, navigate]);
 
   const loginSchema = z.object({
     email_id: z.email("Please enter a valid email address."),
     password: z.string().min(8, "Password must be at least 8 characters."),
+    role: z.enum(["admin", "user"]).default("admin"),
   });
 
   const {
@@ -143,7 +142,7 @@ export default function LoginPage() {
   } = useForm({ resolver: zodResolver(loginSchema) });
 
   function submitForm(value) {
-    dispatch(loginUser(value));
+    dispatch(Adminlogin(value));
   }
 
   return (
@@ -152,11 +151,11 @@ export default function LoginPage() {
         {/* Left Panel (Visual/Welcome) */}
         <div className="hidden md:flex flex-col items-center justify-center p-10 bg-blue-100 border-r-4 border-dashed border-gray-300">
           <h2 className="text-4xl font-bold text-gray-800 text-center">
-            Welcome Back to the Sketchbook!
+            Welcome Back to the Sketchboard! - Admin
           </h2>
           <p className="mt-4 text-center text-gray-600">
-            Pick up your pencil where you left off and continue your creative
-            coding adventure.
+            Pick up your laptop and let's change this world from your
+            countributions. And make a creative world...
           </p>
           <div className="text-7xl mt-8">👋</div>
         </div>
@@ -165,7 +164,9 @@ export default function LoginPage() {
         <div className="p-8 sm:p-12">
           <div className="text-center md:text-left mb-8">
             <h1 className="text-5xl font-bold text-gray-800">Sign In</h1>
-            <p className="text-gray-600 mt-2">Let's get back to solving.</p>
+            <p className="text-gray-600 mt-2">
+              Hello Admin, let's get back to help people...
+            </p>
           </div>
 
           <form onSubmit={handleSubmit(submitForm)} className="space-y-6">
@@ -233,9 +234,9 @@ export default function LoginPage() {
               </p>
               <p className="pt-4">&nbsp; | &nbsp;</p>
               <p className="text-center text-gray-600 text-xs  pt-4">
-                 Admin{" - "}
+                User{" - "}
                 <Link
-                  to="/admin/auth/login"
+                  to="/auth/login"
                   className="text-blue-600 hover:underline font-bold"
                 >
                   Login

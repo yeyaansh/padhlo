@@ -1,6 +1,8 @@
 import React from "react";
 import axiosClient from "../../../axiosClient";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../../redux/authSlice.js";
 
 const StatCard = ({ label, value, icon }) => (
   <div className="bg-white p-4 rounded-lg sketch-border-1 text-center">
@@ -10,20 +12,30 @@ const StatCard = ({ label, value, icon }) => (
   </div>
 );
 
-const userLogout = async () => {
-  const isLoggedOut = await axiosClient.post("/user/logout");
-  console.log(isLoggedOut.data);
-  if (isLoggedOut.data.success == true) {
-    toast
-      .success(`${isLoggedOut.data.message}`)
-      .then(setTimeout(() => window.location.reload(), 2000));
-  }
+// const userLogout = () => {
 
-  if (isLoggedOut.data.success == false)
-    toast.warning(`${isLoggedOut.data.message}`);
-};
+//   // const isLoggedOut = await axiosClient.post("/user/logout");
+//   // console.log(isLoggedOut.data);
+//   // if (isLoggedOut.data.success == true) {
+//   //   toast
+//   //     .success(`${isLoggedOut.data.message}`)
+//   //     .then(setTimeout(() => window.location.reload(), 2000));
+//   // }
+
+//   // if (isLoggedOut.data.success == false)
+//   //   toast.warning(`${isLoggedOut.data.message}`);
+
+//   dispatch(logoutUser()).then((data) => console.log("aur bolo" ,data));
+// };
 
 export default function ProfileHeader(user) {
+    const dispatch = useDispatch();
+
+const userLogout = async() => {
+  dispatch(logoutUser());
+};
+
+
   const joined = new Date(user?.user?.data.createdAt).toLocaleDateString();
   // console.log(user?.user?.data);
   return (

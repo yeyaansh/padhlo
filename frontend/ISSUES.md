@@ -5,3 +5,8 @@
 3. When Submitting or running the answer, make sure your submit button and run button disabled so that no one can make the request again and also add test cases area and message area whether accepted or not and also an attemptedQuestion for that question id and if possible the result area also..
 
 {{ 4. for this time we skipped the problemsAttemptedPart}}
+
+4. "View" "Continue" options in ProfilePage in attempted tab, view should show the code that was written and continue should take the code (previously attempted) and open in codeEditor. And "Review" option in solved tab should allow the users to view their successfully submitted code and an option to jump to that problem
+
+5. A reset button to delete the the code written by user in code-editor (although if user jump to any other programming language it automatically resets them.. not a necessary feature..)
+

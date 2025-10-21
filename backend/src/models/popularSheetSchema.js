@@ -69,9 +69,9 @@ const popularSheetsSchema = new Schema(
   { timestamps: true }
 );
 
-const problemCollection = mongoose.model(
-  "problemCollection",
+const osmosisProblemCollection = mongoose.model(
+  "osmosisProblemCollection",
   popularSheetsSchema
 );
 
-export default problemCollection;
+export default osmosisProblemCollection;

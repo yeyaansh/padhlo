@@ -32,10 +32,12 @@ import ProfilePageLayout from "./components/layouts/ProfiePageLayout/index.jsx";
 import ProfilePage from "./pages/ProfilePage/index.jsx";
 import PlaylistPageLayout from "./components/layouts/PlaylistPageLayout/PlaylistPageLayout.jsx";
 import PlaylistPageById from "./pages/PlaylistPage/index.jsx";
+import AdminAuthorizedRoutes from "./routes/AdminAuthorizedRoutes.jsx";
+import AdminAuthLoginPage from "./pages/AdminPage/AdminAuthLoginPage.jsx";
+import AdminAuthLayout from "./components/layouts/AdminLayout/AdminAuthLayout/AdminAuthLayout.jsx";
 
 function App() {
   const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
-  const location = useLocation();
   const dispatch = useDispatch();
 
   // console.log(
@@ -69,7 +71,7 @@ getKey={(location,matches)=>{
             !isAuthenticated ? (
               <AuthPageLayout></AuthPageLayout>
             ) : (
-              <Navigate to={location.state?.from?.pathname || "/"}></Navigate>
+              <Navigate to={"/dashboard"}></Navigate>
             )
           }
         >
@@ -118,6 +120,32 @@ getKey={(location,matches)=>{
             element={<OsmosisPageLayout></OsmosisPageLayout>}
           >
             <Route index element={<OsmosisPage />}></Route>
+          </Route>
+        </Route>
+
+        <Route
+          path="/admin/auth"
+          element={
+            !isAuthenticated ? (
+              <AdminAuthLayout></AdminAuthLayout>
+            ) : (
+              <Navigate to={"/admin/dashboard"}></Navigate>
+            )
+          }
+        >
+          <Route index element={<Navigate to="login" replace />}></Route>
+          <Route path="login" element={<AdminAuthLoginPage />}></Route>
+        </Route>
+
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/admin" element={<AdminAuthorizedRoutes />}>
+            <Route path="auth" element={<AdminAuthLayout />}>
+              <Route
+                index
+                element={<Navigate to={"qlogin"} replace></Navigate>}
+              ></Route>
+              <Route path="qlogin" element={<AdminAuthLoginPage />}></Route>
+            </Route>
           </Route>
         </Route>
       </Routes>

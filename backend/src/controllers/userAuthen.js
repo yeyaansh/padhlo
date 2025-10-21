@@ -6,6 +6,8 @@ import expireCookie from "../utils/expireCookie.js";
 import jwt from "jsonwebtoken";
 import submission from "../models/userSubmissionSchema.js";
 import playlistContainer from "../models/playlistContainerSchema.js";
+import osmosisURL from "../models/urlSchema.js";
+import osmosisProblemCollection from "../models/popularSheetSchema.js";
 
 //checkAuth function
 const checkAuth = async (req, res) => {
@@ -65,6 +67,7 @@ const register = async (req, res) => {
       email_id: newUser.email_id,
       first_name: newUser.first_name,
       last_name: newUser.last_name,
+      role: newUser.role,
     };
     console.log("reply value on backend");
 
@@ -78,6 +81,7 @@ const register = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.send({
+      result: null,
       success: false,
       message: `${err.message}`,
     });
@@ -102,6 +106,7 @@ const login = async (req, res) => {
       email_id: existingUser.email_id,
       first_name: existingUser.first_name,
       last_name: existingUser.last_name,
+      role: existingUser.role,
     };
     console.log("reply value on backend");
 
@@ -132,14 +137,14 @@ const logout = async (req, res) => {
     // res.cookie("token",null, new Date(Date.now()));
     res.clearCookie("token");
     res.status(200).send({
-      success:true,
-      message:"Successfully LoggedOut",
+      success: true,
+      message: "Successfully LoggedOut",
     });
   } catch (err) {
     console.log(err);
     res.send({
-      success:false,
-      message:`${err.message}`,
+      success: false,
+      message: `${err.message}`,
     });
   }
 };
@@ -192,12 +197,67 @@ const adminRegister = async (req, res) => {
     res.status(400).send(err.message);
   }
 };
+// admin-login function
+const adminLogin = async (req, res) => {
+  try {
+    const { email_id, password, role } = req.body;
+    if (!email_id) throw new Error("email_id can't be empty");
+    if (!password) throw new Error("Password can't be empty");
+    if (!role) throw new Error("Invalid Credentials");
+    const existingUser = await User.findOne({ email_id });
+    if (!existingUser) throw new Error("Invalid Credentials");
+    const validUser = await bcrypt.compare(password, existingUser.password);
+    if (!validUser) throw new Error("Invalid Credentials");
+    if (existingUser.role != "admin") throw new Error("Invalid Credentials");
+
+    // if valid user then pass the data came from db to generate cookie
+    const token = genCookie(existingUser);
+    res.cookie("token", token, { maxAge: 60 * 60 * 1000 });
+    const reply = {
+      _id: existingUser._id,
+      email_id: existingUser.email_id,
+      first_name: existingUser.first_name,
+      last_name: existingUser.last_name,
+      role: existingUser.role,
+    };
+    console.log("reply value on backend");
+
+    console.log(reply);
+
+    res.status(200).send({
+      result: reply,
+      success: true,
+      message: "Admin account logged-in successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      result: null,
+      success: false,
+      message: `${err.message}`,
+    });
+  }
+};
 
 const deleteProfile = async (req, res) => {
   try {
+    // decode the cookie
+    const payload = jwt.decode(req.cookies.token);
+    const { exp } = payload;
+
     const userId = req.result._id;
-    await User.findByIdAndDelete(userId);
-    await submission.deleteMany(userId);
+
+    await Promise.all([
+      await User.findByIdAndDelete(userId),
+      await submission.deleteMany(userId),
+      await osmosisURL.deleteMany({ createdBy: userId }),
+      await osmosisProblemCollection.deleteMany({ createdBy: userId }),
+      await playlistContainer.deleteMany({ playlistCreator: userId }),
+    ]);
+
+    // calling expireCookie function and passing token and expiry time (in ms from EPOCH time)
+    await expireCookie(req.cookies.token, exp);
+    res.clearCookie("token");
     res.status(200).send({
       success: true,
       message: "Your Profile Deleted Successfully",
@@ -210,6 +270,7 @@ const deleteProfile = async (req, res) => {
     });
   }
 };
+
 export {
   checkAuth,
   register,
@@ -217,6 +278,6 @@ export {
   logout,
   getProfile,
   adminRegister,
-  // adminLogin,
+  adminLogin,
   deleteProfile,
 };
