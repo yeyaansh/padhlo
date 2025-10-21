@@ -131,10 +131,16 @@ const logout = async (req, res) => {
     // clear cookie
     // res.cookie("token",null, new Date(Date.now()));
     res.clearCookie("token");
-    res.status(200).send("Successfully LoggedOut");
+    res.status(200).send({
+      success:true,
+      message:"Successfully LoggedOut",
+    });
   } catch (err) {
     console.log(err);
-    res.status(401).send("error during logging-out " + err.message);
+    res.send({
+      success:false,
+      message:`${err.message}`,
+    });
   }
 };
 // getInfo function

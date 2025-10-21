@@ -3,8 +3,7 @@ import { Outlet } from 'react-router'
 
 const PlaylistPageLayout = () => {
   return (
-    <div>
-        <div>PlaylistPageLayout</div>
+      <div className="pt-8">
         <Outlet/>
     </div>
     

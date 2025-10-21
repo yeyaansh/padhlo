@@ -177,7 +177,9 @@ export default function AccountPanel(user) {
   } = useForm({
     resolver: zodResolver(passwordSchema),
   });
-  const onPasswordSubmit = (data) => console.log("Password change:", data);
+  const onPasswordSubmit = (data) => {
+    console.log("Password change:", data);
+  };
 
   return (
     <div className="bg-white p-6 sm:p-8 rounded-xl sketch-border-1 space-y-12">
@@ -235,7 +237,8 @@ export default function AccountPanel(user) {
       <hr className="border-dashed border-gray-300" />
 
       {/* --- Change Password Form --- */}
-      <form onSubmit={handleSubmitPassword(onPasswordSubmit)}>
+      
+      {/* <form onSubmit={handleSubmitPassword(onPasswordSubmit)}>
         <h2 className="text-2xl font-bold text-gray-800">Change Password</h2>
         <div className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 gap-6">
           <PasswordInputField
@@ -244,7 +247,7 @@ export default function AccountPanel(user) {
             register={registerPassword}
             error={passwordErrors.currentPassword}
           />
-          <div></div> {/* Spacer */}
+          <div></div>
           <PasswordInputField
             id="newPassword"
             label="New Password"
@@ -264,9 +267,9 @@ export default function AccountPanel(user) {
         >
           Update Password
         </button>
-      </form>
+      </form> */}
 
-      <hr className="border-dashed border-gray-300" />
+      {/* <hr className="border-dashed border-gray-300" /> */}
 
       {/* --- Notifications Section --- */}
       <div>

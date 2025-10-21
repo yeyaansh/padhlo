@@ -1,4 +1,6 @@
 import React from "react";
+import axiosClient from "../../../axiosClient";
+import { toast } from "sonner";
 
 const StatCard = ({ label, value, icon }) => (
   <div className="bg-white p-4 rounded-lg sketch-border-1 text-center">
@@ -8,12 +10,25 @@ const StatCard = ({ label, value, icon }) => (
   </div>
 );
 
+const userLogout = async () => {
+  const isLoggedOut = await axiosClient.post("/user/logout");
+  console.log(isLoggedOut.data);
+  if (isLoggedOut.data.success == true) {
+    toast
+      .success(`${isLoggedOut.data.message}`)
+      .then(setTimeout(() => window.location.reload(), 2000));
+  }
+
+  if (isLoggedOut.data.success == false)
+    toast.warning(`${isLoggedOut.data.message}`);
+};
+
 export default function ProfileHeader(user) {
   const joined = new Date(user?.user?.data.createdAt).toLocaleDateString();
   // console.log(user?.user?.data);
   return (
     <div className="bg-white rounded-xl sketch-border-1 p-6">
-      <div className="flex flex-col sm:flex-row items-center gap-6">
+      <div className="flex flex-col sm:flex-row items-center gap-6 relative">
         <img
           src={
             user?.user?.avatarUrl || "https://avatar.iran.liara.run/public/boy"
@@ -28,6 +43,12 @@ export default function ProfileHeader(user) {
           <p className="text-gray-500">Joined {joined}</p>
           {/* <p className="text-gray-500">Just Sotime</p> */}
         </div>
+        <button
+          onClick={userLogout}
+          className="absolute right-0 top-0 sketch-button bg-red-500 py-1 px-3 text-lg rounded-sm text-white font-bold hover:cursor-pointer border-black border-1"
+        >
+          Logout
+        </button>
       </div>
       <div className="mt-6 grid sm:grid-cols-3 gap-4">
         {/* <StatCard label="Problems Solved" value={user.problemSolved.length} icon="" /> */}
