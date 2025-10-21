@@ -8,7 +8,7 @@ export default function ProblemListItem({ problem }) {
   };
 
   return (
-    <div className="bg-white p-5 rounded-xl sketch-border-1 flex items-center justify-between gap-4">
+    <div className="bg-white p-4   rounded-xl border-2 flex items-center justify-between gap-4">
       <div>
         <h3 className="text-xl font-bold text-gray-800">{problem.title}</h3>
         <span
