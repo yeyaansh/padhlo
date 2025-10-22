@@ -168,7 +168,7 @@ const authSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state, action) => {
         console.log("Logged Out fulfilled:", action.payload);
         state.isLoading = false;
-        state.isAuthenticated = !action.payload.success;
+        state.isAuthenticated = false;
         state.user = null;
         state.role = null;
         state.error = null;

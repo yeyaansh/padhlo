@@ -35,6 +35,7 @@ import PlaylistPageById from "./pages/PlaylistPage/index.jsx";
 import AdminAuthorizedRoutes from "./routes/AdminAuthorizedRoutes.jsx";
 import AdminAuthLoginPage from "./pages/AdminPage/AdminAuthLoginPage.jsx";
 import AdminAuthLayout from "./components/layouts/AdminLayout/AdminAuthLayout/AdminAuthLayout.jsx";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 
 function App() {
   const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
@@ -148,6 +149,7 @@ getKey={(location,matches)=>{
             </Route>
           </Route>
         </Route>
+        <Route path="*" element={<NotFoundPage/>}></Route>
       </Routes>
     </>
   );
