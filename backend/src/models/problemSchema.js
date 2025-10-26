@@ -118,6 +118,10 @@ const problemSchema = new Schema({
       },
     },
   ],
+  videoURL: {
+    type:Schema.Types.ObjectId,
+    ref:'videoSolution'
+  },
   problemCreator: {
     type: Schema.Types.ObjectId,
     ref: "User",

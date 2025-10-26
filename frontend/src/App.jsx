@@ -36,6 +36,7 @@ import AdminAuthorizedRoutes from "./routes/AdminAuthorizedRoutes.jsx";
 import AdminAuthLoginPage from "./pages/AdminPage/AdminAuthLoginPage.jsx";
 import AdminAuthLayout from "./components/layouts/AdminLayout/AdminAuthLayout/AdminAuthLayout.jsx";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
+import AdminDashboard from "./pages/AdminPage/Dashboard/admindashboard.jsx";
 
 function App() {
   const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
@@ -140,13 +141,8 @@ getKey={(location,matches)=>{
 
         <Route element={<ProtectedRoutes />}>
           <Route path="/admin" element={<AdminAuthorizedRoutes />}>
-            <Route path="auth" element={<AdminAuthLayout />}>
-              <Route
-                index
-                element={<Navigate to={"qlogin"} replace></Navigate>}
-              ></Route>
-              <Route path="qlogin" element={<AdminAuthLoginPage />}></Route>
-            </Route>
+          <Route index element={<Navigate to={"dashboard"} replace/>}></Route>
+          <Route path="dashboard" element={<AdminDashboard/>}></Route>
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage/>}></Route>

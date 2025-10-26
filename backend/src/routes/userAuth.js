@@ -8,6 +8,7 @@ import {
   adminRegister,
   deleteProfile,
   adminLogin,
+  createdProblemList,
 } from "../controllers/userAuthen.js";
 import userMiddleware from "../middleware/userMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -20,6 +21,7 @@ userAuth.post("/logout", userMiddleware, logout);
 userAuth.get("/getProfile", userMiddleware, getProfile);
 userAuth.post("/admin/register", adminMiddleware, adminRegister); // one admin is creating another admin's account
 userAuth.post("/admin/login", adminLogin);
+userAuth.get("/admin/createdProblemList",adminMiddleware, createdProblemList);
 userAuth.delete("/deleteProfile", userMiddleware, deleteProfile);
 
 export default userAuth;

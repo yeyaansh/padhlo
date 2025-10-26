@@ -2,8 +2,8 @@ import { Outlet } from "react-router";
 
 const AdminAuthorizedRoutes = () => {
   return (
-    <div>
-      <div>AdminAuthorizedRoutes</div>
+    <div className="pt-8">
+      {/* <div>AdminAuthorizedRoutes</div> */}
       <Outlet/>
     </div>
   );

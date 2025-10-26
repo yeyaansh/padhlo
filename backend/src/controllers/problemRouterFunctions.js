@@ -40,7 +40,7 @@ const createProblem = async (req, res) => {
       });
       // submissions.map((value)=> console.log(value))
       const batchTokens = await batchSubmission(submissions);
-      // console.log(batchTokens)
+      console.log(batchTokens)
 
       // store token data in an array, this helps in future to get the information about the status of the submitted codes
       const resultToken = batchTokens.map((k) => k.token);
@@ -57,9 +57,12 @@ const createProblem = async (req, res) => {
       } of batchSubmissionStatus.submissions) {
         countTestCases++;
         if (status_id != 3) {
-          return res
-            .status(401)
-            .send(
+          console.log(
+            "Error in your Submitted Code while creating the problem: " +
+              `language: ${language_id}, statusId: ${status_id}, and countTestCases: ${countTestCases}`
+          );
+          return res.status(400)
+            .json(
               "Error in your Submitted Code while creating the problem: " +
                 `language: ${language_id}, statusId: ${status_id}, and countTestCases: ${countTestCases}`
             );
@@ -187,13 +190,11 @@ const fetchProblemById = async (req, res) => {
       throw new Error("This Problem Id doen't exist");
     }
 
-    res
-      .status(200)
-      .send({
-        ...problemById,
-        success: true,
-        message: "successfully fetched the problem",
-      });
+    res.status(200).send({
+      ...problemById,
+      success: true,
+      message: "successfully fetched the problem",
+    });
   } catch (err) {
     console.log("error while fetching the data from db " + err);
     res.status(400).send({
@@ -286,7 +287,7 @@ const problemAttemptedByUser = async (req, res) => {
   try {
     const userId = req.result._id;
     // const problemId = req.params.id;
-    const answer = await submission.find({ userId }).populate('problemId');
+    const answer = await submission.find({ userId }).populate("problemId");
     console.log(answer);
     res.status(200).send(answer);
   } catch (err) {
@@ -305,5 +306,5 @@ export {
   fetchAllProblem,
   uniqueSolvedProblems,
   problemAttemptedById,
-  problemAttemptedByUser
+  problemAttemptedByUser,
 };

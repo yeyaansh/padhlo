@@ -47,8 +47,8 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosClient.post("/user/logout");
-      console.log('hello ji')
-      console.log(response.data)
+      console.log("hello ji");
+      console.log(response.data);
       if (response.data.success) toast.success(`${response.data.message}`);
       if (!response.data.success) toast.warning(`${response.data.message}`);
 
@@ -69,7 +69,7 @@ export const Adminlogin = createAsyncThunk(
       // });
 
       if (!response.data.success) toast.error(`${response.data.message}`);
-      console.log(response.data)
+      console.log(response.data);
       return response.data;
       // return response.data;
     } catch (error) {
@@ -84,12 +84,10 @@ export const deleteAccount = createAsyncThunk(
     try {
       const response = await axiosClient.delete("/user/deleteProfile");
       console.log(response);
-      if(response.data.success)
-        toast.success(`${response.data.message}`)
+      if (response.data.success) toast.success(`${response.data.message}`);
 
-      if(!response.data.success)
-        toast.error(`${response.data.message}`)
-      
+      if (!response.data.success) toast.error(`${response.data.message}`);
+
       return response.data;
     } catch (error) {
       // Note: error.response?.data is a robust way to access specific error information from an Axios response.
@@ -151,7 +149,11 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;
-        state.role = action.payload.result?.role;
+        state.role = action.payload.result.role;
+        console.log(
+          "role in loginUser.fullfiled is: ",
+          action.payload.result.role
+        );
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -186,6 +188,8 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;
+        state.role = action.payload.result.role;
+        console.log("role in checkAuthh ",action.payload.result.role);
         state.error = null;
       })
       .addCase(checkAuth.rejected, (state, action) => {
@@ -203,7 +207,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;
-        state.role = action.payload.result?.role;
+        state.role = action.payload.result.role;
         state.error = null;
       })
       .addCase(Adminlogin.rejected, (state, action) => {

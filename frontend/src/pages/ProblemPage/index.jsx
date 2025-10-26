@@ -85,7 +85,7 @@ console.log("inside problem for all ", "isAuthe: ", isAuthenticated, " isLoading
             <div>
               <div className="flex items-start justify-between mb-3">
                 <h3
-                  className="text-2xl font-bold text-gray-800 group-hover:text-blue-700 transition-colors leading-tight line-clamp-2 sketchy-underline"
+                  className="text-2xl font-bold truncate text-gray-800 group-hover:text-blue-700 transition-colors leading-tight line-clamp-2 sketchy-underline"
                   style={{ "--underline-color": difficulty.borderColor }}
                 >
                   {problem.title}

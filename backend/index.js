@@ -10,6 +10,7 @@ import submitRouter from "./src/routes/userSubmission.js";
 import problemRouter from "./src/routes/problemRouter.js";
 import osmosisRouter from "./src/routes/osmosisRouter.js";
 import playlistRouter from "./src/routes/playlistRouter.js";
+import videoRouter from "./src/routes/videoRouter.js";
 
 app.use(
   cors({
@@ -26,6 +27,7 @@ app.use("/problem", problemRouter);
 app.use("/pid", submitRouter);
 app.use("/osmosis", osmosisRouter);
 app.use("/playlist",playlistRouter);
+app.use('/video',videoRouter);
 
 const startServer = async () => {
   try {

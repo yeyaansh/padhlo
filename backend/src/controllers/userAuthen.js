@@ -8,6 +8,8 @@ import submission from "../models/userSubmissionSchema.js";
 import playlistContainer from "../models/playlistContainerSchema.js";
 import osmosisURL from "../models/urlSchema.js";
 import osmosisProblemCollection from "../models/popularSheetSchema.js";
+import axiosClient from "../../../frontend/src/axiosClient/index.js";
+import problem from "../models/problemSchema.js";
 
 //checkAuth function
 const checkAuth = async (req, res) => {
@@ -17,6 +19,7 @@ const checkAuth = async (req, res) => {
       email_id: req.result.email_id,
       first_name: req.result.first_name,
       last_name: req.result.last_name,
+      role: req.result.role,
     };
 
     return res.status(200).json({
@@ -238,6 +241,38 @@ const adminLogin = async (req, res) => {
     });
   }
 };
+const createdProblemList = async (req, res) => {
+  try {
+    const { _id } = req.result;
+
+    const problemsArray = await problem.find({ problemCreator: _id });
+
+    if (!problemsArray.length)
+      return res.status(400).json({
+        success: false,
+        result:null,
+        message: "You haven't created any playlist yet!",
+      });
+
+    const reply = problemsArray;
+    console.log("sending all problems created by admin: ");
+
+    console.log(reply);
+
+    res.status(200).send({
+      result: reply,
+      success: true,
+      message: "All created-problems fetched successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.send({
+      result: null,
+      success: false,
+      message: `${err.message}`,
+    });
+  }
+};
 
 const deleteProfile = async (req, res) => {
   try {
@@ -280,4 +315,5 @@ export {
   adminRegister,
   adminLogin,
   deleteProfile,
+  createdProblemList,
 };
