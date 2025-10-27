@@ -12,7 +12,10 @@ const leetcode = async (link) => {
     // first store all the data in an array and then push them all in your db by one call to db
 
     // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     // 2. Set headers
@@ -104,7 +107,10 @@ const hackerrank = async (link) => {
     console.time("timing: ");
 
     // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     // 2. Set headers
@@ -195,7 +201,10 @@ const hackerearth = async (link) => {
     console.time("timing: ");
 
     // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     // 2. Set headers
@@ -279,7 +288,10 @@ const interviewbit = async (link) => {
     console.time("timing: ");
 
     // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     // 2. Set headers
@@ -385,7 +397,10 @@ const codingninjas = async (link) => {
     console.time("timing: ");
 
     // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     // 2. Set headers
@@ -475,7 +490,13 @@ const codingninjas = async (link) => {
 //     console.time("timing: ");
 
 //     // 1. Run in headless mode
-//     const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+//     const browser = await puppeteer.launch({
+//   headless: "new",
+//   args: [
+//     '--no-sandbox',
+//     '--disable-setuid-sandbox'
+//   ]
+// });
 //     const page = await browser.newPage();
 
 //     // 2. Set headers
@@ -571,7 +592,10 @@ const gfg = async (link) => {
     console.time("timing: ");
 
     // 1. Run in headless mode
-    const browser = await puppeteer.launch({ headless: "new" }); // or headless: 'new'
+    const browser = await puppeteer.launch({
+      headless: "new",
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
     const page = await browser.newPage();
 
     // 2. Set headers
