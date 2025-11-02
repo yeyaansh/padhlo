@@ -250,7 +250,7 @@ const createdProblemList = async (req, res) => {
     if (!problemsArray.length)
       return res.status(400).json({
         success: false,
-        result:null,
+        result: null,
         message: "You haven't created any playlist yet!",
       });
 

@@ -33,7 +33,10 @@ export const loginUser = createAsyncThunk(
       //   description: `${response.data.message}`,
       // });
 
-      if (!response.data.success) toast.error(`${response.data.message}`);
+      if (!response.data.success) {
+        toast.error(`${response.data.message}`);
+        throw Error(`${response.data.message}`);
+      }
       return response.data;
       // return response.data;
     } catch (error) {
@@ -189,7 +192,7 @@ const authSlice = createSlice({
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;
         state.role = action.payload.result.role;
-        console.log("role in checkAuthh ",action.payload.result.role);
+        console.log("role in checkAuthh ", action.payload.result.role);
         state.error = null;
       })
       .addCase(checkAuth.rejected, (state, action) => {

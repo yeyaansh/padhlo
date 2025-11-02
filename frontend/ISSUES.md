@@ -10,3 +10,6 @@
 
 5. A reset button to delete the the code written by user in code-editor (although if user jump to any other programming language it automatically resets them.. not a necessary feature..)
 
+6. when users signin with wrong credentials they getting toast message of 'invalid credentials' but the page is still loading giving the feeling that it is processing user's data...
+
+7. when admin haven't created any problem (new admin) when visiting the video solution page 400 error is showing..

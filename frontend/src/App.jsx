@@ -141,11 +141,14 @@ getKey={(location,matches)=>{
 
         <Route element={<ProtectedRoutes />}>
           <Route path="/admin" element={<AdminAuthorizedRoutes />}>
-          <Route index element={<Navigate to={"dashboard"} replace/>}></Route>
-          <Route path="dashboard" element={<AdminDashboard/>}></Route>
+            <Route
+              index
+              element={<Navigate to={"dashboard"} replace />}
+            ></Route>
+            <Route path="dashboard" element={<AdminDashboard />}></Route>
           </Route>
         </Route>
-        <Route path="*" element={<NotFoundPage/>}></Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>
     </>
   );

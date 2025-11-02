@@ -185,7 +185,7 @@ const fetchProblemById = async (req, res) => {
       .findById(id)
       .select(
         "title description difficultyLevel tags companies visibleTestCases starterCode"
-      );
+      ).populate("videoURL");
     if (!problemById) {
       throw new Error("This Problem Id doen't exist");
     }

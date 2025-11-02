@@ -3,6 +3,10 @@ import { useSelector } from "react-redux";
 import { NavLink } from "react-router"; // Corrected import from 'react-router' to 'react-router-dom'
 
 export default function Navbar() {
+  
+  const { role} = useSelector((state) => state.auth);
+  console.log('role in navbar', role)
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // ## NEW ##: State to track scroll position
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,10 +64,12 @@ export default function Navbar() {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <NavLink to="/dashboard" className={linkClassName}>Dashboard</NavLink>
+          {role == 'admin' && <NavLink to="/admin" className={linkClassName}>Admin</NavLink>}
+          {role == 'user' &&  <NavLink to="/dashboard" className={linkClassName}>Dashboard</NavLink>}
+            
             <NavLink to="/problem/all" className={linkClassName}>Problems</NavLink>
             <NavLink to="/osmosis" className={linkClassName}>Osmosis</NavLink>
-            <NavLink to="/profile" className="px-5 py-2 bg-purple-300 text-purple-900 text-lg font-bold rounded-lg sketch-button">
+            <NavLink to="/profile" className={linkClassName}>
               Profile
             </NavLink>
           </div>
@@ -90,7 +96,8 @@ export default function Navbar() {
 
       <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 flex flex-wrap sm:px-3 border-t-2 border-dashed border-gray-300">
-          <NavLink to="/dashboard" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Dashboard</NavLink>
+          {role == 'admin' && <NavLink to="/admin" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Admin</NavLink>}
+          {role == 'user' &&  <NavLink to="/dashboard" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Dashboard</NavLink>}
           <NavLink to="/problem/all" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Problems</NavLink>
           <NavLink to="/osmosis" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Osmosis</NavLink>
           <NavLink to="/profile" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Profile</NavLink>

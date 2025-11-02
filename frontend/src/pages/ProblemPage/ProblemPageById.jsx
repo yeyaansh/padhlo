@@ -7,6 +7,7 @@ import { LoadingState } from "../../components/common/LoadingState";
 import { ErrorState } from "../../components/common/ErrorState";
 import ProblemDescription from "../../components/common/ProblemDescription";
 import CodeEditor from "../../components/common/CodeEditor";
+import VideoSolution from "../../components/common/VideoSolution";
 
 export default function ProblemPageById() {
   const [problem, setProblem] = useState(null);
@@ -69,6 +70,12 @@ export default function ProblemPageById() {
             Description
           </TabButton>
           <TabButton
+            active={leftTab === "video"}
+            onClick={() => setLeftTab("video")}
+          >
+            Video 
+          </TabButton>
+          <TabButton
             active={leftTab === "discuss"}
             onClick={() => setLeftTab("discuss")}
           >
@@ -79,9 +86,14 @@ export default function ProblemPageById() {
           {leftTab === "description" && (
             <ProblemDescription problem={problem} />
           )}
+          {leftTab === "video" && (
+           <VideoSolution problem={problem}/>
+          )}
           {leftTab === "discuss" && (
-            <div className="text-center p-10">
-              Discussion forum coming soon! 💬
+            <div>
+              <div className="text-center p-10">
+                Discussion forum coming soon! 💬
+              </div>
             </div>
           )}
         </div>
