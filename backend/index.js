@@ -26,15 +26,15 @@ app.use("/user", userAuth);
 app.use("/problem", problemRouter);
 app.use("/pid", submitRouter);
 app.use("/osmosis", osmosisRouter);
-app.use("/playlist",playlistRouter);
-app.use('/video',videoRouter);
+app.use("/playlist", playlistRouter);
+app.use("/video", videoRouter);
 
 const startServer = async () => {
   try {
     const PORT = process.env.PORT || 3000;
     await Promise.all([dbmongo(), redisClient.connect()]);
     app.listen(PORT, () => {
-    // app.listen(PORT, "0.0.0.0", () => {
+      // app.listen(PORT, "0.0.0.0", () => {
       console.log("Server is Listening at Port No.: " + PORT);
     });
   } catch (err) {
