@@ -6,8 +6,8 @@ import Navbar from "../components/Navbar";
 const ProtectedRoutes = () => {
   const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
 
-  console.log("inside the protected route");
-  console.log("isAuthenticated:", isAuthenticated, "isLoading:", isLoading);
+  // console.log("inside the protected route");
+  // console.log("isAuthenticated:", isAuthenticated, "isLoading:", isLoading);
 
   // Show loading or nothing while checking auth
   if (isLoading) {

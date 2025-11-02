@@ -59,7 +59,7 @@ export default function HomePageLoggedIn() {
         const attemptArr = attemptedResponse.data.reverse();
 
         setProfile(profileResponse.data);
-        setAttempted(attemptArr[0].problemId);
+        setAttempted(attemptArr[0]?.problemId);
 
         // console.log("attemptedResponse.data");
         // console.log(attemptedResponse.data);

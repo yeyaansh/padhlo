@@ -7,8 +7,8 @@ export const registerUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axiosClient.post("/user/register", formData);
-      console.log("reponse");
-      console.log(response);
+      // console.log("reponse");
+      // console.log(response);
 
       if (response.data.success) toast.success(`${response.data.message}`);
       // toast("Congratulations!!", {
@@ -50,10 +50,13 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosClient.post("/user/logout");
-      console.log("hello ji");
-      console.log(response.data);
+      // console.log("hello ji");
+      // console.log(response.data);
       if (response.data.success) toast.success(`${response.data.message}`);
-      if (!response.data.success) toast.warning(`${response.data.message}`);
+      if (!response.data.success) {
+        toast.warning(`${response.data.message}`);
+        throw Error(`${response.data.message}`);
+      }
 
       return response.data;
     } catch (err) {
@@ -72,7 +75,7 @@ export const Adminlogin = createAsyncThunk(
       // });
 
       if (!response.data.success) toast.error(`${response.data.message}`);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
       // return response.data;
     } catch (error) {
@@ -86,7 +89,7 @@ export const deleteAccount = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosClient.delete("/user/deleteProfile");
-      console.log(response);
+      // console.log(response);
       if (response.data.success) toast.success(`${response.data.message}`);
 
       if (!response.data.success) toast.error(`${response.data.message}`);
@@ -103,7 +106,7 @@ export const checkAuth = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosClient.get("/user/checkAuth");
-      console.log(response);
+      // console.log(response);
 
       return response.data;
     } catch (error) {
@@ -132,7 +135,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = !!action.payload.result;
-        console.log(action.payload.result);
+        // console.log(action.payload.result);
         state.user = action.payload.result;
         state.role = action.payload.result.role;
         state.error = null;
@@ -148,15 +151,15 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log("Login fulfilled:", action.payload);
+        // console.log("Login fulfilled:", action.payload);
         state.isLoading = false;
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;
         state.role = action.payload.result.role;
-        console.log(
-          "role in loginUser.fullfiled is: ",
-          action.payload.result.role
-        );
+        // console.log(
+        //   "role in loginUser.fullfiled is: ",
+        //   action.payload.result.role
+        // );
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -171,7 +174,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
-        console.log("Logged Out fulfilled:", action.payload);
+        // console.log("Logged Out fulfilled:", action.payload);
         state.isLoading = false;
         state.isAuthenticated = false;
         state.user = null;
@@ -192,7 +195,7 @@ const authSlice = createSlice({
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;
         state.role = action.payload.result.role;
-        console.log("role in checkAuthh ", action.payload.result.role);
+        // console.log("role in checkAuthh ", action.payload.result.role);
         state.error = null;
       })
       .addCase(checkAuth.rejected, (state, action) => {
@@ -206,7 +209,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(Adminlogin.fulfilled, (state, action) => {
-        console.log("Admin Login fulfilled:", action.payload);
+        // console.log("Admin Login fulfilled:", action.payload);
         state.isLoading = false;
         state.isAuthenticated = !!action.payload.result;
         state.user = action.payload.result;

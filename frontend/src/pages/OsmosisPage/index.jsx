@@ -134,7 +134,7 @@ export default function OsmosisPage() {
     async function fetchPlaylists() {
       try {
         const response = await axiosClient.get("/playlist/all"); // Assuming this is your endpoint
-        console.log(response.data.playlistInfo);
+        // console.log(response.data.playlistInfo);
         setPlaylists(response.data.playlistInfo || []);
       } catch (error) {
         console.error("Failed to fetch playlists:", error);

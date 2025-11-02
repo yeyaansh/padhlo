@@ -12,13 +12,13 @@ export default function ProblemPageAll() {
 
   const {isAuthenticated, isLoading} = useSelector(state=>state.auth); 
 
-console.log("inside problem for all ", "isAuthe: ", isAuthenticated, " isLoading", isLoading);
+// console.log("inside problem for all ", "isAuthe: ", isAuthenticated, " isLoading", isLoading);
 
 
   useEffect(() => {
     const fetchAll = async () => {
       const response = await axiosClient.get("/problem/all");
-      console.log(response.data);
+      // console.log(response.data);
       setIsLoading(false);
       setAllFetchedProblem(response.data);
     };

@@ -133,7 +133,7 @@ export default function AccountPanel(user) {
     //   toast.success(deleteAccount.data.message)
     //   .then(setTimeout(()=>window.location.reload(),2000))
     //   // navigate("/");
-      
+
     // }
 
     // if (!deleteAccount.data.success) {
@@ -143,7 +143,7 @@ export default function AccountPanel(user) {
     dispatch(deleteAccount());
   };
 
-  console.log(user);
+  // console.log(user);
 
   // Form handling for Profile Information
   const profileSchema = z.object({
@@ -242,7 +242,7 @@ export default function AccountPanel(user) {
       <hr className="border-dashed border-gray-300" />
 
       {/* --- Change Password Form --- */}
-      
+
       {/* <form onSubmit={handleSubmitPassword(onPasswordSubmit)}>
         <h2 className="text-2xl font-bold text-gray-800">Change Password</h2>
         <div className="mt-4 grid sm:grid-cols-1 md:grid-cols-2 gap-6">

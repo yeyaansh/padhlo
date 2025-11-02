@@ -34,7 +34,7 @@ export default function ProblemPageById() {
 
         // The actual problem data might be nested, adjust as needed
         setProblem(response.data._doc || response.data);
-        console.log(response.data._doc);
+        // console.log(response.da  ta._doc);
       } catch (err) {
         console.error("Failed to fetch problem:", err);
         setError(err.message || "An unexpected error occurred.");

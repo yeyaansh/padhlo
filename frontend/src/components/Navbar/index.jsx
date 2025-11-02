@@ -5,7 +5,7 @@ import { NavLink } from "react-router"; // Corrected import from 'react-router' 
 export default function Navbar() {
   
   const { role} = useSelector((state) => state.auth);
-  console.log('role in navbar', role)
+  // console.log('role in navbar', role)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // ## NEW ##: State to track scroll position

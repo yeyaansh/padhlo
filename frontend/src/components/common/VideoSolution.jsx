@@ -108,7 +108,7 @@ export default function VideoSolution({ problem }) {
             className="absolute top-0 left-0 w-full h-full"
             src={`https://player.cloudinary.com/embed/?cloud_name=${cloudName}&public_id=${publicId}%2F${uId}%2F${uuIDMp4}&title=false&description=false&chapters=true&show_jump_controls=true&logo_onclick_url=https%3A%2F%2Fsolveimpact.com%2F&logo_image_url=https%3A%2F%2Fsolveimpact.com%2Fvite.svg&ai_highlights_graph=true&colors[accent]=%230DA9FF&source_types[0]=dash&text_tracks[subtitles][0][default]=true&text_tracks[subtitles][0][label]=Original`}
             allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-            allowFullScreen
+            // allowFullScreen
           ></iframe>
         </div>
         {/* --- ## IMPROVED STATS SECTION ## --- */}
@@ -119,8 +119,8 @@ export default function VideoSolution({ problem }) {
             className={`flex items-center gap-2 p-2 rounded-lg transition-colors duration-200 ${
               hasLiked
                 ? "bg-yellow-100 text-black" // Liked state
-                // : "text-gray-600 hover:bg-slate-100" // Default state
-                : "text-black hover:bg-slate-100" // Default state
+                : // : "text-gray-600 hover:bg-slate-100" // Default state
+                  "text-black hover:bg-slate-100" // Default state
             }`}
           >
             <LikeIcon liked={hasLiked} />

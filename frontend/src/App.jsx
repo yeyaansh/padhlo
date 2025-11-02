@@ -51,7 +51,7 @@ function App() {
 
   useEffect(() => {
     dispatch(checkAuth()).then((data) => {
-      console.log(data);
+      // console.log(data);
     });
   }, [dispatch]);
 

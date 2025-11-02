@@ -200,7 +200,7 @@ export default function RegisterPage() {
                 label="First Name"
                 register={register}
                 error={errors.first_name}
-                placeholder="Rohit"
+                placeholder="Yeyaansh"
                 required
               />
               <InputField
@@ -219,7 +219,7 @@ export default function RegisterPage() {
               type="email"
               register={register}
               error={errors.email_id}
-              placeholder="rohit@example.com"
+              placeholder="amisha@example.com"
               required
             />
             <PasswordInputField
