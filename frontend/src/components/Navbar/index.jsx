@@ -63,7 +63,7 @@ export default function Navbar() {
                 <div>
                   {" "}
                   <img
-                    src="../../../public/sketcheditor_logo_v1_transparent (1).png"
+                    src="../../../public/sketcheditor_logo_v1_transparent.png"
                     alt=""
                     width={33}
                     height={33}
