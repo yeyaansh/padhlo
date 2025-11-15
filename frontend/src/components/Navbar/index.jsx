@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"; // NEW: Import useEffect
 import { useSelector } from "react-redux";
-import { NavLink} from "react-router"; // Corrected import from 'react-router' to 'react-router-dom'
+import { NavLink } from "react-router"; // Corrected import from 'react-router' to 'react-router-dom'
 
 export default function Navbar() {
   const { role } = useSelector((state) => state.auth);
@@ -63,7 +63,7 @@ export default function Navbar() {
                 <div>
                   {" "}
                   <img
-                    src="../../../public/sketcheditor_logo_v1_transparent.png"
+                    src="../../assets/sketcheditor_logo_v1_transparent.png"
                     alt=""
                     width={33}
                     height={33}

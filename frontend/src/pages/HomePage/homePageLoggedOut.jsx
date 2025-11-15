@@ -153,7 +153,7 @@ export default function HomepageSketchbookFinal() {
             <div className="relative w-full max-w-[520px]">
               <div className="absolute -right-8 -top-6 hidden md:block">
                 <Polaroid
-                  src="/assets/problems-grid.png"
+                  src="../../assets/problems-grid.png"
                   alt="Problems grid"
                   rotate={-8}
                   width="220px"
@@ -163,7 +163,7 @@ export default function HomepageSketchbookFinal() {
 
               <div className="relative">
                 <Polaroid
-                  src="/assets/live-editor.png"
+                  src="../../assets/live-editor.png"
                   alt="Live editor"
                   rotate={0}
                   width="100%"
@@ -181,7 +181,7 @@ export default function HomepageSketchbookFinal() {
               <div className="absolute -left-6 bottom-[-18px] hidden md:block">
                 <div className="transform rotate-6">
                   <Polaroid
-                    src="/assets/osmosis-card.png"
+                    src="../../assets/osmosis-card.png"
                     alt="Osmosis preview"
                     rotate={6}
                     width="180px"
@@ -342,7 +342,7 @@ export default function HomepageSketchbookFinal() {
             <div>
               <div className="relative bg-white rounded-xl p-4 sketch-border-1">
                 <Polaroid
-                  src="/assets/osmosis-card.png"
+                  src="../../assets/osmosis-card.png"
                   alt="Osmosis card example"
                   rotate={5}
                   caption="Imported metadata card"
@@ -396,7 +396,7 @@ export default function HomepageSketchbookFinal() {
 
                 <div className="bg-white p-4 rounded-xl sketch-border-1">
                   <img
-                    src="/assets/playlist.png"
+                    src="../../assets/playlist.png"
                     alt="Playlist"
                     className="w-full rounded-md object-cover"
                     loading="lazy"
