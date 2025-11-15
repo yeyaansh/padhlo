@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react"; // NEW: Import useEffect
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router"; // Corrected import from 'react-router' to 'react-router-dom'
+import { NavLink} from "react-router"; // Corrected import from 'react-router' to 'react-router-dom'
 
 export default function Navbar() {
-  
-  const { role} = useSelector((state) => state.auth);
+  const { role } = useSelector((state) => state.auth);
   // console.log('role in navbar', role)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,30 +44,53 @@ export default function Navbar() {
     <nav
       className={`
         sticky z-50 transition-all duration-300 ease-in-out
-        ${isScrolled
-            ? 'top-0 rounded-b-lg shadow-lg' // Styles when scrolled
-            : 'top-4 mx-4 rounded-xl'      // Initial floating styles
+        ${
+          isScrolled
+            ? "top-0 rounded-b-lg shadow-lg" // Styles when scrolled
+            : "top-4 mx-4 rounded-xl" // Initial floating styles
         }
         bg-white/80 backdrop-blur-sm sketch-border-1
       `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0">
+          <div className="flex items-center gap-1">
             <NavLink
               to={isAuthenticated ? "/dashboard" : "/"}
               className="text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
             >
-              AlgoSketch
+              <div className="flex items-center gap-1">
+                <div>
+                  {" "}
+                  <img
+                    src="../../../public/sketcheditor_logo_v1_transparent (1).png"
+                    alt=""
+                    width={33}
+                    height={33}
+                  />
+                </div>
+                <div> Sketch Editor</div>
+              </div>
             </NavLink>
           </div>
-
           <div className="hidden md:flex items-center space-x-4">
-          {role == 'admin' && <NavLink to="/admin" className={linkClassName}>Admin</NavLink>}
-          {role == 'user' &&  <NavLink to="/dashboard" className={linkClassName}>Dashboard</NavLink>}
-            
-            <NavLink to="/problem/all" className={linkClassName}>Problems</NavLink>
-            <NavLink to="/osmosis" className={linkClassName}>Osmosis</NavLink>
+            {role == "admin" && (
+              <NavLink to="/admin" className={linkClassName}>
+                Admin
+              </NavLink>
+            )}
+            {role == "user" && (
+              <NavLink to="/dashboard" className={linkClassName}>
+                Dashboard
+              </NavLink>
+            )}
+
+            <NavLink to="/problem/all" className={linkClassName}>
+              Problems
+            </NavLink>
+            <NavLink to="/osmosis" className={linkClassName}>
+              Osmosis
+            </NavLink>
             <NavLink to="/profile" className={linkClassName}>
               Profile
             </NavLink>
@@ -81,12 +103,34 @@ export default function Navbar() {
             >
               <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
                 </svg>
               )}
             </button>
@@ -96,11 +140,45 @@ export default function Navbar() {
 
       <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 flex flex-wrap sm:px-3 border-t-2 border-dashed border-gray-300">
-          {role == 'admin' && <NavLink to="/admin" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Admin</NavLink>}
-          {role == 'user' &&  <NavLink to="/dashboard" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Dashboard</NavLink>}
-          <NavLink to="/problem/all" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Problems</NavLink>
-          <NavLink to="/osmosis" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Osmosis</NavLink>
-          <NavLink to="/profile" className={linkClassName} onClick={() => setIsMenuOpen(false)}>Profile</NavLink>
+          {role == "admin" && (
+            <NavLink
+              to="/admin"
+              className={linkClassName}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Admin
+            </NavLink>
+          )}
+          {role == "user" && (
+            <NavLink
+              to="/dashboard"
+              className={linkClassName}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Dashboard
+            </NavLink>
+          )}
+          <NavLink
+            to="/problem/all"
+            className={linkClassName}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Problems
+          </NavLink>
+          <NavLink
+            to="/osmosis"
+            className={linkClassName}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Osmosis
+          </NavLink>
+          <NavLink
+            to="/profile"
+            className={linkClassName}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Profile
+          </NavLink>
         </div>
       </div>
     </nav>

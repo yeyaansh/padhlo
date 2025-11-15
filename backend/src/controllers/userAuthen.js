@@ -8,7 +8,6 @@ import submission from "../models/userSubmissionSchema.js";
 import playlistContainer from "../models/playlistContainerSchema.js";
 import osmosisURL from "../models/urlSchema.js";
 import osmosisProblemCollection from "../models/popularSheetSchema.js";
-import axiosClient from "../../../frontend/src/axiosClient/index.js";
 import problem from "../models/problemSchema.js";
 
 //checkAuth function

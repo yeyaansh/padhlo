@@ -15,7 +15,10 @@ export const registerUser = createAsyncThunk(
       //   description: `${response.data.message}`,
       // });
 
-      if (!response.data.success) toast.error(`${response.data.message}`);
+      if (!response.data.success) {
+        toast.error(`${response.data.message}`);
+        throw Error(`${response.data.message}`);
+      }
       return response.data;
     } catch (error) {
       // Note: error.response?.data is a robust way to access specific error information from an Axios response.
