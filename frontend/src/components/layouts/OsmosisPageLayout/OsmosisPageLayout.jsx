@@ -3,7 +3,7 @@ import Navbar from "../../Navbar";
 
 export default function OsmosisPageLayout(){
     return(<>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="pt-8">
     {/* <div>OsmosisPageLayout</div> */}
         <Outlet></Outlet></div>

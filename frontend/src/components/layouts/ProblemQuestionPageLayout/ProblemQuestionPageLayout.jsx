@@ -3,7 +3,7 @@ import Navbar from "../../Navbar";
 
 export default function ProblemQuestionPageLayout(){
     return(<>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div>ProblemQuestionPageLayout</div>
         <Outlet></Outlet>
     </>)

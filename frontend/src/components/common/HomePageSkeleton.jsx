@@ -19,7 +19,7 @@ const ProblemCardSkeleton = () => (
 
 export default function HomePageSkeleton() {
   return (<>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="p-6 md:p-10 font-['Comic_Neue'] pt-10">
       {/* 1. Greeting Skeleton */}
       <div className="h-12 bg-gray-300 rounded w-1/2 mb-3 animate-pulse"></div>

@@ -22,7 +22,7 @@ const ProtectedRoutes = () => {
   // Render protected content if authenticated
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Outlet />
     </>
   );

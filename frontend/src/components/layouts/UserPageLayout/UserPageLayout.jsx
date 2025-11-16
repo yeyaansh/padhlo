@@ -3,7 +3,7 @@ import Navbar from "../../Navbar";
 
 export default function UserPageLayout(){
     return(<>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div>UserPageLayout</div>
         <Outlet></Outlet>
     </>)

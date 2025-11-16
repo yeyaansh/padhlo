@@ -104,7 +104,7 @@ export default function HomePageLoggedIn() {
   // console.log(profile);
 
   return (<>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="p-6 md:p-10 font-['Comic_Neue'] pt-10">
       {/* 1. Personalized Greeting & Stats */}
       <h1 className="text-5xl font-bold text-gray-800">

@@ -5,7 +5,7 @@ import Navbar from '../../Navbar'
 const PlaylistPageLayout = () => {
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="pt-8">
         <Outlet/>
     </div>

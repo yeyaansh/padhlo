@@ -4,7 +4,7 @@ import Navbar from "../../Navbar";
 const ProfilePageLayout = () => {
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="pt-8">
         <Outlet />
       </div>
