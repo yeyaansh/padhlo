@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import axiosClient from "../../axiosClient";
 import { ErrorState } from "../../components/common/ErrorState";
 import HomePageSkeleton from "../../components/common/HomePageSkeleton";
+import Navbar from "../../components/Navbar";
 
 // You would import your actual ProblemDossierCard here
 
@@ -102,7 +103,8 @@ export default function HomePageLoggedIn() {
 
   // console.log(profile);
 
-  return (
+  return (<>
+    <Navbar/>
     <div className="p-6 md:p-10 font-['Comic_Neue'] pt-10">
       {/* 1. Personalized Greeting & Stats */}
       <h1 className="text-5xl font-bold text-gray-800">
@@ -180,5 +182,5 @@ export default function HomePageLoggedIn() {
         </div>
       </section>
     </div>
-  );
+ </> );
 }

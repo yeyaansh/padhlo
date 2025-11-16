@@ -474,7 +474,10 @@ export default function HomepageSketchbookFinal() {
         <footer className="py-8 text-center text-gray-600">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex gap-1">
-            <span className="text-2xl"> ©</span><span className="text-md">{new Date().getFullYear()} Sketch Editor</span>  
+              <span className="text-2xl"> ©</span>
+              <span className="text-md">
+                {new Date().getFullYear()} Sketch Editor
+              </span>
             </div>
             <div className="text-sm text-gray-500">
               Paste links, sketch ideas, solve problems — Osmosis imports

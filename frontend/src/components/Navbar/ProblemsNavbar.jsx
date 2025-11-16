@@ -1,85 +1,69 @@
-import { useState, useEffect } from "react"; // NEW: Import useEffect
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router"; // Corrected import from 'react-router' to 'react-router-dom'
 
-export default function Navbar() {
-  const { role } = useSelector((state) => state.auth);
-  // console.log('role in navbar', role)
-
+export default function ProblemsNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // ## NEW ##: State to track scroll position
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { role, isAuthenticated } = useSelector((state) => state.auth);
 
-  // ## NEW ##: Effect to handle scroll detection
   useEffect(() => {
     const handleScroll = () => {
-      // Set isScrolled to true if user scrolls down more than 10px, otherwise false
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 10);
     };
-
-    // Add event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []); // The empty array ensures this effect runs only once
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const linkClassName = ({ isActive }) =>
-    `px-3 py-2 rounded-md text-lg font-bold transition-all duration-200 font-['Comic_Neue'] ${
-      isActive
-        ? "text-blue-600 sketchy-underline"
-        : "text-gray-700 hover:text-blue-600 hover:bg-blue-100/50"
-    }`;
+    `px-3 py-2 rounded-md text-lg font-bold transition-all duration-200 font-['Comic_Neue']
+     ${
+       isActive
+         ? "text-blue-600 sketchy-underline"
+         : "text-gray-700 hover:text-blue-600 hover:bg-blue-100/50"
+     }`;
 
   return (
-    // ## UPDATED ##: The className is now dynamic based on isScrolled state
     <nav
       className={`
-        sticky z-50 transition-all duration-300 ease-in-out
+        sticky z-50 transition-all duration-300 ease-in-out bg-white/80 backdrop-blur-sm sketch-border-1 
         ${
           isScrolled
-            ? "top-0 rounded-b-lg shadow-lg" // Styles when scrolled
-            : "top-4 mx-4 rounded-xl" // Initial floating styles
+            ? "top-0 rounded-b-lg shadow-lg"
+            : "top-0 mx-4 rounded-xl"
         }
-        bg-white/80 backdrop-blur-sm sketch-border-1
       `}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* -------- TOP NAV SECTION (logo + links) -------- */}
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-1">
-            <NavLink
-              to={isAuthenticated ? "/dashboard" : "/"}
-              className="text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
-            >
-              <div className="flex items-center gap-1">
-                <div>
-                  {" "}
-                  <img
-                    src="/assets/sketcheditor_logo_v1_transparent.png"
-                    alt=""
-                    width={33}
-                    height={33}
-                  />
-                </div>
-                <div> Sketch Editor</div>
-              </div>
-            </NavLink>
-          </div>
+
+          {/* Logo */}
+          <NavLink
+            to={isAuthenticated ? "/dashboard" : "/"}
+            className="text-3xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
+          >
+            <div className="flex items-center gap-1">
+              <img
+                src="/assets/sketcheditor_logo_v1_transparent.png"
+                alt="logo"
+                width={33}
+                height={33}
+              />
+              <div>Sketch Editor</div>
+            </div>
+          </NavLink>
+
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            {role == "admin" && (
+            {role === "admin" && (
               <NavLink to="/admin" className={linkClassName}>
                 Admin
               </NavLink>
             )}
-            {role == "user" && (
+
+            {role === "user" && (
               <NavLink to="/dashboard" className={linkClassName}>
                 Dashboard
               </NavLink>
@@ -96,16 +80,15 @@ export default function Navbar() {
             </NavLink>
           </div>
 
+          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-800 hover:bg-gray-200 focus:outline-none"
             >
-              <span className="sr-only">Open main menu</span>
               {isMenuOpen ? (
                 <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w.org/2000/svg"
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -119,8 +102,7 @@ export default function Navbar() {
                 </svg>
               ) : (
                 <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -138,9 +120,10 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* -------- MOBILE NAV LINKS -------- */}
       <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 flex flex-wrap sm:px-3 border-t-2 border-dashed border-gray-300">
-          {role == "admin" && (
+          {role === "admin" && (
             <NavLink
               to="/admin"
               className={linkClassName}
@@ -149,7 +132,7 @@ export default function Navbar() {
               Admin
             </NavLink>
           )}
-          {role == "user" && (
+          {role === "user" && (
             <NavLink
               to="/dashboard"
               className={linkClassName}
@@ -179,6 +162,62 @@ export default function Navbar() {
           >
             Profile
           </NavLink>
+        </div>
+      </div>
+
+      {/* -------- PROBLEMS PAGE FILTER BAR -------- */}
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pb-4 mt-4">
+
+        <div className="flex flex-col xl:flex-row gap-4">
+
+          {/* Search */}
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Search problems..."
+              className="
+                w-full px-4 py-3 rounded-xl bg-white border-2 border-gray-700
+                text-gray-900 font-bold
+                placeholder-gray-500 shadow-sm
+                focus:outline-none focus:ring-2 focus:ring-blue-400
+              "
+            />
+          </div>
+
+          {/* Filters */}
+          <div className="flex items-center gap-4 overflow-x-auto pb-1">
+
+            <button
+              className="
+                px-4 py-2 rounded-lg bg-yellow-200 text-gray-900 font-bold
+                border-2 border-gray-800
+                hover:bg-yellow-300 transition
+              "
+            >
+              Difficulty ▾
+            </button>
+
+            <button
+              className="
+                px-4 py-2 rounded-lg bg-purple-200 text-purple-900 font-bold
+                border-2 border-purple-800
+                hover:bg-purple-300 transition
+              "
+            >
+              Tags ▾
+            </button>
+
+            <button
+              className="
+                px-4 py-2 rounded-lg bg-pink-200 text-pink-900 font-bold
+                border-2 border-pink-800
+                hover:bg-pink-300 transition
+              "
+            >
+              Companies ▾
+            </button>
+
+          </div>
         </div>
       </div>
     </nav>

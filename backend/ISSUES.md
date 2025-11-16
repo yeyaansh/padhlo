@@ -5,3 +5,4 @@
 5. When submitting or running the solution, if the solution is not correct my beckend before sending the main or final res.status.send(), it throws this error "AxiosError: Request failed with status code 400  error Request failed with status code 400"
 {{ 4. for this time we skipped the problemsAttemptedPart}}
 6. Need to create two seperate playlists (one for normal problems playlist and another playlist specifically for 'osmosis' fetched problems) - this cause you to make changes in osmosis page (show only osmosis compatible playlists) , in profile page in playlist section when creating new Playlist (an extra option for selecting whether creating for normal playlist or for osmosis playlist..) , and also need to create seperate schema for osmosisPlaylist
+7. There's an issue when logging in, it throws error because somewhere in backend in authentication logic, email (is unable to lowercase the input email)

@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "../Navbar";
 
 // A single pulsing card skeleton
 const StatCardSkeleton = () => (
@@ -17,7 +18,8 @@ const ProblemCardSkeleton = () => (
 );
 
 export default function HomePageSkeleton() {
-  return (
+  return (<>
+    <Navbar/>
     <div className="p-6 md:p-10 font-['Comic_Neue'] pt-10">
       {/* 1. Greeting Skeleton */}
       <div className="h-12 bg-gray-300 rounded w-1/2 mb-3 animate-pulse"></div>
@@ -46,5 +48,5 @@ export default function HomePageSkeleton() {
         </div>
       </section>
     </div>
-  );
+</>  );
 }
