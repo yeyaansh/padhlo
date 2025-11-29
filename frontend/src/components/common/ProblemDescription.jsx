@@ -1,6 +1,12 @@
 import React from "react";
 import Markdown from 'react-markdown'
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+// 2. Import the CSS for the math formulas (CRITICAL for it to look right)
+import "katex/dist/katex.min.css";
 export default function ProblemDescription({ problem }) {
+  console.log(problem);
+  
   const getDifficultyStyles = (level = "") => {
     switch (level.toLowerCase()) {
       case "easy":
@@ -36,31 +42,60 @@ export default function ProblemDescription({ problem }) {
       </div>
 
       <div className="prose max-w-none text-gray-700">
-        <Markdown>{problem.description || "No description available."}</Markdown>
+        {/* 3. THE IMPROVED DESCRIPTION SECTION */}
+      <div className="prose prose-slate max-w-none text-gray-800">
+        <Markdown
+          // Enable Math Support
+          remarkPlugins={[remarkMath]}
+          rehypePlugins={[rehypeKatex]}
+          
+          // Custom styling for the "Sketch" theme
+          components={{
+            // Paragraphs: Add relaxed line height and spacing
+            p: ({ node, ...props }) => (
+              <p className="mb-4 leading-7 text-base text-gray-700" {...props} />
+            ),
+            // Headings: Use the marker font
+            h1: ({ node, ...props }) => (
+              <h2 className="text-2xl font-['Permanent_Marker'] mt-6 mb-3 text-gray-900" {...props} />
+            ),
+            h2: ({ node, ...props }) => (
+              <h3 className="text-xl font-['Permanent_Marker'] mt-5 mb-2 text-gray-800" {...props} />
+            ),
+            // Lists: Ensure bullets are visible and spaced
+            ul: ({ node, ...props }) => (
+              <ul className="list-disc pl-5 mb-4 space-y-1 text-gray-700" {...props} />
+            ),
+            ol: ({ node, ...props }) => (
+              <ol className="list-decimal pl-5 mb-4 space-y-1 text-gray-700" {...props} />
+            ),
+            // Highlights: Yellow background for bold text
+            strong: ({ node, ...props }) => (
+              <span className="font-bold text-gray-900 bg-yellow-200 px-1 rounded-sm" {...props} />
+            ),
+            // Code Blocks: Dark mode style
+            code: ({ node, inline, className, children, ...props }) => {
+              if (inline) {
+                return (
+                  <code className="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-200" {...props}>
+                    {children}
+                  </code>
+                );
+              }
+              return (
+                <div className="bg-slate-900 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto shadow-md border-l-4 border-yellow-400">
+                  <code className="font-mono text-sm" {...props}>{children}</code>
+                </div>
+              );
+            },
+          }}
+        >
+          {/* This will now render math like $x^2$ correctly */}
+          {problem.description || "No description available."}
+        </Markdown>
+      </div>
 
-        {/* Example section - adapt based on your data structure */}
-        {/* {problem.visibleTestCases?.map((example, index) => (
-          <div key={index} className="mt-4">
-            <h3 className="font-bold">Example {index + 1}:</h3>
-           <div className="bg-slate-100 p-3 rounded-lg border-2 border-dashed mt-1">
-            <pre className="">
-              <code>
-                <strong>Input:</strong> {example.input} <br />
-                <strong>Output:</strong> {example.output} <br />
-                
-              </code>
-              
-            </pre>
-            <div>{example.outputMessage && (
-                  <>
-                    <strong>Explanation:</strong> {example.outputMessage}
-                  </>
-                )}</div>
-             </div>
-          </div>
-        ))} */}
 
-        {/* Example section - adapt based on your data structure */}
 
         {problem.visibleTestCases?.map((example, index) => {
           // pase test case

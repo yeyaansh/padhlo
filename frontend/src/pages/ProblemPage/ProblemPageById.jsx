@@ -8,6 +8,7 @@ import { ErrorState } from "../../components/common/ErrorState";
 import ProblemDescription from "../../components/common/ProblemDescription";
 import CodeEditor from "../../components/common/CodeEditor";
 import VideoSolution from "../../components/common/VideoSolution";
+import AiHints from "../../components/common/aiHints";
 
 export default function ProblemPageById() {
   const [problem, setProblem] = useState(null);
@@ -81,6 +82,12 @@ export default function ProblemPageById() {
           >
             Discuss
           </TabButton>
+          <TabButton
+            active={leftTab === "ai"}
+            onClick={() => setLeftTab("ai")}
+          >
+            AI Hint
+          </TabButton>
         </div>
         <div className="p-5 overflow-y-auto">
           {leftTab === "description" && (
@@ -94,6 +101,11 @@ export default function ProblemPageById() {
               <div className="text-center p-10">
                 Discussion forum coming soon! 💬
               </div>
+            </div>
+          )}
+          {leftTab === "ai" && (
+            <div>
+            <AiHints problem={problem}/>
             </div>
           )}
         </div>

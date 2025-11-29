@@ -219,7 +219,7 @@ export default function RegisterPage() {
               type="email"
               register={register}
               error={errors.email_id}
-              placeholder="amisha@example.com"
+              placeholder="yeyaansh@example.com"
               required
             />
             <PasswordInputField

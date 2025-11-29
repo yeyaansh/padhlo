@@ -175,7 +175,7 @@ export default function LoginPage() {
               type="email"
               register={register}
               error={errors.email_id}
-              placeholder="amisha@example.com"
+              placeholder="yeyaansh@example.com"
               required
             />
 
